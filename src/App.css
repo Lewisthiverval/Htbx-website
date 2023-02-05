@@ -1,5 +1,20 @@
+.html {
+  height: 100%;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  height: 900px;
+}
+
+.container {
+  height: 100%;
+  width: 1000px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -12,7 +27,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+/* 
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -22,7 +37,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .App-link {
   color: #61dafb;
@@ -34,5 +49,40 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.enter {
+  border: white;
+  animation: blinker 1s linear infinite;
+  color: red;
+  padding: 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 200px;
+
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.enter:hover {
+  color: #8b0000;
+}
+
+.enter:active {
+  color: #8b0000;
+  transform: translateY(4px);
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.6;
   }
 }

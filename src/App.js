@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import PromoTix from "./components/Promotix";
 
 function App() {
+  const [entered, setEntered] = useState(false);
+
+  const handleClick = () => {
+    setEntered(true);
+    changeBackgroundImage();
+  };
+
+  const changeBackgroundImage = () => {
+    document.body.style.backgroundImage = "url('/image2.jpg')";
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        {entered ? (
+          <PromoTix />
+        ) : (
+          <a
+            onClick={() => {
+              handleClick();
+              document.body.style.backgroundImage = "url('/image2.jpg')";
+              document.body.style.backgroundColor = "#ff007f ";
+            }}
+          >
+            <h1 className="enter">E N T E R</h1>
+          </a>
+        )}
+      </div>
     </div>
   );
 }
