@@ -1,5 +1,6 @@
 body {
   background-image: url("/image1.png");
+  /* animation: blinkingBackground 0.9s infinite; */
   background-size: 200px;
   height: 100%;
   margin: 0;
@@ -13,4 +14,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@keyframes blinkingBackground {
+  80% {
+    background-color: #dc143c;
+  }
 }

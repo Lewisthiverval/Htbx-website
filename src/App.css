@@ -17,6 +17,10 @@
   align-items: center;
 }
 
+.frame {
+  border: thick double #32a1ce;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
