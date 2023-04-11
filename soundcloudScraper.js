@@ -2,7 +2,7 @@ const SoundCloud = require("soundcloud-scraper");
 const client = new SoundCloud.Client();
 const fs = require("fs");
 
-const song = "https://soundcloud.com/trans-aminaza/as1-no-rest";
+const song = "https://soundcloud.com/pan_hq/puce-mary-the-size-of-our";
 
 client
   .getSongInfo(song)

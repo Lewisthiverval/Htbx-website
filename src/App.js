@@ -4,7 +4,7 @@ import PromoTix from "./components/Promotix";
 
 import apple2 from "./sounds/apple2.wav";
 import apple3 from "./sounds/apple3.wav";
-import song from "./sounds/AS1NoRest.mp3";
+import song from "./sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
 
 function App() {
   const [entered, setEntered] = useState(false);
@@ -16,12 +16,14 @@ function App() {
   const appleSounds = [];
 
   appleSounds.push(audio2, audio3);
+
   const handleClick = () => {
     setEntered(true);
     changeBackgroundImage();
     const randomIndex = Math.floor(Math.random() * appleSounds.length);
     const randomElement = appleSounds[randomIndex];
     randomElement.play();
+    track.currentTime = 192;
     track.play();
     setEnterTrackPlaying(false);
 
@@ -29,7 +31,7 @@ function App() {
   };
 
   const changeBackgroundImage = () => {
-    document.body.style.backgroundImage = "url('/image2.jpg')";
+    document.body.style.backgroundImage = "url('image2.jpg')";
   };
   return (
     <div className="App">
@@ -37,15 +39,17 @@ function App() {
         {entered ? (
           <PromoTix />
         ) : (
-          <a
-            onClick={() => {
-              handleClick();
-              document.body.style.backgroundImage = "url('/image2.jpg')";
-              document.body.style.backgroundColor = "#ff007f ";
-            }}
-          >
-            <h1 className="enter">E N T E R</h1>
-          </a>
+          <div className="enterContainer">
+            <a
+              onClick={() => {
+                handleClick();
+                document.body.style.backgroundImage = "url('image2.jpg')";
+                document.body.style.backgroundColor = "#000000 ";
+              }}
+            >
+              <h1 className="enter">E N T E R</h1>
+            </a>
+          </div>
         )}
       </div>
     </div>
