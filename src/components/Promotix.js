@@ -12,13 +12,13 @@ export default function PromoTix() {
       </div>
       <div className="frameContainer">
         <div className="frame">
-          <iframe
+          {/* <iframe
             // style="width:100%;"
             height="500"
             src="https://app.promotix.com/trade/select-tickets/HTBX-tickets?embedded_to_iframe=true"
             frameborder="0"
             scolling="yes"
-          ></iframe>
+          ></iframe> */}
         </div>
       </div>
     </div>
