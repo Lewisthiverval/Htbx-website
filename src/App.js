@@ -5,6 +5,7 @@ import PromoTix from "./components/Promotix";
 import apple2 from "./sounds/apple2.wav";
 import apple3 from "./sounds/apple3.wav";
 import song from "./sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
+import { Checkout } from "./components/Checkout";
 
 function App() {
   const [entered, setEntered] = useState(false);
@@ -37,7 +38,8 @@ function App() {
     <div className="App">
       <div className="container">
         {entered ? (
-          <PromoTix />
+          // <PromoTix />
+          <Checkout />
         ) : (
           <div className="enterContainer">
             <a

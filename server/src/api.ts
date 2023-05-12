@@ -1,13 +1,26 @@
 import express, { Request, Response } from "express";
+import { createStripeCheckoutSession } from "./checkout";
 export const app = express();
 
-// Allows cross origin requests
 import cors from "cors";
 app.use(cors({ origin: true }));
 
 app.use(express.json());
 
-app.post("/test", (req: Request, res: Response) => {
-  const amount = req.body.amount;
-  res.status(200).send({ with_tax: amount * 7 });
+function runAsync(callback: Function) {
+  return (req: Request, res: Response, next: Function) => {
+    callback(req, res, next).catch(next);
+  };
+}
+
+app.post(
+  "/checkouts",
+  runAsync(async ({ body }: Request, res: Response) => {
+    res.send(await createStripeCheckoutSession(body.line_items));
+    //   res.send(body.line_items);
+  })
+);
+
+app.post("/test", (req, res) => {
+  res.send("Hello from test endpoint");
 });
