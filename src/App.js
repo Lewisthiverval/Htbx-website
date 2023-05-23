@@ -34,9 +34,9 @@ function App() {
     changeBackgroundImage();
     const randomIndex = Math.floor(Math.random() * appleSounds.length);
     const randomElement = appleSounds[randomIndex];
-    randomElement.play();
-    track2.currentTime = 30;
-    track2.play();
+    // randomElement.play();
+    // track2.currentTime = 30;
+    // track2.play();
     // setEnterTrackPlaying(false);
 
     // audio.play();
@@ -50,9 +50,9 @@ function App() {
     <div className="App">
       <div className="container">
         {entered ? (
-          <PromoTix />
+          <Checkout />
         ) : (
-          // <Checkout />
+          // <PromoTix />
           <div className="enterContainer">
             <a
               onClick={() => {

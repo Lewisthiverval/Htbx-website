@@ -6,9 +6,7 @@ import logo from "../htbx-logo.png";
 
 export function Checkout() {
   const [product, setProduct] = useState({
-    name: "HTBX ticket",
-    amount: 1000,
-    currency: "usd",
+    type: "full",
     quantity: 1,
   });
 
@@ -20,12 +18,15 @@ export function Checkout() {
 
   const handleClick = async (event) => {
     const body = { line_items: [product] };
+
     const { id: sessionId } = await fetchFromAPI("checkouts", {
       body,
     });
+
     const { error } = await stripe.redirectToCheckout({
       sessionId,
     });
+
     if (error) {
       console.log(error);
     }
@@ -41,6 +42,13 @@ export function Checkout() {
         <div className="frameContainer">
           <div className="frame"></div>
           <h1 style={{ color: "white" }}>{product.name}</h1>
+          {/* <select name="types" id="typeSelect">
+            <option value="">--Please choose a ticketType--</option>
+            <option value="full">full</option>
+            <option value="concession">concession</option>
+            <option value="staff">staff</option>
+            <option value="free">free</option>
+          </select> */}
           <button onClick={() => changeQuantity(-1)}>-</button>
           <span style={{ color: "white" }}>{product.quantity}</span>
           <button onClick={() => changeQuantity(1)}>+</button>
