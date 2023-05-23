@@ -7,7 +7,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 });
 
 import { app } from "./api";
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.listen(port, () =>
   console.log(`API available on http://localhost:${port}`)
 );

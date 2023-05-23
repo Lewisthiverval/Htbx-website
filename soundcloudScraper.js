@@ -3,9 +3,10 @@ const client = new SoundCloud.Client();
 const fs = require("fs");
 
 const song = "https://soundcloud.com/pan_hq/puce-mary-the-size-of-our";
+const NN = "https://soundcloud.com/demianrecords/premiere-nn-police-brutality";
 
 client
-  .getSongInfo(song)
+  .getSongInfo(NN)
   .then(async (song) => {
     const stream = await song.downloadProgressive();
     const writer = stream.pipe(fs.createWriteStream(`./${song.title}.mp3`));

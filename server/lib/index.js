@@ -12,6 +12,6 @@ exports.stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27",
 });
 const api_1 = require("./api");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 api_1.app.listen(port, () => console.log(`API available on http://localhost:${port}`));
 //# sourceMappingURL=index.js.map
