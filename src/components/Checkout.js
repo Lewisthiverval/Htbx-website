@@ -3,36 +3,62 @@ import { useStripe } from "@stripe/react-stripe-js";
 import { fetchFromAPI } from "../functions/helpers";
 import "../App.css";
 import logo from "../htbx-logo.png";
+import Payments from "./Payments";
 
 export function Checkout() {
+  const stripe = useStripe();
+  const [code, setCode] = useState("");
+  const [codeSubmitted, setCodeSubmitted] = useState(false);
+  const [testObject, settestObject] = useState({
+    amount: 1000,
+    quantity: 2,
+  });
   const [product, setProduct] = useState({
     type: "full",
     quantity: 1,
   });
 
-  const stripe = useStripe();
-
   const changeQuantity = (v) => {
     setProduct({ ...product, quantity: product.quantity + v });
   };
-
+  const handleCode = (code) => {
+    switch (code) {
+      case "1":
+        setProduct({ ...product, type: "full" });
+        break;
+      case "2":
+        setProduct({ ...product, type: "concession" });
+        break;
+      case "3":
+        setProduct({ ...product, type: "staff" });
+        break;
+      case "4":
+        setProduct({ ...product, type: "free" });
+        break;
+    }
+  };
   const handleClick = async (event) => {
+    setCodeSubmitted(true);
     const body = { line_items: [product] };
-
     const { id: sessionId } = await fetchFromAPI("checkouts", {
       body,
     });
-
     const { error } = await stripe.redirectToCheckout({
       sessionId,
     });
-
     if (error) {
       console.log(error);
     }
   };
 
-  return (
+  return codeSubmitted ? (
+    <div className="secondpageContainer">
+      <div className="imageContainer">
+        <img src={logo} alt="logo" width="300" height="90"></img>
+        {/* <Payments testObject={testObject} /> */}
+      </div>
+    </div>
+  ) : (
     <div>
       <div className="secondpageContainer">
         <div className="imageContainer">
@@ -42,13 +68,18 @@ export function Checkout() {
         <div className="frameContainer">
           <div className="frame"></div>
           <h1 style={{ color: "white" }}>{product.name}</h1>
-          {/* <select name="types" id="typeSelect">
-            <option value="">--Please choose a ticketType--</option>
-            <option value="full">full</option>
-            <option value="concession">concession</option>
-            <option value="staff">staff</option>
-            <option value="free">free</option>
-          </select> */}
+
+          <input
+            type="text"
+            id="codeInput"
+            name="CODE"
+            placeholder="ENTER CODE"
+            value={code}
+            onChange={(e) => {
+              setCode(e.target.value);
+              handleCode(e.target.value);
+            }}
+          ></input>
           <button onClick={() => changeQuantity(-1)}>-</button>
           <span style={{ color: "white" }}>{product.quantity}</span>
           <button onClick={() => changeQuantity(1)}>+</button>
@@ -61,11 +92,11 @@ export function Checkout() {
   );
 }
 
-export function CheckoutSuccess() {
-  const url = window.location.href;
-  const sessionId = new URL(url).searchParams.get("session_id");
-  return <h3>Checkout was a Success! {sessionId}</h3>;
-}
+// export function CheckoutSuccess() {
+//   const url = window.location.href;
+//   const sessionId = new URL(url).searchParams.get("session_id");
+//   return <h3>Checkout was a Success! {sessionId}</h3>;
+// }
 
 export function CheckoutFail() {
   return <h3>Checkout failed!</h3>;

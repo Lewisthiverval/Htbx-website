@@ -8,16 +8,27 @@ import NN from "./sounds/NN-Police Brutality.mp3";
 
 import PromoTix from "./components/Promotix";
 import { Checkout } from "./components/Checkout";
+import { CheckoutSuccess } from "./components/CheckoutSuccess";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Routes,
   Link,
   createBrowserRouter,
 } from "react-router-dom";
 
 function App() {
+  return (
+    <Routes>
+      <Route path="/success" element={<CheckoutSuccess />} />
+      <Route path="/" element={<MainPage />} />
+    </Routes>
+  );
+}
+
+function MainPage() {
   const [entered, setEntered] = useState(false);
   // const [enterTrackPlaying, setEnterTrackPlaying] = useState(true);
 
@@ -34,7 +45,7 @@ function App() {
     changeBackgroundImage();
     const randomIndex = Math.floor(Math.random() * appleSounds.length);
     const randomElement = appleSounds[randomIndex];
-    // randomElement.play();
+    randomElement.play();
     // track2.currentTime = 30;
     // track2.play();
     // setEnterTrackPlaying(false);

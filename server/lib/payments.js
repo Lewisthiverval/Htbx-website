@@ -5,8 +5,10 @@ const _1 = require("./");
 async function createPaymentIntent(amount) {
     const paymentIntent = await _1.stripe.paymentIntents.create({
         amount,
-        currency: "usd",
-        receipt_email: "",
+        currency: "gbp",
+        automatic_payment_methods: {
+            enabled: true,
+        },
     });
     paymentIntent.status;
     return paymentIntent;

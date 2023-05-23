@@ -1,17 +1,17 @@
 import express, { Request, Response } from "express";
 import { createStripeCheckoutSession } from "./checkout";
 import cors from "cors";
-// import { createPaymentIntent } from "./payments";
+import { createPaymentIntent } from "./payments";
 import { handleStripeWebhook } from "./webhooks";
 export const app = express();
 
-app.use(cors({ origin: true }));
+app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
-// app.use(
-//   express.json({
-//     verify: (req, res, buffer) => (req["rawBody"] = buffer),
-//   })
-// );
+app.use(
+  express.json({
+    verify: (req, res, buffer) => (req["rawBody"] = buffer),
+  })
+);
 function runAsync(callback: Function) {
   return (req: Request, res: Response, next: Function) => {
     callback(req, res, next).catch(next);
@@ -22,7 +22,7 @@ const ticketTypes = new Map([
   ["full", { name: "Full Ticket", amount: 1500 }],
   ["concession", { name: "Concession Ticket", amount: 1200 }],
   ["staff", { name: "Staff Ticket", amount: 660 }],
-  ["free", { name: "Free Ticket", amount: 0 }],
+  ["free", { name: "Free Ticket", amount: 0.0 }],
 ]);
 
 app.post(
@@ -43,13 +43,10 @@ app.post(
 
 app.post("/hooks", runAsync(handleStripeWebhook));
 
-// app.post("/test", (req, res) => {
-//   res.send("Hello from test endpoint");
-// });
+app.post(
+  "/payments",
 
-// app.post(
-//   "/payments",
-//   runAsync(async ({ body }: Request, res: Response) => {
-//     res.send(await createPaymentIntent(body.amount));
-//   })
-// );
+  runAsync(async ({ body }: Request, res: Response) => {
+    res.send(await createPaymentIntent(body.amount));
+  })
+);

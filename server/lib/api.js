@@ -7,16 +7,14 @@ exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const checkout_1 = require("./checkout");
 const cors_1 = __importDefault(require("cors"));
-// import { createPaymentIntent } from "./payments";
+const payments_1 = require("./payments");
 const webhooks_1 = require("./webhooks");
 exports.app = express_1.default();
-exports.app.use(cors_1.default({ origin: true }));
+exports.app.use(cors_1.default({ origin: "http://localhost:3000" }));
 exports.app.use(express_1.default.json());
-// app.use(
-//   express.json({
-//     verify: (req, res, buffer) => (req["rawBody"] = buffer),
-//   })
-// );
+exports.app.use(express_1.default.json({
+    verify: (req, res, buffer) => (req["rawBody"] = buffer),
+}));
 function runAsync(callback) {
     return (req, res, next) => {
         callback(req, res, next).catch(next);
@@ -26,7 +24,7 @@ const ticketTypes = new Map([
     ["full", { name: "Full Ticket", amount: 1500 }],
     ["concession", { name: "Concession Ticket", amount: 1200 }],
     ["staff", { name: "Staff Ticket", amount: 660 }],
-    ["free", { name: "Free Ticket", amount: 0 }],
+    ["free", { name: "Free Ticket", amount: 0.0 }],
 ]);
 exports.app.post("/checkouts", runAsync(async ({ body }, res) => {
     const line_items = body.line_items.map((item) => {
@@ -41,13 +39,7 @@ exports.app.post("/checkouts", runAsync(async ({ body }, res) => {
     res.send(await checkout_1.createStripeCheckoutSession(line_items));
 }));
 exports.app.post("/hooks", runAsync(webhooks_1.handleStripeWebhook));
-// app.post("/test", (req, res) => {
-//   res.send("Hello from test endpoint");
-// });
-// app.post(
-//   "/payments",
-//   runAsync(async ({ body }: Request, res: Response) => {
-//     res.send(await createPaymentIntent(body.amount));
-//   })
-// );
+exports.app.post("/payments", runAsync(async ({ body }, res) => {
+    res.send(await payments_1.createPaymentIntent(body.amount));
+}));
 //# sourceMappingURL=api.js.map

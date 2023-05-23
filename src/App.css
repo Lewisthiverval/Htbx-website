@@ -122,6 +122,15 @@
   }
 }
 
+.well {
+  background-color: white;
+  max-width: 728px;
+  /* border: solid 1px; */
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 10px auto;
+}
+
 /* .enterContainer {
   background-color: black;
   width: 100%;
