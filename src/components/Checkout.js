@@ -4,18 +4,11 @@ import "../App.css";
 import logo from "../htbx-logo.png";
 import Payments from "./Payments";
 
-import apple2 from "./sounds/apple2.wav";
-import apple3 from "./sounds/apple3.wav";
-import song from "./sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
-import NN from "./sounds/NN-Police Brutality.mp3";
-
-// const audio2 = new Audio(apple2);
-// const audio3 = new Audio(apple3);
-// const track1 = new Audio(song);
-// const track2 = new Audio(NN);
-// const appleSounds = [];
-
-// appleSounds.push(audio2, audio3);
+import apple1 from "../sounds/apple1.wav";
+import apple2 from "../sounds/apple2.wav";
+import apple3 from "../sounds/apple3.wav";
+import track1 from "../sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
+import track2 from "../sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
   const [code, setCode] = useState("");
@@ -28,7 +21,7 @@ export function Checkout() {
     type: "full",
     quantity: 1,
   });
-
+  console.log(apple2, "apple2");
   const changeQuantity = (v) => {
     setProduct({ ...product, quantity: product.quantity + v });
   };
@@ -58,38 +51,38 @@ export function Checkout() {
     <div className="secondpageContainer">
       <div className="imageContainer">
         <img src={logo} alt="logo" width="300" height="90"></img>
-        <Payments testObject={testObject} />
       </div>
+      <Payments testObject={testObject} />
     </div>
   ) : (
     <div>
       <div className="secondpageContainer">
         <div className="imageContainer">
           <img src={logo} alt="logo" width="300" height="90"></img>
-          {/* <img src={logoGif} alt="logo" width="500" height="500"></img> */}
         </div>
-        <div className="frameContainer">
-          <div className="frame"></div>
-          <h1 style={{ color: "white" }}>{product.name}</h1>
+        {/* <img src={logoGif} alt="logo" width="500" height="500"></img> */}
+      </div>
+      <div className="frameContainer">
+        <div className="frame"></div>
+        <h1 style={{ color: "white" }}>{product.name}</h1>
 
-          <input
-            type="text"
-            id="codeInput"
-            name="CODE"
-            placeholder="ENTER CODE"
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-              handleCode(e.target.value);
-            }}
-          ></input>
-          <button onClick={() => changeQuantity(-1)}>-</button>
-          <span style={{ color: "white" }}>{product.quantity}</span>
-          <button onClick={() => changeQuantity(1)}>+</button>
-          <button onClick={handleClick} disabled={product.quantity < 1}>
-            Checkout
-          </button>
-        </div>
+        <input
+          type="text"
+          id="codeInput"
+          name="CODE"
+          placeholder="ENTER CODE"
+          value={code}
+          onChange={(e) => {
+            setCode(e.target.value);
+            handleCode(e.target.value);
+          }}
+        ></input>
+        <button onClick={() => changeQuantity(-1)}>-</button>
+        <span style={{ color: "white" }}>{product.quantity}</span>
+        <button onClick={() => changeQuantity(1)}>+</button>
+        <button onClick={handleClick} disabled={product.quantity < 1}>
+          Checkout
+        </button>
       </div>
     </div>
   );
