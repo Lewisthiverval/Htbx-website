@@ -46,6 +46,6 @@ app.post("/hooks", runAsync(handleStripeWebhook));
 app.post(
   "/payments",
   runAsync(async ({ body }: Request, res: Response) => {
-    res.send(await createPaymentIntent());
+    res.send(await createPaymentIntent(body.amount));
   })
 );

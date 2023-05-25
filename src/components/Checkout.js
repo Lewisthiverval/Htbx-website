@@ -12,16 +12,17 @@ import track2 from "../sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
   const [code, setCode] = useState("");
-  const [codeSubmitted, setCodeSubmitted] = useState(true);
+  const [codeSubmitted, setCodeSubmitted] = useState(false);
+
   const [testObject, settestObject] = useState({
-    amount: 1000,
+    amount: 4000,
     quantity: 2,
   });
+
   const [product, setProduct] = useState({
     type: "full",
     quantity: 1,
   });
-  console.log(apple2, "apple2");
   const changeQuantity = (v) => {
     setProduct({ ...product, quantity: product.quantity + v });
   };
@@ -57,32 +58,37 @@ export function Checkout() {
   ) : (
     <div>
       <div className="secondpageContainer">
-        <div className="imageContainer">
+        {/* <div className="imageContainer">
           <img src={logo} alt="logo" width="300" height="90"></img>
-        </div>
+        </div> */}
         {/* <img src={logoGif} alt="logo" width="500" height="500"></img> */}
-      </div>
-      <div className="frameContainer">
-        <div className="frame"></div>
-        <h1 style={{ color: "white" }}>{product.name}</h1>
 
-        <input
-          type="text"
-          id="codeInput"
-          name="CODE"
-          placeholder="ENTER CODE"
-          value={code}
-          onChange={(e) => {
-            setCode(e.target.value);
-            handleCode(e.target.value);
-          }}
-        ></input>
-        <button onClick={() => changeQuantity(-1)}>-</button>
-        <span style={{ color: "white" }}>{product.quantity}</span>
-        <button onClick={() => changeQuantity(1)}>+</button>
-        <button onClick={handleClick} disabled={product.quantity < 1}>
-          Checkout
-        </button>
+        <div className="frameContainer">
+          <img src={logo} alt="logo" width="300" height="90"></img>
+          <input
+            type="text"
+            className="codeInput"
+            name="CODE"
+            placeholder="ENTER CODE"
+            value={code}
+            onChange={(e) => {
+              setCode(e.target.value);
+              handleCode(e.target.value);
+            }}
+          ></input>
+          <div className="quantityContainer">
+            {/* <button onClick={() => changeQuantity(-1)}>-</button>
+            <span style={{ color: "white" }}>{product.quantity}</span>
+            <button onClick={() => changeQuantity(1)}>+</button> */}
+          </div>
+          <button
+            className="sendButton"
+            onClick={handleClick}
+            disabled={product.quantity < 1}
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

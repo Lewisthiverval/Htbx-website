@@ -16,12 +16,12 @@ export const stripePromise = loadStripe(
   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
 );
 
-function Payment() {
+function Payment({ testObject }) {
   const [clientSecret, setClientSecret] = useState("");
 
   const createPaymentIntent = async (event) => {
     await fetchFromAPI("payments", {
-      body: { amount: 1000 },
+      body: { amount: testObject.amount, quantity: testObject.quantity },
     }).then((response) => {
       setClientSecret(response.client_secret);
     });

@@ -40,6 +40,6 @@ exports.app.post("/checkouts", runAsync(async ({ body }, res) => {
 }));
 exports.app.post("/hooks", runAsync(webhooks_1.handleStripeWebhook));
 exports.app.post("/payments", runAsync(async ({ body }, res) => {
-    res.send(await payments_1.createPaymentIntent());
+    res.send(await payments_1.createPaymentIntent(body.amount));
 }));
 //# sourceMappingURL=api.js.map

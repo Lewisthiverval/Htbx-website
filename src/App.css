@@ -38,9 +38,66 @@
 }
 
 .frameContainer {
-  height: 70%;
+  width: 30%;
+  height: 40%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: green;
+  border: solid;
+  border-color: red;
+  border-width: 4px;
+  border-radius: 10px;
+
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
+.quanitityContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.codeInput {
+  width: 80%;
+  height: 10%;
+  font-size: 30px;
+  background-color: black;
+  border-radius: 10px;
+  text-align: center;
+  border: solid;
+  border-color: pink;
+  border-width: 3px;
+  color: white;
+}
+.codeInput:hover {
+  background-color: grey;
+}
+.sendButton {
+  width: 40%;
+  height: 10%;
+  font-size: 30px;
+  background-color: red;
+  border-radius: 3px;
+  text-align: center;
+  border: solid;
+  border-color: pink;
+  border-width: 3px;
+  color: white;
+  padding-bottom: 10px;
+}
+
+.sendButton:hover {
+  background-color: pink;
+  color: black;
+  cursor: pointer;
+}
 .imageContainer {
   height: 20%;
   animation: play 1.5s steps(10) infinite;
