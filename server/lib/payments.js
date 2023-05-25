@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPaymentIntent = void 0;
 const _1 = require("./");
-async function createPaymentIntent(amount) {
+async function createPaymentIntent() {
     const paymentIntent = await _1.stripe.paymentIntents.create({
-        amount,
+        amount: 1000,
         currency: "gbp",
         automatic_payment_methods: {
             enabled: true,

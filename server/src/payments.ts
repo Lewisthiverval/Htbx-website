@@ -1,8 +1,8 @@
 import { stripe } from "./";
 
-export async function createPaymentIntent(amount: number) {
+export async function createPaymentIntent() {
   const paymentIntent = await stripe.paymentIntents.create({
-    amount,
+    amount: 1000,
     currency: "gbp",
     automatic_payment_methods: {
       enabled: true,

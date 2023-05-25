@@ -9,6 +9,7 @@ import NN from "./sounds/NN-Police Brutality.mp3";
 import PromoTix from "./components/Promotix";
 import { Checkout } from "./components/Checkout";
 import { CheckoutSuccess } from "./components/CheckoutSuccess";
+import Payments from "./components/Payments";
 
 import {
   BrowserRouter as Router,
@@ -61,7 +62,7 @@ function MainPage() {
     <div className="App">
       <div className="container">
         {entered ? (
-          <Checkout />
+          <Payments />
         ) : (
           // <PromoTix />
           <div className="enterContainer">
@@ -69,7 +70,7 @@ function MainPage() {
               onClick={() => {
                 handleClick();
                 document.body.style.backgroundImage = "url('htbx_scan.JPG'')";
-                document.body.style.backgroundColor = "#000000 ";
+                document.body.style.backgroundColor = "white ";
               }}
             >
               <h1 className="enter">E N T E R</h1>

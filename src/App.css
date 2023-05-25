@@ -131,6 +131,22 @@
   margin: 10px auto;
 }
 
+.checkoutContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.checkout {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 /* .enterContainer {
   background-color: black;
   width: 100%;

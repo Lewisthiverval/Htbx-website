@@ -5,7 +5,7 @@ import { createPaymentIntent } from "./payments";
 import { handleStripeWebhook } from "./webhooks";
 export const app = express();
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(
   express.json({
@@ -45,8 +45,7 @@ app.post("/hooks", runAsync(handleStripeWebhook));
 
 app.post(
   "/payments",
-
   runAsync(async ({ body }: Request, res: Response) => {
-    res.send(await createPaymentIntent(body.amount));
+    res.send(await createPaymentIntent());
   })
 );

@@ -26,7 +26,8 @@ code {
 
 @keyframes blinkingBackground {
   80% {
-    background-color: #dc143c;
+    /* background-color: #dc143c; */
+    background-color: white;
   }
 }
 

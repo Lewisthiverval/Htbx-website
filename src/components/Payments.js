@@ -1,68 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { fetchFromAPI } from "../functions/helpers";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import "../App.css";
 
-function Payments({ testObject }) {
-  const stripe = useStripe();
-  const [amount, setAmount] = useState();
-  const [paymentIntent, setPaymentIntent] = useState();
-  const elements = useElements();
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+export const stripePromise = loadStripe(
+  " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
+);
+
+function Payments() {
+  const [clientSecret, setClientSecret] = useState("");
 
   const createPaymentIntent = async (event) => {
-    const validAmount = Math.min(Math.max(amount, 50), 9999999);
-    setAmount(validAmount);
-    const pi = await fetchFromAPI("payments", {
-      body: { amount: 2000 },
+    await fetchFromAPI("payments", {
+      body: { amount: 1000 },
+    }).then((response) => {
+      setClientSecret(response.client_secret);
     });
-    setPaymentIntent(pi);
   };
 
   useEffect(() => {
     createPaymentIntent();
   }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const cardElement = elements.getElement(CardElement);
-
-    const { paymentIntent: updatedPaymentIntent, error } =
-      await stripe.confirmCardPayment(paymentIntent.client_secret, {
-        payment_method: { card: cardElement },
-      });
-
-    if (error) {
-      console.error(error);
-      error.payment_intent && setPaymentIntent(error.payment_intent);
-      console.log("Payment failed");
-    } else {
-      setPaymentIntent(updatedPaymentIntent);
-    }
+  const appearance = {
+    theme: "stripe",
   };
-
+  const options = {
+    clientSecret,
+    appearance,
+  };
+  const paymentElementOptions = {
+    layout: "tabs",
+  };
+  console.log(clientSecret);
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="well"
-      hidden={!paymentIntent || paymentIntent.status === "succeeded"}
-    >
-      <h3>Step 2: Submit a Payment Method</h3>
-      <p>Collect credit card details, then submit the payment.</p>
-      <p>
-        Normal Card: <code>4242424242424242</code>
-      </p>
-      <p>
-        3D Secure Card: <code>4000002500003155</code>
-      </p>
+    <div className="checkoutContainer">
+      {clientSecret && (
+        <div className="checkout">
+          <h1>Payment</h1>
 
-      <hr />
-
-      <CardElement />
-      <button className="btn btn-success" type="submit">
-        Pay
-      </button>
-    </form>
+          <Elements options={options} stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        </div>
+      )}
+    </div>
   );
 }
 

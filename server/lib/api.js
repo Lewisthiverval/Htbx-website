@@ -10,7 +10,7 @@ const cors_1 = __importDefault(require("cors"));
 const payments_1 = require("./payments");
 const webhooks_1 = require("./webhooks");
 exports.app = express_1.default();
-exports.app.use(cors_1.default({ origin: "http://localhost:3000" }));
+exports.app.use(cors_1.default({ origin: true }));
 exports.app.use(express_1.default.json());
 exports.app.use(express_1.default.json({
     verify: (req, res, buffer) => (req["rawBody"] = buffer),
@@ -40,6 +40,6 @@ exports.app.post("/checkouts", runAsync(async ({ body }, res) => {
 }));
 exports.app.post("/hooks", runAsync(webhooks_1.handleStripeWebhook));
 exports.app.post("/payments", runAsync(async ({ body }, res) => {
-    res.send(await payments_1.createPaymentIntent(body.amount));
+    res.send(await payments_1.createPaymentIntent());
 }));
 //# sourceMappingURL=api.js.map

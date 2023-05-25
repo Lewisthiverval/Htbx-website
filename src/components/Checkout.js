@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { useStripe } from "@stripe/react-stripe-js";
-import { fetchFromAPI } from "../functions/helpers";
+
 import "../App.css";
 import logo from "../htbx-logo.png";
 import Payments from "./Payments";
 
 export function Checkout() {
-  const stripe = useStripe();
   const [code, setCode] = useState("");
-  const [codeSubmitted, setCodeSubmitted] = useState(false);
+  const [codeSubmitted, setCodeSubmitted] = useState(true);
   const [testObject, settestObject] = useState({
     amount: 1000,
     quantity: 2,
@@ -37,25 +35,31 @@ export function Checkout() {
         break;
     }
   };
+
   const handleClick = async (event) => {
+    console.log("working");
     setCodeSubmitted(true);
-    const body = { line_items: [product] };
-    const { id: sessionId } = await fetchFromAPI("checkouts", {
-      body,
-    });
-    const { error } = await stripe.redirectToCheckout({
-      sessionId,
-    });
-    if (error) {
-      console.log(error);
-    }
   };
+
+  // const handleClick = async (event) => {
+  //   setCodeSubmitted(true);
+  //   const body = { line_items: [product] };
+  //   const { id: sessionId } = await fetchFromAPI("checkouts", {
+  //     body,
+  //   });
+  //   const { error } = await stripe.redirectToCheckout({
+  //     sessionId,
+  //   });
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return codeSubmitted ? (
     <div className="secondpageContainer">
       <div className="imageContainer">
         <img src={logo} alt="logo" width="300" height="90"></img>
-        {/* <Payments testObject={testObject} /> */}
+        <Payments testObject={testObject} />
       </div>
     </div>
   ) : (
@@ -98,6 +102,6 @@ export function Checkout() {
 //   return <h3>Checkout was a Success! {sessionId}</h3>;
 // }
 
-export function CheckoutFail() {
-  return <h3>Checkout failed!</h3>;
-}
+// export function CheckoutFail() {
+//   return <h3>Checkout failed!</h3>;
+// }
