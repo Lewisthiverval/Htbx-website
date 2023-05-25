@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "../App.css";
 import logo from "../htbx-logo.png";
-import Payments from "./Payments";
+import Payment from "./Payment";
 
 import apple1 from "../sounds/apple1.wav";
 import apple2 from "../sounds/apple2.wav";
@@ -52,7 +52,7 @@ export function Checkout() {
       <div className="imageContainer">
         <img src={logo} alt="logo" width="300" height="90"></img>
       </div>
-      <Payments testObject={testObject} />
+      <Payment testObject={testObject} />
     </div>
   ) : (
     <div>

@@ -16,7 +16,7 @@ export const stripePromise = loadStripe(
   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
 );
 
-function Payments() {
+function Payment() {
   const [clientSecret, setClientSecret] = useState("");
 
   const createPaymentIntent = async (event) => {
@@ -46,7 +46,7 @@ function Payments() {
     <div className="checkoutContainer">
       {clientSecret && (
         <div className="checkout">
-          <Elements options={options} stripe={stripePromise}>
+          <Elements stripe={stripePromise} options={options}>
             <CheckoutForm />
           </Elements>
         </div>
@@ -55,4 +55,4 @@ function Payments() {
   );
 }
 
-export default Payments;
+export default Payment;
