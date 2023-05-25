@@ -4,6 +4,19 @@ import "../App.css";
 import logo from "../htbx-logo.png";
 import Payments from "./Payments";
 
+import apple2 from "./sounds/apple2.wav";
+import apple3 from "./sounds/apple3.wav";
+import song from "./sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
+import NN from "./sounds/NN-Police Brutality.mp3";
+
+// const audio2 = new Audio(apple2);
+// const audio3 = new Audio(apple3);
+// const track1 = new Audio(song);
+// const track2 = new Audio(NN);
+// const appleSounds = [];
+
+// appleSounds.push(audio2, audio3);
+
 export function Checkout() {
   const [code, setCode] = useState("");
   const [codeSubmitted, setCodeSubmitted] = useState(true);
@@ -40,20 +53,6 @@ export function Checkout() {
     console.log("working");
     setCodeSubmitted(true);
   };
-
-  // const handleClick = async (event) => {
-  //   setCodeSubmitted(true);
-  //   const body = { line_items: [product] };
-  //   const { id: sessionId } = await fetchFromAPI("checkouts", {
-  //     body,
-  //   });
-  //   const { error } = await stripe.redirectToCheckout({
-  //     sessionId,
-  //   });
-  //   if (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return codeSubmitted ? (
     <div className="secondpageContainer">

@@ -2,27 +2,33 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
 }
 
-.container {
+.firstPageContainer {
+  background-image: url("htbx_scan.JPG");
+  background-size: 500px;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 .secondpageContainer {
+  background-color: black;
   /* background-image: url("website-htbx-sexond-page.jpg"); */
-  background-size: 1000px;
+
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20%;
-  margin-top: 20%;
+  height: 100vh;
+  width: 100vw;
 }
 
 .frame {
@@ -141,7 +147,7 @@
 }
 
 .checkout {
-  width: 40%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
