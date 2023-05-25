@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "../App.css";
 import logo from "../htbx-logo.png";
@@ -13,7 +13,10 @@ import track2 from "../sounds/NN-Police Brutality.mp3";
 export function Checkout() {
   const [code, setCode] = useState("");
   const [codeSubmitted, setCodeSubmitted] = useState(false);
-
+  const track = new Audio(track2);
+  useEffect(() => {
+    track.play();
+  }, []);
   const [testObject, settestObject] = useState({
     amount: 4000,
     quantity: 2,
@@ -44,16 +47,17 @@ export function Checkout() {
   };
 
   const handleClick = async (event) => {
-    console.log("working");
     setCodeSubmitted(true);
   };
 
   return codeSubmitted ? (
     <div className="secondpageContainer">
-      <div className="imageContainer">
+      {/* <div className="imageContainer">
         <img src={logo} alt="logo" width="300" height="90"></img>
+      </div> */}
+      <div className="frameContainer">
+        <Payment testObject={testObject} />
       </div>
-      <Payment testObject={testObject} />
     </div>
   ) : (
     <div>

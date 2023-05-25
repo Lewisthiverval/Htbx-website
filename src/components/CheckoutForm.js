@@ -6,7 +6,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 export default function CheckoutForm() {
-  const [message, setMessage] = useState("HEllo");
+  const [message, setMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();

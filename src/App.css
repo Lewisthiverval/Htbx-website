@@ -46,7 +46,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  background-color: green;
+  background-color: pink;
   border: solid;
   border-color: red;
   border-width: 4px;
@@ -65,6 +65,7 @@
 }
 
 .codeInput {
+  color: red;
   width: 80%;
   height: 10%;
   font-size: 30px;
@@ -72,13 +73,16 @@
   border-radius: 10px;
   text-align: center;
   border: solid;
-  border-color: pink;
+  border-color: red;
   border-width: 3px;
   color: white;
 }
-.codeInput:hover {
-  background-color: grey;
+.codeInput::placeholder {
+  /* Most modern browsers support this */
+  color: red;
+  font-family: Old English Text;
 }
+
 .sendButton {
   width: 40%;
   height: 10%;
