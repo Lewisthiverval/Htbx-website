@@ -13,60 +13,50 @@ import track2 from "../sounds/NN-Police Brutality.mp3";
 export function Checkout() {
   const [code, setCode] = useState("");
   const [codeSubmitted, setCodeSubmitted] = useState(false);
+  const [product, setProduct] = useState({
+    type: "full",
+    quantity: 1,
+    amount: 1500,
+  });
   const track = new Audio(track2);
   useEffect(() => {
     track.play();
   }, []);
-  const [testObject, settestObject] = useState({
-    amount: 4000,
-    quantity: 2,
-  });
-
-  const [product, setProduct] = useState({
-    type: "full",
-    quantity: 1,
-  });
   const changeQuantity = (v) => {
     setProduct({ ...product, quantity: product.quantity + v });
   };
   const handleCode = (code) => {
     switch (code) {
-      case "1":
-        setProduct({ ...product, type: "full" });
+      case "111":
+        setProduct({ ...product, type: "full", amount: 1500 });
         break;
-      case "2":
-        setProduct({ ...product, type: "concession" });
+      case "222":
+        setProduct({ ...product, type: "concession", amount: 1200 });
         break;
-      case "3":
-        setProduct({ ...product, type: "staff" });
+      case "333":
+        setProduct({ ...product, type: "staff", amount: 660 });
         break;
-      case "4":
-        setProduct({ ...product, type: "free" });
+      case "444":
+        setProduct({ ...product, type: "free", amount: 1000 });
         break;
     }
   };
 
   const handleClick = async (event) => {
+    event.preventDefault();
+
     setCodeSubmitted(true);
   };
 
   return codeSubmitted ? (
     <div className="secondpageContainer">
-      {/* <div className="imageContainer">
-        <img src={logo} alt="logo" width="300" height="90"></img>
-      </div> */}
       <div className="frameContainer">
-        <Payment testObject={testObject} />
+        <Payment {...product} />
       </div>
     </div>
   ) : (
     <div>
       <div className="secondpageContainer">
-        {/* <div className="imageContainer">
-          <img src={logo} alt="logo" width="300" height="90"></img>
-        </div> */}
-        {/* <img src={logoGif} alt="logo" width="500" height="500"></img> */}
-
         <div className="frameContainer">
           <img src={logo} alt="logo" width="300" height="90"></img>
           <input
@@ -98,12 +88,12 @@ export function Checkout() {
   );
 }
 
-// export function CheckoutSuccess() {
-//   const url = window.location.href;
-//   const sessionId = new URL(url).searchParams.get("session_id");
-//   return <h3>Checkout was a Success! {sessionId}</h3>;
-// }
+export function CheckoutSuccess() {
+  const url = window.location.href;
+  const sessionId = new URL(url).searchParams.get("session_id");
+  return <h3>Checkout was a Success! {sessionId}</h3>;
+}
 
-// export function CheckoutFail() {
-//   return <h3>Checkout failed!</h3>;
-// }
+export function CheckoutFail() {
+  return <h3>Checkout failed!</h3>;
+}

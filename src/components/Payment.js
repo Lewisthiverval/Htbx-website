@@ -16,19 +16,21 @@ export const stripePromise = loadStripe(
   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
 );
 
-function Payment({ testObject }) {
+function Payment(product) {
   const [clientSecret, setClientSecret] = useState("");
 
-  const createPaymentIntent = async (event) => {
+  const createPaymentIntent = async (product) => {
     await fetchFromAPI("payments", {
-      body: { amount: testObject.amount, quantity: testObject.quantity },
+      body: { amount: product.amount, quantity: product.quantity },
     }).then((response) => {
+      console.log(response);
+
       setClientSecret(response.client_secret);
     });
   };
 
   useEffect(() => {
-    createPaymentIntent();
+    createPaymentIntent(product);
   }, []);
 
   const appearance = {
@@ -44,6 +46,7 @@ function Payment({ testObject }) {
   console.log(clientSecret);
   return (
     <div className="checkoutContainer">
+      <h1>PLease pay: {product.amount}</h1>
       {clientSecret && (
         <div className="checkout">
           <Elements stripe={stripePromise} options={options}>
