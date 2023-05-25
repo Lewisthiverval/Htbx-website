@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import "../App.css";
-import logo from "../htbx-logo.png";
+import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
 
-import apple1 from "../sounds/apple1.wav";
-import apple2 from "../sounds/apple2.wav";
-import apple3 from "../sounds/apple3.wav";
-import track1 from "../sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
-import track2 from "../sounds/NN-Police Brutality.mp3";
+import apple1 from "../assets/sounds/apple1.wav";
+import apple2 from "../assets/sounds/apple2.wav";
+import apple3 from "../assets/sounds/apple3.wav";
+import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
+import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
   const [code, setCode] = useState("");

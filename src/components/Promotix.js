@@ -1,7 +1,6 @@
 import React from "react";
 import "../App.css";
-import logo from "../htbx-logo.png";
-import logoGif from "../htbx-logo.gif";
+import logo from "../assets/htbx-logo.png";
 
 export default function PromoTix() {
   return (
