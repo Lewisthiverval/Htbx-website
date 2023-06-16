@@ -49,3 +49,14 @@ app.post(
     res.send(await createPaymentIntent(body.amount));
   })
 );
+
+app.post(
+  "/login",
+  runAsync(async ({ body }: Request, res: Response) => {
+    if (body.password === process.env.ADMIN_PAGE_PASSWORD) {
+      res.send(true);
+    } else {
+      res.send(false);
+    }
+  })
+);

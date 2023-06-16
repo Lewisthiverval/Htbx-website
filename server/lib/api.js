@@ -42,4 +42,12 @@ exports.app.post("/hooks", runAsync(webhooks_1.handleStripeWebhook));
 exports.app.post("/payments", runAsync(async ({ body }, res) => {
     res.send(await payments_1.createPaymentIntent(body.amount));
 }));
+exports.app.post("/login", runAsync(async ({ body }, res) => {
+    if (body.password === process.env.ADMIN_PAGE_PASSWORD) {
+        res.send(true);
+    }
+    else {
+        res.send(false);
+    }
+}));
 //# sourceMappingURL=api.js.map

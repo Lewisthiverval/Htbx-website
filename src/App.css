@@ -216,7 +216,10 @@
   align-items: center;
   justify-content: center;
 }
-/* .enterContainer {
-  background-color: black;
-  width: 100%;
-} */
+
+.loginPage {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
