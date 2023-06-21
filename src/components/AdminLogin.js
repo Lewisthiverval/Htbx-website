@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import AdminPage from "./AdminPage";
-import { fetchFromAPI } from "../functions/helpers";
+// import { fetchFromAPI } from "../functions/helpers";
 
 export default function AdminLogin() {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();

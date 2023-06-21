@@ -9,7 +9,7 @@ export async function createPaymentIntent(amount: number) {
     },
   });
 
-  paymentIntent.status;
+  // paymentIntent.status;
 
   return paymentIntent;
 }

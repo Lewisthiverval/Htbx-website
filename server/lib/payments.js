@@ -10,7 +10,7 @@ async function createPaymentIntent(amount) {
             enabled: true,
         },
     });
-    paymentIntent.status;
+    // paymentIntent.status;
     return paymentIntent;
 }
 exports.createPaymentIntent = createPaymentIntent;
