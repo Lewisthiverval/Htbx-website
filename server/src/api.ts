@@ -40,23 +40,22 @@ app.post(
     res.send(await createStripeCheckoutSession(line_items));
   })
 );
-
 app.post("/hooks", runAsync(handleStripeWebhook));
-
 app.post(
   "/payments",
   runAsync(async ({ body }: Request, res: Response) => {
     res.send(await createPaymentIntent(body.amount));
   })
 );
-
 app.post(
   "/login",
   runAsync(async ({ body }: Request, res: Response) => {
-    if (body.password === process.env.ADMIN_PAGE_PASSWORD) {
-      res.send(true);
-    } else {
-      res.send(false);
-    }
+    body.password === process.env.ADMIN_PAGE_PASSWORD
+      ? res.send(true)
+      : res.send(false);
   })
 );
+
+app.get("/hello", (req, res) => {
+  res.send("hello world");
+});

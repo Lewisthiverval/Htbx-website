@@ -4,7 +4,8 @@ import { CheckoutSuccess } from "./components/CheckoutSuccess";
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import QRcode from "./components/QRcode";
-import Admin from "./components/Admin";
+import Admin from "./components/AdminLogin";
+import AdminLogin from "./components/AdminLogin";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Route path="/" element={<EnterPage />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/QRcode" element={<QRcode />} />
-      <Route path="/admin" element={<Admin />} />
+      <Route path="/admin" element={<AdminLogin />} />
     </Routes>
   );
 }
