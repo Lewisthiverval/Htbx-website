@@ -7,27 +7,26 @@ import NewMemberForm from "./NewMemberForm";
 
 export default function AdminPage() {
   const [ravers, setRavers] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const membersRef = collection(db, "Members");
 
+  const getData = async () => {
+    try {
+      const data = await getDocs(membersRef);
+      const cleanData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setRavers(cleanData);
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await getDocs(membersRef);
-        const cleanData = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setRavers(cleanData);
-      } catch (error) {
-        console.error("Error retrieving data:", error);
-      }
-    };
     getData();
   }, []);
 
-  const handleClick = () => {
-    setShowForm(true);
+  const handleRefresh = () => {
+    getData();
   };
 
   return (
@@ -35,7 +34,7 @@ export default function AdminPage() {
       <h1>HTBX Event</h1>
       <NewMemberForm />
       {ravers.map((x) => (
-        <Member x={x} />
+        <Member key={x.id} x={x} onrefresh onRefresh={handleRefresh} />
       ))}
     </div>
   );

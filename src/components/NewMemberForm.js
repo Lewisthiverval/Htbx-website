@@ -1,15 +1,32 @@
 import React, { useState } from "react";
 import { db } from "../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 
 function MemberForm() {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
+  const [type, setType] = useState("");
 
-  const handleAddMember = () => {
+  const membersRef = collection(db, "Members");
+  const openForm = () => {
     setShowForm(true);
+  };
+
+  const addMember = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "Members"), {
+        name: name,
+        email: email,
+        code: code,
+        status: "not sent",
+        type: type,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   const handleFormSubmit = (e) => {
@@ -17,6 +34,7 @@ function MemberForm() {
     setName("");
     setCode("");
     setEmail("");
+    addMember();
     setShowForm(false);
   };
 
@@ -26,7 +44,7 @@ function MemberForm() {
 
   return (
     <div>
-      {!showForm && <button onClick={handleAddMember}>Add New Member</button>}
+      {!showForm && <button onClick={openForm}>Add New Member</button>}
 
       {showForm && (
         <form onSubmit={handleFormSubmit}>
@@ -54,6 +72,15 @@ function MemberForm() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+
+          <label>
+            Type:
+            <input
+              type="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
             />
           </label>
 
