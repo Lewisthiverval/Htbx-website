@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { db } from "../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import Member from "./Member";
+import NewMemberForm from "./NewMemberForm";
 
 export default function AdminPage() {
   const [ravers, setRavers] = useState([]);
+  const [showForm, setShowForm] = useState(false);
   const membersRef = collection(db, "Members");
 
   useEffect(() => {
@@ -23,17 +26,16 @@ export default function AdminPage() {
     getData();
   }, []);
 
+  const handleClick = () => {
+    setShowForm(true);
+  };
+
   return (
     <div>
       <h1>HTBX Event</h1>
+      <NewMemberForm />
       {ravers.map((x) => (
-        <div className="user" key={x.id}>
-          <h2>{x.name}</h2>
-          <p>{`email: ${x.email}`}</p>
-          <p>{`type: ${x.type}`}</p>
-          <p>{`code: ${x.code}`}</p>
-          <p>sent: false</p>
-        </div>
+        <Member x={x} />
       ))}
     </div>
   );
