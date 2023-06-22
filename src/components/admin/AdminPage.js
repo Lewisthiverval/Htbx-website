@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Member from "./Member";
 import NewMemberForm from "./NewMemberForm";

@@ -4,8 +4,8 @@ import { CheckoutSuccess } from "./components/CheckoutSuccess";
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import QRcode from "./components/QRcode";
-import Admin from "./components/AdminLogin";
-import AdminLogin from "./components/AdminLogin";
+import Admin from "./components/admin/AdminLogin";
+import AdminLogin from "./components/admin/AdminLogin";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 function MemberForm() {

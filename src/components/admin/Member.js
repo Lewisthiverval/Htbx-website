@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 import { collection, updateDoc, doc } from "firebase/firestore";
 
 export default function Member({ x, onRefresh }) {
