@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchFromAPI } from "../functions/helpers";
-import {
-  CardElement,
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
+import useSwr from "swr";
+
 import "../App.css";
 
 import { loadStripe } from "@stripe/stripe-js";
@@ -17,39 +13,29 @@ export const stripePromise = loadStripe(
 );
 
 function Payment(product) {
-  const [clientSecret, setClientSecret] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const { data, isLoading, error } = useSwr(
+    `checkout/${product.code}/${quantity}`,
+    () => fetchFromAPI("payments", { body: { code: product.code, quantity } })
+  );
 
-  useEffect(() => {
-    console.log();
-    fetchFromAPI("payments", { body: { code: product.code } })
-      .then((response) => {
-        console.log(response);
-        setClientSecret(response.client_secret);
-      })
-      .catch(() => {
-        alert("bad code");
-      });
-    console.log(product);
-  }, []);
+  console.log(error, data);
 
-  // useEffect(() => {
-  //   console.log(clientSecret);
-  // }, [clientSecret]);
-
-  const appearance = {
-    theme: "stripe",
-  };
-  const options = {
-    clientSecret,
-    appearance,
-  };
+  if (isLoading) return "Loading";
+  if (error) return "Error";
 
   return (
     <div className="checkoutContainer">
       <h1>Please pay: {product.amount}</h1>
-      {clientSecret && (
+      {data.client_secret && (
         <div className="checkout">
-          <Elements stripe={stripePromise} options={options}>
+          <Elements
+            stripe={stripePromise}
+            options={{
+              clientSecret: data.client_secret,
+              appearance: { theme: "stripe" },
+            }}
+          >
             <CheckoutForm />
           </Elements>
         </div>

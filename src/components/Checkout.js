@@ -1,18 +1,9 @@
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { db } from "../config/firebase";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  query,
-  where,
-} from "firebase/firestore";
 
-import "../App.css";
 import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
 import { ticketTypes } from "../lib/ticketTypes";
-
 import apple1 from "../assets/sounds/apple1.wav";
 import apple2 from "../assets/sounds/apple2.wav";
 import apple3 from "../assets/sounds/apple3.wav";
@@ -20,24 +11,22 @@ import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87
 import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
-  const [price, setPrice] = useState(0);
   const [code, setCode] = useState(0);
-
+  const params = useParams();
+  const nav = useNavigate();
   const handleCode = async (code) => {
     setCode(code);
   };
 
   const handleClick = async (event) => {
     event.preventDefault();
-    fetch("http://localhost:3001/check-code")
-      .then((res) => res.json())
-      .then((data) => setPrice(data.price));
+    nav(`/checkout/${code}`);
   };
 
-  return price ? (
+  return params.code ? (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <Payment code={code} />
+        <Payment code={params.code} />
       </div>
     </div>
   ) : (

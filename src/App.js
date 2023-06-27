@@ -12,6 +12,7 @@ function App() {
     <Routes>
       <Route path="/success" element={<CheckoutSuccess />} />
       <Route path="/" element={<EnterPage />} />
+      <Route path="/checkout/:code" element={<Checkout />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/QRcode" element={<QRcode />} />
       <Route path="/admin" element={<AdminLogin />} />
