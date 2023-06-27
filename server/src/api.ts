@@ -1,17 +1,13 @@
 import express, { Request, Response } from "express";
 import { createStripeCheckoutSession } from "./checkout";
 import cors from "cors";
-import { createPaymentIntent } from "./payments";
+import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { handleStripeWebhook } from "./webhooks";
 export const app = express();
 
 app.use(cors({ origin: true }));
 app.use(express.json());
-app.use(
-  express.json({
-    verify: (req, res, buffer) => (req["rawBody"] = buffer),
-  })
-);
+
 function runAsync(callback: Function) {
   return (req: Request, res: Response, next: Function) => {
     callback(req, res, next).catch(next);
@@ -40,13 +36,25 @@ app.post(
     res.send(await createStripeCheckoutSession(line_items));
   })
 );
-app.post("/hooks", runAsync(handleStripeWebhook));
+
+app.post(
+  "/hooks",
+  express.raw({ type: "application/json" }),
+  runAsync(handleStripeWebhook)
+);
+
 app.post(
   "/payments",
   runAsync(async ({ body }: Request, res: Response) => {
-    res.send(await createPaymentIntent(body.amount));
+    createPaymentIntent(body.code)
+      .then((x) => res.json(x))
+      .catch((err) => {
+        res.status(402);
+        res.send(err.message || "");
+      });
   })
 );
+
 app.post(
   "/login",
   runAsync(async ({ body }: Request, res: Response) => {
@@ -56,6 +64,14 @@ app.post(
   })
 );
 
-app.get("/hello", (req, res) => {
-  res.send("hello world");
-});
+app.get(
+  "/success",
+  runAsync(async (req: Request, res: Response) => {
+    await updatePaymentComplete(req.query.payment_intent);
+    res.setHeader("Location", "http://localhost:3000/success");
+    res.status(302);
+    res.end();
+  })
+);
+
+app.get("/check-code", (req, res) => res.json({ price: 10_00 }));

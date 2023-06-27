@@ -4,6 +4,7 @@ import { db } from "../../config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Member from "./Member";
 import NewMemberForm from "./NewMemberForm";
+import { fetchFromAPI } from "../../functions/helpers";
 
 export default function AdminPage() {
   const [ravers, setRavers] = useState([]);
@@ -21,6 +22,10 @@ export default function AdminPage() {
       console.error("Error retrieving data:", error);
     }
   };
+
+  const getOtherData = async () => {
+    fetchFromAPI("/success", {});
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -32,6 +37,7 @@ export default function AdminPage() {
   return (
     <div>
       <h1>HTBX Event</h1>
+      <button onClick={getOtherData}></button>
       <NewMemberForm />
       {ravers.map((x) => (
         <Member key={x.id} x={x} onrefresh onRefresh={handleRefresh} />

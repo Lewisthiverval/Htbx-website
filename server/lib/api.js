@@ -12,9 +12,6 @@ const webhooks_1 = require("./webhooks");
 exports.app = express_1.default();
 exports.app.use(cors_1.default({ origin: true }));
 exports.app.use(express_1.default.json());
-exports.app.use(express_1.default.json({
-    verify: (req, res, buffer) => (req["rawBody"] = buffer),
-}));
 function runAsync(callback) {
     return (req, res, next) => {
         callback(req, res, next).catch(next);
@@ -38,16 +35,25 @@ exports.app.post("/checkouts", runAsync(async ({ body }, res) => {
     });
     res.send(await checkout_1.createStripeCheckoutSession(line_items));
 }));
-exports.app.post("/hooks", runAsync(webhooks_1.handleStripeWebhook));
+exports.app.post("/hooks", express_1.default.raw({ type: "application/json" }), runAsync(webhooks_1.handleStripeWebhook));
 exports.app.post("/payments", runAsync(async ({ body }, res) => {
-    res.send(await payments_1.createPaymentIntent(body.amount));
+    payments_1.createPaymentIntent(body.code)
+        .then((x) => res.json(x))
+        .catch((err) => {
+        res.status(402);
+        res.send(err.message || "");
+    });
 }));
 exports.app.post("/login", runAsync(async ({ body }, res) => {
     body.password === process.env.ADMIN_PAGE_PASSWORD
         ? res.send(true)
         : res.send(false);
 }));
-exports.app.get("/hello", (req, res) => {
-    res.send("hello world");
-});
+exports.app.get("/success", runAsync(async (req, res) => {
+    await payments_1.updatePaymentComplete(req.query.payment_intent);
+    res.setHeader("Location", "http://localhost:3000/success");
+    res.status(302);
+    res.end();
+}));
+exports.app.get("/check-code", (req, res) => res.json({ price: 1000 }));
 //# sourceMappingURL=api.js.map

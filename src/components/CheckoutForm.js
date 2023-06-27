@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -19,19 +19,20 @@ export default function CheckoutForm() {
       return;
     }
     setIsProcessing(true);
-    const { error } = await stripe.confirmPayment({
+    const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/QRcode`,
+        return_url: "http://localhost:3001/success",
       },
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+    console.log("test");
+    if (error) {
+      console.log(error);
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      console.log("success");
     } else {
-      setMessage("An unexpected error occured.");
     }
-
     setIsProcessing(false);
   };
   return (
@@ -42,7 +43,7 @@ export default function CheckoutForm() {
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
+
       {message && <div id="payment-message">{message}</div>}
     </form>
   );

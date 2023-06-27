@@ -19,19 +19,22 @@ export const stripePromise = loadStripe(
 function Payment(product) {
   const [clientSecret, setClientSecret] = useState("");
 
-  const createPaymentIntent = async (product) => {
-    await fetchFromAPI("payments", {
-      body: { amount: product.amount, quantity: product.quantity },
-    }).then((response) => {
-      console.log(response);
-
-      setClientSecret(response.client_secret);
-    });
-  };
-
   useEffect(() => {
-    createPaymentIntent(product);
+    console.log();
+    fetchFromAPI("payments", { body: { code: product.code } })
+      .then((response) => {
+        console.log(response);
+        setClientSecret(response.client_secret);
+      })
+      .catch(() => {
+        alert("bad code");
+      });
+    console.log(product);
   }, []);
+
+  // useEffect(() => {
+  //   console.log(clientSecret);
+  // }, [clientSecret]);
 
   const appearance = {
     theme: "stripe",
@@ -40,13 +43,10 @@ function Payment(product) {
     clientSecret,
     appearance,
   };
-  const paymentElementOptions = {
-    layout: "tabs",
-  };
-  console.log(clientSecret);
+
   return (
     <div className="checkoutContainer">
-      <h1>PLease pay: {product.amount}</h1>
+      <h1>Please pay: {product.amount}</h1>
       {clientSecret && (
         <div className="checkout">
           <Elements stripe={stripePromise} options={options}>

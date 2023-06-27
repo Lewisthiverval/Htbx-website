@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { db } from "../config/firebase";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  query,
+  where,
+} from "firebase/firestore";
 
 import "../App.css";
 import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
+import { ticketTypes } from "../lib/ticketTypes";
 
 import apple1 from "../assets/sounds/apple1.wav";
 import apple2 from "../assets/sounds/apple2.wav";
@@ -11,47 +20,24 @@ import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87
 import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
-  const [code, setCode] = useState("");
-  const [codeSubmitted, setCodeSubmitted] = useState(false);
-  const [product, setProduct] = useState({
-    type: "full",
-    quantity: 1,
-    amount: 1500,
-  });
-  const track = new Audio(track2);
-  useEffect(() => {
-    track.play();
-  }, []);
-  const changeQuantity = (v) => {
-    setProduct({ ...product, quantity: product.quantity + v });
-  };
-  const handleCode = (code) => {
-    switch (code) {
-      case "111":
-        setProduct({ ...product, type: "full", amount: 1500 });
-        break;
-      case "222":
-        setProduct({ ...product, type: "concession", amount: 1200 });
-        break;
-      case "333":
-        setProduct({ ...product, type: "staff", amount: 660 });
-        break;
-      case "444":
-        setProduct({ ...product, type: "free", amount: 1000 });
-        break;
-    }
+  const [price, setPrice] = useState(0);
+  const [code, setCode] = useState(0);
+
+  const handleCode = async (code) => {
+    setCode(code);
   };
 
   const handleClick = async (event) => {
     event.preventDefault();
-
-    setCodeSubmitted(true);
+    fetch("http://localhost:3001/check-code")
+      .then((res) => res.json())
+      .then((data) => setPrice(data.price));
   };
 
-  return codeSubmitted ? (
+  return price ? (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <Payment {...product} />
+        <Payment code={code} />
       </div>
     </div>
   ) : (
@@ -70,16 +56,8 @@ export function Checkout() {
               handleCode(e.target.value);
             }}
           ></input>
-          <div className="quantityContainer">
-            {/* <button onClick={() => changeQuantity(-1)}>-</button>
-            <span style={{ color: "white" }}>{product.quantity}</span>
-            <button onClick={() => changeQuantity(1)}>+</button> */}
-          </div>
-          <button
-            className="sendButton"
-            onClick={handleClick}
-            disabled={product.quantity < 1}
-          >
+          <div className="quantityContainer"></div>
+          <button className="sendButton" onClick={handleClick}>
             Send
           </button>
         </div>

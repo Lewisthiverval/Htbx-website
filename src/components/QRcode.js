@@ -9,5 +9,6 @@ export default function QRcode() {
   //     if (error) console.error(error);
   //     console.log("success!");
   //   });
-  return <canvas id="qr-code"></canvas>;
+  // return <canvas id="qr-code"></canvas>;
+  return <h1>canvas</h1>;
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import AdminPage from "./AdminPage";
-// import { fetchFromAPI } from "../functions/helpers";
 
 export default function AdminLogin() {
   const [auth, setAuth] = useState(true);
@@ -16,7 +15,7 @@ export default function AdminLogin() {
       },
       body: JSON.stringify({ password: password }),
     })
-      .then((response) => response.json()) // Parse the response as JSON
+      .then((response) => response.json())
       .then((data) => {
         data === true ? setAuth(true) : setAuth(false);
       })

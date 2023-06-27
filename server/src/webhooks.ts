@@ -3,17 +3,20 @@ import Stripe from "stripe";
 
 const webhookHandlers = {
   "payment_intent.succeeded": async (data: Stripe.PaymentIntent) => {
-    // Add logic here
+    const id = data.metadata.id;
+    console.log(id);
   },
   "payment_intent.payment_failed": async (data: Stripe.PaymentIntent) => {
-    // Add logic here
+    const id = data.metadata.id;
+    console.log(id);
   },
 };
 
 export const handleStripeWebhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   const event = stripe.webhooks.constructEvent(
-    req["rawBody"],
+    // req["rawBody"],
+    req.body,
     sig,
     process.env.STRIPE_WEBHOOK_SECRET
   );
