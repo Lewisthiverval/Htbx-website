@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 // import { createStripeCheckoutSession } from "./checkout";
 const cors_1 = __importDefault(require("cors"));
 const payments_1 = require("./payments");
+const email_1 = require("./email");
 exports.app = express_1.default();
 exports.app.use(cors_1.default({ origin: true }));
 exports.app.use(express_1.default.json());
@@ -22,6 +23,7 @@ exports.app.post("/payments", async ({ body }, res) => {
 });
 exports.app.get("/success", async (req, res) => {
     await payments_1.updatePaymentComplete(req.query.payment_intent);
+    email_1.sendEmail();
     res.setHeader("Location", "http://localhost:3000/success");
     res.status(302);
     res.end();

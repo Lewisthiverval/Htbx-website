@@ -1,17 +1,16 @@
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
 
 import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
-import { ticketTypes } from "../lib/ticketTypes";
-import apple1 from "../assets/sounds/apple1.wav";
-import apple2 from "../assets/sounds/apple2.wav";
-import apple3 from "../assets/sounds/apple3.wav";
-import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
-import track2 from "../assets/sounds/NN-Police Brutality.mp3";
+// import apple1 from "../assets/sounds/apple1.wav";
+// import apple2 from "../assets/sounds/apple2.wav";
+// import apple3 from "../assets/sounds/apple3.wav";
+// import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
+// import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
-  const [code, setCode] = useState(0);
+  const [code, setCode] = useState();
   const params = useParams();
   const nav = useNavigate();
   const handleCode = async (code) => {
@@ -47,7 +46,7 @@ export function Checkout() {
           ></input>
           <div className="quantityContainer"></div>
           <button className="sendButton" onClick={handleClick}>
-            Send
+            submit
           </button>
         </div>
       </div>

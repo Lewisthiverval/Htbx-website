@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { fetchFromAPI } from "../functions/helpers";
 import useSwr from "swr";
 
@@ -14,19 +14,22 @@ export const stripePromise = loadStripe(
 
 function Payment(product) {
   const [quantity, setQuantity] = useState(1);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const { data, isLoading, error } = useSwr(
     `checkout/${product.code}/${quantity}`,
     () => fetchFromAPI("payments", { body: { code: product.code, quantity } })
   );
 
   console.log(error, data);
-
   if (isLoading) return "Loading";
-  if (error) return "Error";
-
+  if (error) {
+    setErrorMessage(error);
+    console.log(errorMessage);
+  }
   return (
     <div className="checkoutContainer">
-      <h1>Please pay: {product.amount}</h1>
+      <h1>Total: {data.price}£</h1>
       {data.client_secret && (
         <div className="checkout">
           <Elements

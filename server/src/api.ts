@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 // import { createStripeCheckoutSession } from "./checkout";
 import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
+import { sendEmail } from "./email";
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -18,6 +19,7 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 });
 app.get("/success", async (req: Request, res: Response) => {
   await updatePaymentComplete(req.query.payment_intent);
+  sendEmail();
   res.setHeader("Location", "http://localhost:3000/success");
   res.status(302);
   res.end();
