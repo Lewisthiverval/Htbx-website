@@ -18,12 +18,15 @@ export async function createPaymentIntent(data: {
   const purchased = member?.fields?.purchased;
   const amount = data.quantity * (member.fields.price as number) * 100;
 
+  if (price === 0) {
+    return { client_secret: null, price, remaining, purchased };
+  }
+
   const createNewIntent = async () => {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
       amount,
       metadata: { code: data.code },
-      automatic_payment_methods: { enabled: true },
     });
 
     await table.update(member.id, { payment_intent: paymentIntent.id });
@@ -45,7 +48,7 @@ export async function createPaymentIntent(data: {
   return { client_secret: intent.client_secret, price, remaining, purchased };
 }
 
-export async function updatePaymentComplete(id) {
+export async function updatePaymentComplete(id: string) {
   const intent = await stripe.paymentIntents.retrieve(id);
 
   if (intent.status === "succeeded") {

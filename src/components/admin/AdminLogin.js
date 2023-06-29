@@ -3,7 +3,7 @@ import { useState } from "react";
 import AdminPage from "./AdminPage";
 
 export default function AdminLogin() {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();

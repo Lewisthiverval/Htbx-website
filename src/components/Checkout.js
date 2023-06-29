@@ -10,12 +10,9 @@ import Payment from "./Payment";
 // import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
 export function Checkout() {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState("");
   const params = useParams();
   const nav = useNavigate();
-  const handleCode = async (code) => {
-    setCode(code);
-  };
 
   const handleClick = async (event) => {
     event.preventDefault();
@@ -41,7 +38,6 @@ export function Checkout() {
             value={code}
             onChange={(e) => {
               setCode(e.target.value);
-              handleCode(e.target.value);
             }}
           ></input>
           <div className="quantityContainer"></div>

@@ -51,7 +51,6 @@
   border-color: red;
   border-width: 4px;
   border-radius: 10px;
-
   padding-left: 10%;
   padding-right: 10%;
 }
@@ -67,7 +66,6 @@
 .codeInput {
   color: red;
   width: 80%;
-  height: 10%;
   font-size: 30px;
   background-color: black;
   border-radius: 10px;
@@ -76,6 +74,7 @@
   border-color: red;
   border-width: 3px;
   color: white;
+  margin: 10%;
 }
 .codeInput::placeholder {
   /* Most modern browsers support this */
@@ -85,7 +84,6 @@
 
 .sendButton {
   width: 40%;
-  height: 10%;
   font-size: 30px;
   background-color: red;
   border-radius: 3px;
@@ -94,7 +92,7 @@
   border-color: black;
   border-width: 3px;
   color: white;
-  padding-bottom: 20px;
+  margin: 10%;
 }
 
 .sendButton:hover {
@@ -109,6 +107,7 @@
 }
 
 .App-logo {
+  margin-top: 10px;
   height: 40vmin;
   pointer-events: none;
 }

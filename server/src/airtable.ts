@@ -9,10 +9,14 @@ type Member = {
 };
 
 export const queryMemberBy = async (key: string, value: string) => {
+  const baseId = process.env.AIRTABLE_BASEID;
+  if (!baseId) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
   const base = new Airtable({ apiKey: process.env.AIRTABLE_SECRET_TOKEN }).base(
-    process.env.AIRTABLE_BASEID
+    baseId
   );
-  const table = base<Member>(process.env.AIRTABLE_NAME);
+  const tableName = process.env.AIRTABLE_NAME;
+  if (!tableName) throw new Error(`Missing AIRTABLE_NAME environment variable`);
+  const table = base<Member>(tableName);
   const member = await table
     .select({
       filterByFormula: `{${key}} = '${value}'`,
