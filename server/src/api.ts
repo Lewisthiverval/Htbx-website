@@ -8,6 +8,12 @@ export const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
+app.get("/", async (_req, res) => {
+  res.setHeader("Location", `${process.env.WEBAPP_URL}`);
+  res.status(302);
+  res.end();
+});
+
 app.post("/payments", async ({ body }: Request, res: Response) => {
   await createPaymentIntent({ code: body.code, quantity: body.quantity })
     .then((x) => res.json(x))
@@ -22,7 +28,7 @@ app.get("/success", async (req: Request, res: Response) => {
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
-      "http://localhost:3000/failure?error=missingpaymentintent"
+      `${process.env.WEBAPP_URL}/failure?error=missingpaymentintent`
     );
     res.status(302);
     res.end();
@@ -30,7 +36,7 @@ app.get("/success", async (req: Request, res: Response) => {
   }
   await updatePaymentComplete(paymentIntent);
   // sendEmail();
-  res.setHeader("Location", "http://localhost:3000/success");
+  res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
   res.status(302);
   res.end();
 });
