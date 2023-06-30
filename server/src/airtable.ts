@@ -8,6 +8,7 @@ type Member = {
   purchased: number;
   payment_intent: string;
   email: string;
+  ID: string;
 };
 
 export const queryMemberBy = async (

@@ -41,7 +41,6 @@ app.get("/success", async (req: Request, res: Response) => {
     return;
   }
   await updatePaymentComplete(paymentIntent);
-  // sendEmail();
   res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
   res.status(302);
   res.end();

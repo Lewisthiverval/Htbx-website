@@ -97,6 +97,6 @@ export async function freeCheckoutComplete(
     purchased: member.fields.purchased + quantity,
     email: email,
     name: name,
-    payment_intent: id,
+    ID: id,
   });
 }
