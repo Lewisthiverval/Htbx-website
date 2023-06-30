@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
+import { TicketType } from "./TicketType";
 
 import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
@@ -20,9 +21,11 @@ export function Checkout() {
   };
 
   return params.code ? (
-    <div className="secondpageContainer">
-      <div className="frameContainer">
-        <Payment code={params.code} />
+    <div>
+      <div className="secondpageContainer">
+        <div className="frameContainer">
+          <TicketType code={params.code} />
+        </div>
       </div>
     </div>
   ) : (
@@ -50,6 +53,9 @@ export function Checkout() {
   );
 }
 
+export function form() {
+  return <div></div>;
+}
 export function CheckoutSuccess() {
   const url = window.location.href;
   const sessionId = new URL(url).searchParams.get("session_id");

@@ -4,8 +4,12 @@ import { queryMemberBy } from "./airtable";
 export async function createPaymentIntent(data: {
   code: string;
   quantity: number;
+  type: string;
 }) {
-  const { member, table } = await queryMemberBy("code", data.code);
+  const { member, table } = await queryMemberBy(
+    ["code", "type"],
+    [data.code, data.type]
+  );
 
   if (!member) return Promise.reject(`Cant find member with code`);
   if (data.quantity > member.fields.remaining) {
@@ -52,7 +56,7 @@ export async function updatePaymentComplete(id: string) {
   const intent = await stripe.paymentIntents.retrieve(id);
 
   if (intent.status === "succeeded") {
-    const { member, table } = await queryMemberBy("payment_intent", id);
+    const { member, table } = await queryMemberBy(["payment_intent"], [id]);
     if (!member) return null;
 
     const quantity = intent.amount / 100 / member.fields.price;

@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 // import { createStripeCheckoutSession } from "./checkout";
 import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
-// import { sendEmail } from "./email";
+import { sendEmail } from "./email";
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -15,7 +15,11 @@ app.get("/", async (_req, res) => {
 });
 
 app.post("/payments", async ({ body }: Request, res: Response) => {
-  await createPaymentIntent({ code: body.code, quantity: body.quantity })
+  await createPaymentIntent({
+    code: body.code,
+    quantity: body.quantity,
+    type: body.type,
+  })
     .then((x) => res.json(x))
     .catch((error) => {
       console.log(error);
@@ -41,9 +45,9 @@ app.get("/success", async (req: Request, res: Response) => {
   res.end();
 });
 
-app.get("/freeCheckout", async (req: Request, res: Response) => {
-  // sendEmail();
-  res.send("free");
+app.post("/freeCheckout", async (req: Request, res: Response) => {
+  sendEmail();
+  res.json({});
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {

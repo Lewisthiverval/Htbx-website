@@ -13,10 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "@digitak/esrun": "^3.2.24",
+    "@sendgrid/mail": "^7.7.0",
     "airtable": "^0.12.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "form-data": "^4.0.0",
+    "mailgun.js": "^9.1.1",
     "stripe": "^8.43.0"
   },
   "devDependencies": {

@@ -20,11 +20,18 @@ function Payment(product) {
 
   const { data, isLoading, error } = useSwr(
     `checkout/${product.code}/${quantity}`,
-    () => fetchFromAPI("payments", { body: { code: product.code, quantity } })
+    () =>
+      fetchFromAPI("payments", {
+        body: { code: product.code, quantity, type: product.type },
+      })
   );
 
-  const checkoutfree = useSwrMutation(() =>
-    fetchFromAPI("/freeCheckout", {}).then((response) => response.json())
+  console.log(data);
+
+  const checkoutfree = useSwrMutation("freeCheckout", () =>
+    fetchFromAPI("freeCheckout", { body: {} }).then((response) =>
+      console.log(response)
+    )
   );
 
   if (isLoading) return "Loading";
@@ -33,8 +40,9 @@ function Payment(product) {
   }
 
   const handleClick = () => {
-    checkoutfree.trigger().then(console.log);
-    nav("/success");
+    checkoutfree.trigger().then(() => {
+      nav("/success");
+    });
   };
 
   return (
