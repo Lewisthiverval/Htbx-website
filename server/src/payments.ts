@@ -1,6 +1,7 @@
 import { stripe } from "./";
 import { queryMemberBy } from "./airtable";
 import { sendEmail } from "./email";
+import { nanoid } from "nanoid";
 
 export async function createPaymentIntent(data: {
   code: string;
@@ -81,15 +82,21 @@ export async function updatePaymentComplete(id: string) {
   }
 }
 
-export async function freeCheckoutComplete(email: string, name: string) {
-  const { member, table } = await queryMemberBy([], []);
+export async function freeCheckoutComplete(
+  email: string,
+  name: string,
+  code: string
+) {
+  const { member, table } = await queryMemberBy(["code"], [code]);
   if (!member) return null;
   sendEmail(email);
+  const id = nanoid();
   const quantity = 1;
   await table.update(member.id, {
     remaining: member.fields.remaining - quantity,
     purchased: member.fields.purchased + quantity,
     email: email,
     name: name,
+    payment_intent: id,
   });
 }

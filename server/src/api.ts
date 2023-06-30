@@ -50,7 +50,8 @@ app.get("/success", async (req: Request, res: Response) => {
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   const email = body.email;
   const name = body.name;
-  freeCheckoutComplete(email, name);
+  const code = body.code;
+  freeCheckoutComplete(email, name, code);
   res.json({});
 });
 
