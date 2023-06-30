@@ -22,16 +22,20 @@ function Payment(product) {
     `checkout/${product.code}/${quantity}`,
     () =>
       fetchFromAPI("payments", {
-        body: { code: product.code, quantity, type: product.type },
+        body: {
+          code: product.code,
+          quantity,
+          type: product.type,
+          email: product.email,
+          name: product.name,
+        },
       })
   );
 
-  console.log(data);
-
   const checkoutfree = useSwrMutation("freeCheckout", () =>
-    fetchFromAPI("freeCheckout", { body: {} }).then((response) =>
-      console.log(response)
-    )
+    fetchFromAPI("freeCheckout", {
+      body: { email: product.email, code: product.code, name: product.name },
+    }).then((response) => console.log(response))
   );
 
   if (isLoading) return "Loading";
@@ -49,7 +53,7 @@ function Payment(product) {
     <div className="checkoutContainer">
       {data.price === 0 ? (
         <button onClick={handleClick} disabled={checkoutfree.isLoading}>
-          Send ticket
+          Send free ticket by email
         </button>
       ) : (
         <>

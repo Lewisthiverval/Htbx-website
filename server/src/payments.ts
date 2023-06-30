@@ -1,10 +1,13 @@
 import { stripe } from "./";
 import { queryMemberBy } from "./airtable";
+import { sendEmail } from "./email";
 
 export async function createPaymentIntent(data: {
   code: string;
   quantity: number;
   type: string;
+  email: string;
+  name: string;
 }) {
   const { member, table } = await queryMemberBy(
     ["code", "type"],
@@ -21,6 +24,14 @@ export async function createPaymentIntent(data: {
   const remaining = member?.fields?.remaining;
   const purchased = member?.fields?.purchased;
   const amount = data.quantity * (member.fields.price as number) * 100;
+  const name = member?.fields?.name as string;
+
+  if (data.name !== "" && data.email !== "") {
+    await table.update(member.id, {
+      email: data.email,
+      name: name + `, ${data.name}`,
+    });
+  }
 
   if (price === 0) {
     return { client_secret: null, price, remaining, purchased };
@@ -58,7 +69,8 @@ export async function updatePaymentComplete(id: string) {
   if (intent.status === "succeeded") {
     const { member, table } = await queryMemberBy(["payment_intent"], [id]);
     if (!member) return null;
-
+    const address = member?.fields?.email as string;
+    sendEmail(address);
     const quantity = intent.amount / 100 / member.fields.price;
 
     await table.update(member.id, {
@@ -67,4 +79,17 @@ export async function updatePaymentComplete(id: string) {
       payment_intent: "",
     });
   }
+}
+
+export async function freeCheckoutComplete(email: string, name: string) {
+  const { member, table } = await queryMemberBy([], []);
+  if (!member) return null;
+  sendEmail(email);
+  const quantity = 1;
+  await table.update(member.id, {
+    remaining: member.fields.remaining - quantity,
+    purchased: member.fields.purchased + quantity,
+    email: email,
+    name: name,
+  });
 }

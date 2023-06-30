@@ -1,11 +1,13 @@
 import Airtable from "airtable";
 
 type Member = {
+  name: string;
   code: string;
   price: number;
   remaining: number;
   purchased: number;
   payment_intent: string;
+  email: string;
 };
 
 export const queryMemberBy = async (
