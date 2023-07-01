@@ -10,7 +10,6 @@ export function TicketType(params) {
   const handleCheckboxChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
   const onSubmit = (event) => {
     event.preventDefault();
     setTicketTypeChosen(true);

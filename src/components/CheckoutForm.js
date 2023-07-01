@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
   useStripe,
@@ -10,6 +10,7 @@ export default function CheckoutForm() {
   const [isProcessing, setIsProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+
   if (!stripe || !elements) {
     return;
   }
@@ -34,6 +35,10 @@ export default function CheckoutForm() {
     } else {
     }
     setIsProcessing(false);
+  };
+
+  const cancelPaymentIntent = () => {
+    console.log("Payment intent canceled.");
   };
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
