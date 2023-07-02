@@ -3,6 +3,8 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
+import { getAllTicketsFromCode } from "./airtable";
+import { sendEmail } from "./email";
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -15,13 +17,19 @@ app.get("/", async (_req, res) => {
 });
 
 app.post("/payments", async ({ body }: Request, res: Response) => {
-  await createPaymentIntent({
-    code: body.code,
-    quantity: body.quantity,
-    type: body.type,
-    email: body.email,
-    name: body.name,
-  })
+  const amount = body.tickets
+    .map((x: any) => {
+      return x.price;
+    })
+    .reduce((prev: any, curr: any) => {
+      return prev + curr;
+    }, 0);
+
+  if (amount === 0) {
+    return res.json({ price: 0, client_secret: null, id: null });
+  }
+
+  await createPaymentIntent(body.tickets, body.email, amount * 100)
     .then((x) => res.json(x))
     .catch((error) => {
       console.log(error);
@@ -29,7 +37,9 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
       res.json({ error });
     });
 });
+
 app.get("/success", async (req: Request, res: Response) => {
+  const email = "lewismurray78@gmail.com";
   const paymentIntent = req.query.payment_intent;
   if (typeof paymentIntent !== "string") {
     res.setHeader(
@@ -40,6 +50,7 @@ app.get("/success", async (req: Request, res: Response) => {
     res.end();
     return;
   }
+
   await updatePaymentComplete(paymentIntent);
   res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
   res.status(302);
@@ -59,3 +70,14 @@ app.post("/login", async ({ body }: Request, res: Response) => {
     ? res.send(true)
     : res.send(false);
 });
+
+app.post("/getTickets", async ({ body }: Request, res: Response) => {
+  const code = body.code;
+  const tickets = await getAllTicketsFromCode(code);
+  res.send(tickets);
+});
+
+// app.get("/emailTest", async (req, res) => {
+//   const tickets = await sendEmail("lewismurray78@gmail.com", 4);
+//   res.json(tickets);
+// });

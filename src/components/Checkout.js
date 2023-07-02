@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import { TicketType } from "./TicketType";
+import { Tickets } from "./Tickets";
 
 import logo from "../assets/htbx-logo.png";
 import Payment from "./Payment";
@@ -24,7 +24,7 @@ export function Checkout() {
     <div>
       <div className="secondpageContainer">
         <div className="frameContainer">
-          <TicketType code={params.code} />
+          <Tickets code={params.code} />
         </div>
       </div>
     </div>

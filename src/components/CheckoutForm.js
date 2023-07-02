@@ -33,13 +33,10 @@ export default function CheckoutForm() {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       console.log("success");
     } else {
+      setIsProcessing(false);
     }
-    setIsProcessing(false);
   };
 
-  const cancelPaymentIntent = () => {
-    console.log("Payment intent canceled.");
-  };
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />

@@ -2,56 +2,36 @@ import { stripe } from "./";
 import { queryMemberBy } from "./airtable";
 import { sendEmail } from "./email";
 import { nanoid } from "nanoid";
+const Qrcode = require("qrcode");
 
-export async function createPaymentIntent(data: {
-  code: string;
-  quantity: number;
-  type: string;
-  email: string;
-  name: string;
-}) {
-  const { member, table } = await queryMemberBy(
-    ["code", "type"],
-    [data.code, data.type]
-  );
+export async function createPaymentIntent(
+  data: Array<any>,
+  email: string,
+  amount: number
+) {
+  const { member } = await queryMemberBy(["name"], [data[0].name]);
 
-  if (!member) return Promise.reject(`Cant find member with code`);
-  if (data.quantity > member.fields.remaining) {
-    return Promise.reject(`No tickets remaining`);
-  }
-
+  const updatePaymentIntent = async (ID: string, paymentIntent: string) => {
+    const { member, table } = await queryMemberBy(["ID"], [ID]);
+    table.update(member.id, { payment_intent: paymentIntent });
+  };
   const payment_intent = member?.fields?.payment_intent as string;
-  const price = member?.fields?.price;
-  const remaining = member?.fields?.remaining;
-  const purchased = member?.fields?.purchased;
-  const amount = data.quantity * (member.fields.price as number) * 100;
-  const name = member?.fields?.name as string;
-
-  if (data.name !== "" && data.email !== "") {
-    await table.update(member.id, {
-      email: data.email,
-      name: name + `, ${data.name}`,
-    });
-  }
-
-  if (price === 0) {
-    return { client_secret: null, price, remaining, purchased };
-  }
 
   const createNewIntent = async () => {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
-      amount,
-      metadata: { code: data.code },
+      amount: amount,
+      metadata: { code: data[0].code, email: email },
     });
 
-    await table.update(member.id, { payment_intent: paymentIntent.id });
+    data.forEach((x) => {
+      updatePaymentIntent(x.ID, paymentIntent.id);
+    });
 
     return {
       client_secret: paymentIntent.client_secret,
-      price,
-      remaining,
-      purchased,
+      amount: amount,
+      id: paymentIntent.id,
     };
   };
 
@@ -61,23 +41,37 @@ export async function createPaymentIntent(data: {
 
   if (intent.amount !== amount) return createNewIntent();
 
-  return { client_secret: intent.client_secret, price, remaining, purchased };
+  return {
+    client_secret: intent.client_secret,
+    amount,
+  };
 }
 
 export async function updatePaymentComplete(id: string) {
+  const quantityPerTicket = 1;
   const intent = await stripe.paymentIntents.retrieve(id);
-
+  const email = intent.metadata.email;
   if (intent.status === "succeeded") {
     const { member, table } = await queryMemberBy(["payment_intent"], [id]);
-    if (!member) return null;
-    const address = member?.fields?.email as string;
-    sendEmail(address);
-    const quantity = intent.amount / 100 / member.fields.price;
+    const members = await table
+      .select({
+        filterByFormula: `{payment_intent} = '${id}'`,
+      })
+      .all();
 
-    await table.update(member.id, {
-      remaining: member.fields.remaining - quantity,
-      purchased: member.fields.purchased + quantity,
-      payment_intent: "",
+    sendEmail(email, members.length);
+    const updateMembers = async (member: any) => {
+      if (!member) return null;
+
+      // const quantity = intent.amount / 100 / member.fields.price;
+      await table.update(member.id, {
+        remaining: member.fields.remaining - quantityPerTicket,
+        purchased: member.fields.purchased + quantityPerTicket,
+        payment_intent: "",
+      });
+    };
+    members.forEach((member) => {
+      updateMembers(member);
     });
   }
 }
@@ -89,7 +83,7 @@ export async function freeCheckoutComplete(
 ) {
   const { member, table } = await queryMemberBy(["code"], [code]);
   if (!member) return null;
-  sendEmail(email);
+  sendEmail(email, 1);
   const id = nanoid();
   const quantity = 1;
   await table.update(member.id, {

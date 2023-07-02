@@ -14,27 +14,32 @@ export const stripePromise = loadStripe(
   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
 );
 
-function Payment(product) {
-  const [quantity, setQuantity] = useState(1);
+function Payment({ products, email }) {
+  // const [emailValue, setEmailValue] = useState("");
   const nav = useNavigate();
 
   const { data, isLoading, error } = useSwr(
-    `checkout/${product.code}/${quantity}`,
+    `checkout/${products[0].code}`,
     () =>
       fetchFromAPI("payments", {
         body: {
-          code: product.code,
-          quantity,
-          type: product.type,
-          email: product.email,
-          name: product.name,
+          tickets: products,
+          email: email,
         },
       })
   );
 
+  useEffect(() => {
+    console.log(data, "DATA");
+  }, [data]);
+
   const checkoutfree = useSwrMutation("freeCheckout", () =>
     fetchFromAPI("freeCheckout", {
-      body: { email: product.email, code: product.code, name: product.name },
+      body: {
+        email: email,
+        code: products[0].code,
+        name: products[0].name,
+      },
     }).then((response) => console.log(response))
   );
 
@@ -44,26 +49,43 @@ function Payment(product) {
   }
 
   const handleClick = () => {
-    checkoutfree.trigger().then(() => {
-      nav("/success");
-    });
+    if (validateEmail(email))
+      checkoutfree.trigger().then(() => {
+        nav("/success");
+      });
+  };
+
+  const validateEmail = (email) => {
+    // Using regex pattern for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (
     <div className="checkoutContainer">
       {data.price === 0 ? (
-        <button onClick={handleClick} disabled={checkoutfree.isLoading}>
-          Send free ticket by email
-        </button>
+        <div>
+          {/* <input
+            type="text"
+            id="myInput"
+            placeholder="please enter email"
+            value={emailValue}
+            onChange={handleEmailChange}
+          /> */}
+          <button onClick={handleClick} disabled={checkoutfree.isLoading}>
+            Send free ticket by email
+          </button>
+        </div>
       ) : (
         <>
-          <h1>Total: {data.price}£</h1>
+          <h1> Total: {data.amount / 100}£</h1>
           {data.client_secret && (
             <div className="checkout">
               <Elements
                 stripe={stripePromise}
                 options={{
                   clientSecret: data.client_secret,
+                  id: data.id,
                   appearance: { theme: "stripe" },
                 }}
               >

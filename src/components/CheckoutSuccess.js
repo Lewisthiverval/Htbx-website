@@ -11,7 +11,10 @@ export function CheckoutSuccess() {
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <h3>Checkout was a Success! confirmation sent by email. {sessionId}</h3>
+        <h1>
+          Baaaaabes, ticket sent by email, omg thank u so much xoxoxoxo.{" "}
+          {sessionId}
+        </h1>
         <button onClick={home}>exit</button>
       </div>
     </div>
