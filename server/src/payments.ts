@@ -74,15 +74,18 @@ export async function updatePaymentComplete(id: string) {
     members.forEach((member) => {
       updateMembers(member);
     });
-    const names = ["becky", "lewis"];
+    const names = ["_"];
     sendEmail(email, members.length, names);
   }
 }
 
 export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
-  // const { member, table } = await queryMemberBy(["code"], [tickets[0].code]);
-  // if (!member) return null;
-  // sendEmail(email, tickets.length);
+  const names = tickets.map((x) => {
+    return x.name;
+  });
+  const { member, table } = await queryMemberBy(["code"], [tickets[0].code]);
+  if (!member) return null;
+  sendEmail(email, tickets.length, names);
   const updateTicket = async (ID: string, quantity: number) => {
     const { member, table } = await queryMemberBy(["ID"], [ID]);
 

@@ -84,20 +84,23 @@ export function Tickets(params) {
   return ticketsChosen ? (
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
-    <div className="ticket-list">
+    <div>
       {tickets.length > 0 ? (
-        <div>
+        <div className="tickets container">
           <h1> Tickets </h1>
-          {tickets.map((ticket, index) => {
-            return (
-              <Ticket
-                ticket={ticket}
-                index={index}
-                addToChosen={addToChosen}
-                modifyQuantity={modifyQuantity}
-              />
-            );
-          })}
+          <div className="ticket-list">
+            {tickets.map((ticket, index) => {
+              return (
+                <Ticket
+                  ticket={ticket}
+                  index={index}
+                  addToChosen={addToChosen}
+                  modifyQuantity={modifyQuantity}
+                />
+              );
+            })}
+          </div>
+
           <input
             type="text"
             id="myInput"
