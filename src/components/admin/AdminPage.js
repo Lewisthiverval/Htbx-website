@@ -1,34 +1,29 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { db } from "../../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import Member from "./Member";
-import NewMemberForm from "./NewMemberForm";
 import { fetchFromAPI } from "../../functions/helpers";
 
 export default function AdminPage() {
   const [ravers, setRavers] = useState([]);
-  const membersRef = collection(db, "Members");
+  const [cash, setCash] = useState(0);
 
   const getData = async () => {
-    try {
-      const data = await getDocs(membersRef);
-      const cleanData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setRavers(cleanData);
-    } catch (error) {
-      console.error("Error retrieving data:", error);
-    }
+    await fetchFromAPI("getPurchased", { body: { code: "" } }).then(
+      (response) => {
+        setRavers(response);
+        setCash(calculateCash(response));
+      }
+    );
   };
 
-  const getOtherData = async () => {
-    fetchFromAPI("/success", {});
+  const calculateCash = (data) => {
+    return data.reduce((prev, curr) => prev + curr.fields.price, 0);
   };
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {}, [ravers]);
 
   const handleRefresh = () => {
     getData();
@@ -36,9 +31,9 @@ export default function AdminPage() {
 
   return (
     <div>
-      <h1>HTBX Event</h1>
-      <button onClick={getOtherData}></button>
-      <NewMemberForm />
+      <h1>{`Tickets sold: ${ravers.length}`}</h1>
+      <h2>{` ${cash}`}</h2>
+
       {ravers.map((x) => (
         <Member key={x.id} x={x} onrefresh onRefresh={handleRefresh} />
       ))}

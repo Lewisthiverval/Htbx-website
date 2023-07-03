@@ -4,7 +4,7 @@ import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
-import { sendEmail } from "./email";
+import { getAllPurchasedTickets } from "./airtable";
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -19,7 +19,7 @@ app.get("/", async (_req, res) => {
 app.post("/payments", async ({ body }: Request, res: Response) => {
   const amount = body.tickets
     .map((x: any) => {
-      return x.price;
+      return x.price * x.quantity;
     })
     .reduce((prev: any, curr: any) => {
       return prev + curr;
@@ -39,7 +39,6 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 });
 
 app.get("/success", async (req: Request, res: Response) => {
-  const email = "lewismurray78@gmail.com";
   const paymentIntent = req.query.payment_intent;
   if (typeof paymentIntent !== "string") {
     res.setHeader(
@@ -61,7 +60,7 @@ app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   const email = body.email;
   const name = body.name;
   const code = body.code;
-  freeCheckoutComplete(email, name, code);
+  freeCheckoutComplete(email, name, code, body.quantity);
   res.json({});
 });
 
@@ -77,7 +76,7 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   res.send(tickets);
 });
 
-// app.get("/emailTest", async (req, res) => {
-//   const tickets = await sendEmail("lewismurray78@gmail.com", 4);
-//   res.json(tickets);
-// });
+app.post("/getPurchased", async (req, res) => {
+  const purchased = await getAllPurchasedTickets();
+  res.send(purchased);
+});

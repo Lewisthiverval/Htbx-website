@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Payment from "./Payment";
 import { fetchFromAPI } from "../functions/helpers";
 import "./../tickets.css";
+import { validateEmail } from "../functions/helpers";
+import Ticket from "./Ticket";
 
 export function Tickets(params) {
   const [ticketsChosen, setTicketsChosen] = useState(false);
@@ -18,15 +20,8 @@ export function Tickets(params) {
     );
   };
 
-  const validateEmail = (email) => {
-    // Using regex pattern for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   useEffect(() => {
     getTickets();
-    console.log(tickets);
   }, []);
 
   const addToChosen = (ticketIndex) => {
@@ -36,12 +31,41 @@ export function Tickets(params) {
       const ticketIndexInChosen = updatedChosenTickets.findIndex(
         (chosenTicket) => chosenTicket === ticket
       );
+
       if (ticketIndexInChosen === -1) {
         updatedChosenTickets.push(ticket);
       } else {
         updatedChosenTickets.splice(ticketIndexInChosen, 1);
       }
       return updatedChosenTickets;
+    });
+  };
+  useEffect(() => {
+    console.log(tickets);
+    console.log(chosenTickets);
+  }, [tickets]);
+
+  const modifyQuantity = (name, operator, available) => {
+    const formula = `x.quantity ${operator} 1 `;
+    setTickets((prevChosenTickets) => {
+      const mod = prevChosenTickets.map((x) => {
+        const newQuantity = eval(formula);
+        if (x.name === name && newQuantity <= available && newQuantity >= 1) {
+          return { ...x, quantity: newQuantity };
+        } else return x;
+      });
+      return mod;
+    });
+    console.log(tickets);
+
+    setChosenTickets((prevChosenTickets) => {
+      const mod = prevChosenTickets.map((x) => {
+        const newQuantity = eval(formula);
+        if (x.name === name && newQuantity <= available && newQuantity >= 1) {
+          return { ...x, quantity: newQuantity };
+        } else return x;
+      });
+      return mod;
     });
   };
 
@@ -65,25 +89,13 @@ export function Tickets(params) {
         <div>
           <h1> Tickets </h1>
           {tickets.map((ticket, index) => {
-            const name = ticket?.name;
-            const price = ticket?.price;
-            const email = ticket?.email;
-            const type = ticket?.type;
-
             return (
-              <div className="row">
-                <input
-                  type="checkbox"
-                  value="false"
-                  onChange={() => addToChosen(index)}
-                ></input>
-                <div key={index} className="ticket">
-                  <p className="name">{name}</p>
-                  <p className="price">£{price}</p>
-                  {/* <p className="email">{email}</p> */}
-                  <p className="type">{type}</p>
-                </div>
-              </div>
+              <Ticket
+                ticket={ticket}
+                index={index}
+                addToChosen={addToChosen}
+                modifyQuantity={modifyQuantity}
+              />
             );
           })}
           <input
@@ -98,37 +110,6 @@ export function Tickets(params) {
       ) : (
         <h1>Sorry babe, your code is sold out?! </h1>
       )}
-      {/* <h1> Tickets </h1>
-      {tickets.map((ticket, index) => {
-        const name = ticket?.name;
-        const price = ticket?.price;
-        const email = ticket?.email;
-        const type = ticket?.type;
-
-        return (
-          <div className="row">
-            <input
-              type="checkbox"
-              value="false"
-              onChange={() => addToChosen(index)}
-            ></input>
-            <div key={index} className="ticket">
-              <p className="name">{name}</p>
-              <p className="price">£{price}</p>
-              <p className="email">{email}</p>
-              <p className="type">{type}</p>
-            </div>
-          </div>
-        );
-      })}
-      <input
-        type="text"
-        id="myInput"
-        placeholder="please enter email"
-        value={emailValue}
-        onChange={handleEmailChange}
-      />
-      <button onClick={handleClick}>Checkout</button> */}
     </div>
   );
 }

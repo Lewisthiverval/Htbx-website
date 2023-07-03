@@ -12,3 +12,9 @@ export async function fetchFromAPI(endpointURL, opts) {
 
   return res.json();
 }
+
+export const validateEmail = (email) => {
+  // Using regex pattern for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};

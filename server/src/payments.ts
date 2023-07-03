@@ -10,12 +10,18 @@ export async function createPaymentIntent(
   amount: number
 ) {
   const { member } = await queryMemberBy(["name"], [data[0].name]);
-
-  const updatePaymentIntent = async (ID: string, paymentIntent: string) => {
-    const { member, table } = await queryMemberBy(["ID"], [ID]);
-    table.update(member.id, { payment_intent: paymentIntent });
-  };
   const payment_intent = member?.fields?.payment_intent as string;
+
+  const updatePaymentIntent = async (
+    ID: string,
+    paymentIntent: string,
+    quantity: number
+  ) => {
+    const { member, table } = await queryMemberBy(["ID"], [ID]);
+    table.update(member.id, {
+      payment_intent: paymentIntent,
+    });
+  };
 
   const createNewIntent = async () => {
     const paymentIntent = await stripe.paymentIntents.create({
@@ -25,7 +31,7 @@ export async function createPaymentIntent(
     });
 
     data.forEach((x) => {
-      updatePaymentIntent(x.ID, paymentIntent.id);
+      updatePaymentIntent(x.ID, paymentIntent.id, x.quantity);
     });
 
     return {
@@ -36,11 +42,8 @@ export async function createPaymentIntent(
   };
 
   if (!payment_intent) return createNewIntent();
-
   const intent = await stripe.paymentIntents.retrieve(payment_intent);
-
   if (intent.amount !== amount) return createNewIntent();
-
   return {
     client_secret: intent.client_secret,
     amount,
@@ -48,7 +51,6 @@ export async function createPaymentIntent(
 }
 
 export async function updatePaymentComplete(id: string) {
-  const quantityPerTicket = 1;
   const intent = await stripe.paymentIntents.retrieve(id);
   const email = intent.metadata.email;
   if (intent.status === "succeeded") {
@@ -63,11 +65,12 @@ export async function updatePaymentComplete(id: string) {
     const updateMembers = async (member: any) => {
       if (!member) return null;
 
-      // const quantity = intent.amount / 100 / member.fields.price;
+      const quantity = intent.amount / 100 / member.fields.price;
       await table.update(member.id, {
-        remaining: member.fields.remaining - quantityPerTicket,
-        purchased: member.fields.purchased + quantityPerTicket,
+        remaining: member.fields.remaining - quantity,
+        purchased: member.fields.purchased + quantity,
         payment_intent: "",
+        // quantity: 1,
       });
     };
     members.forEach((member) => {
@@ -79,13 +82,13 @@ export async function updatePaymentComplete(id: string) {
 export async function freeCheckoutComplete(
   email: string,
   name: string,
-  code: string
+  code: string,
+  quantity: number
 ) {
   const { member, table } = await queryMemberBy(["code"], [code]);
   if (!member) return null;
   sendEmail(email, 1);
   const id = nanoid();
-  const quantity = 1;
   await table.update(member.id, {
     remaining: member.fields.remaining - quantity,
     purchased: member.fields.purchased + quantity,

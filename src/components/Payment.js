@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchFromAPI } from "../functions/helpers";
+import { validateEmail } from "../functions/helpers";
 import useSwrMutation from "swr/mutation";
 import useSwr from "swr";
 
@@ -19,7 +20,7 @@ function Payment({ products, email }) {
   const nav = useNavigate();
 
   const { data, isLoading, error } = useSwr(
-    `checkout/${products[0].code}`,
+    `checkout/${products[0]?.code}`,
     () =>
       fetchFromAPI("payments", {
         body: {
@@ -37,8 +38,10 @@ function Payment({ products, email }) {
     fetchFromAPI("freeCheckout", {
       body: {
         email: email,
-        code: products[0].code,
+        // code: products[0].code,
+        code: 666,
         name: products[0].name,
+        quantity: products[0].quantity,
       },
     }).then((response) => console.log(response))
   );
@@ -53,12 +56,6 @@ function Payment({ products, email }) {
       checkoutfree.trigger().then(() => {
         nav("/success");
       });
-  };
-
-  const validateEmail = (email) => {
-    // Using regex pattern for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   return (
