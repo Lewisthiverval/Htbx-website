@@ -5,6 +5,7 @@ import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
 import { getAllPurchasedTickets } from "./airtable";
+
 export const app = express();
 
 app.use(cors({ origin: true }));
@@ -57,11 +58,8 @@ app.get("/success", async (req: Request, res: Response) => {
 });
 
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
-  const email = body.email;
-  const name = body.name;
-  const code = body.code;
-  freeCheckoutComplete(email, name, code, body.quantity);
-  res.json({});
+  await freeCheckoutComplete(body.tickets, body.email);
+  res.send({});
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {

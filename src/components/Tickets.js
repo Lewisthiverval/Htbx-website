@@ -14,7 +14,7 @@ export function Tickets(params) {
   const getTickets = async () => {
     await fetchFromAPI("getTickets", { body: { code: params.code } }).then(
       (response) => {
-        console.log(response);
+        console.log(response, "response");
         setTickets(response);
       }
     );
@@ -105,7 +105,9 @@ export function Tickets(params) {
             value={emailValue}
             onChange={handleEmailChange}
           />
-          <button onClick={handleClick}>Checkout</button>
+          <button onClick={handleClick} disabled={chosenTickets.length === 0}>
+            Checkout
+          </button>
         </div>
       ) : (
         <h1>Sorry babe, your code is sold out?! </h1>

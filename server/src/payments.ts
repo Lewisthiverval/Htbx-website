@@ -61,7 +61,6 @@ export async function updatePaymentComplete(id: string) {
       })
       .all();
 
-    sendEmail(email, members.length);
     const updateMembers = async (member: any) => {
       if (!member) return null;
 
@@ -70,30 +69,32 @@ export async function updatePaymentComplete(id: string) {
         remaining: member.fields.remaining - quantity,
         purchased: member.fields.purchased + quantity,
         payment_intent: "",
-        // quantity: 1,
       });
     };
     members.forEach((member) => {
       updateMembers(member);
     });
+    const names = ["becky", "lewis"];
+    sendEmail(email, members.length, names);
   }
 }
 
-export async function freeCheckoutComplete(
-  email: string,
-  name: string,
-  code: string,
-  quantity: number
-) {
-  const { member, table } = await queryMemberBy(["code"], [code]);
-  if (!member) return null;
-  sendEmail(email, 1);
-  const id = nanoid();
-  await table.update(member.id, {
-    remaining: member.fields.remaining - quantity,
-    purchased: member.fields.purchased + quantity,
-    email: email,
-    name: name,
-    ID: id,
+export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
+  // const { member, table } = await queryMemberBy(["code"], [tickets[0].code]);
+  // if (!member) return null;
+  // sendEmail(email, tickets.length);
+  const updateTicket = async (ID: string, quantity: number) => {
+    const { member, table } = await queryMemberBy(["ID"], [ID]);
+
+    await table.update(member.id, {
+      remaining: member.fields.remaining - quantity,
+      purchased: member.fields.purchased + quantity,
+      payment_intent: "",
+      ID: "",
+    });
+  };
+
+  tickets.forEach((ticket) => {
+    updateTicket(ticket.ID, ticket.quantity);
   });
 }

@@ -37,11 +37,8 @@ function Payment({ products, email }) {
   const checkoutfree = useSwrMutation("freeCheckout", () =>
     fetchFromAPI("freeCheckout", {
       body: {
+        tickets: products,
         email: email,
-        // code: products[0].code,
-        code: 666,
-        name: products[0].name,
-        quantity: products[0].quantity,
       },
     }).then((response) => console.log(response))
   );
@@ -62,15 +59,8 @@ function Payment({ products, email }) {
     <div className="checkoutContainer">
       {data.price === 0 ? (
         <div>
-          {/* <input
-            type="text"
-            id="myInput"
-            placeholder="please enter email"
-            value={emailValue}
-            onChange={handleEmailChange}
-          /> */}
           <button onClick={handleClick} disabled={checkoutfree.isLoading}>
-            Send free ticket by email
+            Send free ticket(s) by email
           </button>
         </div>
       ) : (

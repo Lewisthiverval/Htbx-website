@@ -4,16 +4,22 @@ import { nanoid } from "nanoid";
 // const fs = require("fs");
 const path = require("path");
 
-export const sendEmail = (adress: string, quantity: number) => {
+export const sendEmail = (
+  adress: string,
+  quantity: number,
+  names: Array<string>
+) => {
   const apiKey = process.env.SENDGRID_API_KEY;
   if (!apiKey) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
   sgMail.setApiKey(apiKey);
   const ticketIds = [];
+
   for (let i = 0; i < quantity; i++) {
-    const data = { id: nanoid() };
+    const data = { id: nanoid(), name: names[i] };
     createTicket(data);
     ticketIds.push(data.id);
   }
+
   const currentDirectory = process.cwd();
   const filesToAttach = ticketIds.map((id) => {
     const fileName = `ticket${id}.png`;

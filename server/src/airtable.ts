@@ -62,6 +62,7 @@ export const getAllTicketsFromCode = async (code: string) => {
     const record = {
       ...member.fields,
       ID: id,
+      quantity: 1,
     };
 
     table.update([{ id: member.id, fields: { ID: id } }]);

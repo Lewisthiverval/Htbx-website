@@ -3,7 +3,6 @@ import { Checkout } from "./components/Checkout";
 import { CheckoutSuccess } from "./components/CheckoutSuccess";
 
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import QRcode from "./components/QRcode";
 import AdminLogin from "./components/admin/AdminLogin";
 
 function App() {
@@ -13,7 +12,7 @@ function App() {
       <Route path="/" element={<EnterPage />} />
       <Route path="/checkout/:code" element={<Checkout />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/QRcode" element={<QRcode />} />
+      {/* <Route path="/QRcode" element={<QRcode />} /> */}
       <Route path="/admin" element={<AdminLogin />} />
     </Routes>
   );
