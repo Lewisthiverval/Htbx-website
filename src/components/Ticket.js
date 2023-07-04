@@ -27,11 +27,6 @@ export default function Ticket({ ticket, index, addToChosen, modifyQuantity }) {
       className={`ticket-card ${isSelected ? "selected" : ""}`}
       onClick={handleCardClick}
     >
-      <input
-        type="checkbox"
-        value="false"
-        onChange={() => addToChosen(index)}
-      ></input>
       <div key={index} className="ticket">
         <p className="name">{name}</p>
         <p className="price">£{price}</p>

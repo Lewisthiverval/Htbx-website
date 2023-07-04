@@ -15,9 +15,19 @@ export function Checkout() {
   const nav = useNavigate();
 
   const handleClick = async (event) => {
-    event.preventDefault();
-    nav(`/checkout/${code}`);
+    if (event.key === "Enter") {
+      event.preventDefault();
+
+      nav(`/checkout/${code}`);
+    }
   };
+
+  // const handleKeyPress = (event) => {
+  //   if (event.key === 'Enter') {
+  //     event.preventDefault();
+  //     document.getElementById('myButton').click();
+  //   }
+  // };
 
   return params.code ? (
     <div>
@@ -41,11 +51,9 @@ export function Checkout() {
             onChange={(e) => {
               setCode(e.target.value);
             }}
+            onKeyDown={handleClick}
           ></input>
           <div className="quantityContainer"></div>
-          <button className="sendButton" onClick={handleClick}>
-            submit
-          </button>
         </div>
       </div>
     </div>

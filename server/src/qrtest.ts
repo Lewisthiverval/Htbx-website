@@ -1,12 +1,23 @@
-const Qrcode = require("qrcode");
+const pdfkit = require("pdfkit");
+const fs = require("fs");
 const path = require("path");
+const Qrcode = require("qrcode");
 
-export const createTicket = (data: any) => {
-  const str = JSON.stringify(data);
+export const createTicket = async (data: any) => {
+  const doc = new pdfkit();
 
-  const filename = `ticket_${data?.name}_${data?.id}.png`;
-  const filePath = path.join(__dirname, "tickets", filename);
-  Qrcode.toFile(filePath, str, function (err: Error, url: any) {
-    if (err) console.log("error", `✘ ${err}`);
-  });
+  // Generate QR code
+  // const qrCodeData = "Your ticket data"; // Replace with your ticket data
+  // const qrCodePath = path.join(__dirname, "tickets/qrcodes", "qrcode.png");
+  // await Qrcode.toFile(qrCodePath, qrCodeData);
+
+  // Set up PDF document
+  const pdfPath = path.join(__dirname, "tickets", `ticket${data.name}.pdf`);
+  doc.pipe(fs.createWriteStream(pdfPath));
+
+  // Write content to PDF
+  doc.fontSize(20).text(`${data.name}`, { align: "center" });
+  doc.moveDown();
+  //   doc.image(qrCodePath, { width: 200, align: "center" });
+  doc.end();
 };

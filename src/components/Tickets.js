@@ -85,22 +85,24 @@ export function Tickets(params) {
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
     <div>
-      {tickets.length > 0 ? (
-        <div className="tickets container">
-          <h1> Tickets </h1>
-          <div className="ticket-list">
-            {tickets.map((ticket, index) => {
-              return (
-                <Ticket
-                  ticket={ticket}
-                  index={index}
-                  addToChosen={addToChosen}
-                  modifyQuantity={modifyQuantity}
-                />
-              );
-            })}
-          </div>
-
+      <div className="tickets-container">
+        {/* <h2 className="tickets-title"> Tickets </h2> */}
+        <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
+          Choose your ticket(s):
+        </h4>
+        <div className="ticket-list">
+          {tickets.map((ticket, index) => {
+            return (
+              <Ticket
+                ticket={ticket}
+                index={index}
+                addToChosen={addToChosen}
+                modifyQuantity={modifyQuantity}
+              />
+            );
+          })}
+        </div>
+        <div className="checkoutAndEmail">
           <input
             type="text"
             id="myInput"
@@ -112,9 +114,7 @@ export function Tickets(params) {
             Checkout
           </button>
         </div>
-      ) : (
-        <h1>Sorry babe, your code is sold out?! </h1>
-      )}
+      </div>
     </div>
   );
 }

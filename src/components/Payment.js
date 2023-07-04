@@ -10,6 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useNavigate } from "react-router-dom";
+import { ticketTypes } from "../lib/ticketTypes";
 
 export const stripePromise = loadStripe(
   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
@@ -31,8 +32,9 @@ function Payment({ products, email }) {
   );
 
   useEffect(() => {
-    console.log(data, "DATA");
-  }, [data]);
+    // console.log(data, "DATA");
+    console.log(products, "products");
+  }, []);
 
   const checkoutfree = useSwrMutation("freeCheckout", () =>
     fetchFromAPI("freeCheckout", {
@@ -40,7 +42,7 @@ function Payment({ products, email }) {
         tickets: products,
         email: email,
       },
-    }).then((response) => console.log(response))
+    }).then((response) => console.log(response, "response"))
   );
 
   if (isLoading) return "Loading";
@@ -51,11 +53,12 @@ function Payment({ products, email }) {
   const handleClick = () => {
     if (validateEmail(email))
       checkoutfree.trigger().then(() => {
+        console.log("success");
         nav("/success");
       });
   };
 
-  return (
+  return products.length > 0 ? (
     <div className="checkoutContainer">
       {data.price === 0 ? (
         <div>
@@ -76,13 +79,15 @@ function Payment({ products, email }) {
                   appearance: { theme: "stripe" },
                 }}
               >
-                <CheckoutForm />
+                <CheckoutForm tickets={products} />
               </Elements>
             </div>
           )}
         </>
       )}
     </div>
+  ) : (
+    <h1> Sorry babe, your code is sold out?! </h1>
   );
 }
 

@@ -4,7 +4,8 @@ import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
-import { getAllPurchasedTickets } from "./airtable";
+import { sendEmail } from "./email";
+// import { getAllPurchasedTickets } from "./airtable";
 
 export const app = express();
 
@@ -41,6 +42,9 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 
 app.get("/success", async (req: Request, res: Response) => {
   const paymentIntent = req.query.payment_intent;
+
+  const encodedData: any = req.query.data;
+
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
@@ -50,8 +54,19 @@ app.get("/success", async (req: Request, res: Response) => {
     res.end();
     return;
   }
+  try {
+    const decodedData = JSON.parse(decodeURIComponent(encodedData));
+    await updatePaymentComplete(paymentIntent, decodedData);
+  } catch (error) {
+    res.setHeader(
+      "Location",
+      `${process.env.WEBAPP_URL}/failure?error=decodingerror`
+    );
+    res.status(302);
+    res.end();
+    return;
+  }
 
-  await updatePaymentComplete(paymentIntent);
   res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
   res.status(302);
   res.end();
@@ -59,7 +74,10 @@ app.get("/success", async (req: Request, res: Response) => {
 
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
-  res.send({});
+
+  // res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
+  // res.status(302);
+  // res.end();
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
@@ -74,7 +92,12 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   res.send(tickets);
 });
 
-app.post("/getPurchased", async (req, res) => {
-  const purchased = await getAllPurchasedTickets();
-  res.send(purchased);
+// app.post("/getPurchased", async (req, res) => {
+//   const purchased = await getAllPurchasedTickets();
+//   res.send(purchased);
+// });
+app.get("/emailtest", (req, res) => {
+  sendEmail("lewismurray78@gmail.com", 4, ["lewis"]).then(() => {
+    res.send("sent");
+  });
 });

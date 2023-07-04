@@ -1,9 +1,25 @@
-.tickets-container h1 {
+.tickets-container {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  /* justify-content: center;
+  align-items: center; */
+  font-color: red;
+  /* margin: 10%; */
+}
+.tickets-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkoutAndEmail {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: red;
+  margin: 5%;
 }
 
 .ticket-list {
@@ -14,6 +30,7 @@
 
 .ticket-card {
   display: inline-block;
+  flex: 1 1 300px;
   margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -24,7 +41,7 @@
 }
 
 .ticket-card.selected {
-  background-color: #aaf;
+  background-color: #fc0fc0;
 }
 
 .ticket-card:hover {
