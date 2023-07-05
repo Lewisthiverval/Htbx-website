@@ -3,7 +3,7 @@ import { fetchFromAPI } from "../functions/helpers";
 import { validateEmail } from "../functions/helpers";
 import useSwrMutation from "swr/mutation";
 import useSwr from "swr";
-import logo from "../assets/htbx-logo.png";
+import logo from "../assets/htbx-logo.jpg";
 import "../App.css";
 
 import { loadStripe } from "@stripe/stripe-js";

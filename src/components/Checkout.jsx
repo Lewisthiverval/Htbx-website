@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Tickets } from "./Tickets";
 
-import logo from "../assets/htbx-logo.png";
+import logo from "../assets/htbx-logo.jpg";
 // import apple1 from "../assets/sounds/apple1.wav";
 // import apple2 from "../assets/sounds/apple2.wav";
 // import apple3 from "../assets/sounds/apple3.wav";

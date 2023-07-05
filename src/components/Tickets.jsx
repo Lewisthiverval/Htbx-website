@@ -5,7 +5,7 @@ import "./../tickets.css";
 import { validateEmail } from "../functions/helpers";
 import Ticket from "./Ticket";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/htbx-logo.png";
+import logo from "../assets/htbx-logo.jpg";
 
 export function Tickets(params) {
   const [ticketsChosen, setTicketsChosen] = useState(false);

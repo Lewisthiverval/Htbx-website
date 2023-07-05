@@ -4,7 +4,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import logo from "../assets/htbx-logo.png";
+import logo from "../assets/htbx-logo.jpg";
 
 export default function CheckoutForm({ tickets }) {
   const [isProcessing, setIsProcessing] = useState(false);
