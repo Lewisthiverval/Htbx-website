@@ -1,13 +1,9 @@
 import express, { Request, Response, response } from "express";
-// import { createStripeCheckoutSession } from "./checkout";
+import { stripe } from "./";
 import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
-import { createTickets } from "./createTickets";
-import { sendEmail } from "./payments";
-import { createTicket } from "./createTickets";
-import { nanoid } from "nanoid";
 const fs = require("fs");
 const path = require("path");
 const sgMail = require("@sendgrid/mail");
@@ -49,9 +45,10 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 });
 
 app.get("/success", async (req: Request, res: Response) => {
-  const paymentIntent = req.query.payment_intent;
-
+  const paymentIntent: any = req.query.payment_intent;
   const encodedData: any = req.query.data;
+  const intent = await stripe.paymentIntents.retrieve(paymentIntent);
+  const email = intent.metadata.email;
 
   if (typeof paymentIntent !== "string") {
     res.setHeader(
@@ -62,11 +59,12 @@ app.get("/success", async (req: Request, res: Response) => {
     res.end();
     return;
   }
+
   try {
     const decodedData = JSON.parse(decodeURIComponent(encodedData));
     await updatePaymentComplete(paymentIntent, decodedData);
     setTimeout(() => {
-      email(decodedData);
+      confirmEmail(decodedData, email);
     }, 5000);
   } catch (error) {
     res.setHeader(
@@ -103,7 +101,7 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   res.send(tickets);
 });
 
-const email = async (names: Array<any>) => {
+const confirmEmail = async (names: Array<any>, address: string) => {
   await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   let tickets: Array<any> = [];
@@ -127,9 +125,9 @@ const email = async (names: Array<any>) => {
 
   const msg = {
     from: "lewismurray78@gmail.com",
-    to: "lewismurray78@gmail.com",
-    subject: "nanana",
-    text: "nananan",
+    to: address,
+    subject: "ticket",
+    text: "htbx ticket",
     attachments: tickets,
   };
   await sgMail.send(msg);

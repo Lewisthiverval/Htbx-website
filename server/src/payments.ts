@@ -93,52 +93,7 @@ export const updatePaymentComplete = async (id: string, data: any) => {
   }
 };
 
-// export async function updatePaymentComplete(id: string, data: any) {
-//   const baseId = process.env.AIRTABLE_BASEID;
-//   if (!baseId) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
-//   const base = new Airtable({ apiKey: process.env.AIRTABLE_SECRET_TOKEN }).base(
-//     baseId
-//   );
-//   const tableName = process.env.AIRTABLE_NAME;
-//   if (!tableName) throw new Error(`Missing AIRTABLE_NAME environment variable`);
-//   const table = base(tableName);
-
-//   if (intent.status === "succeeded") {
-//     data.forEach(async (x: any) => {
-//       const recordId = x.id;
-
-//       await table
-//         .select({
-//           filterByFormula: `{ID} = '${recordId}'`,
-//         })
-//         .all()
-//         .then((record: any) => {
-//           table.update(record.id, {
-//             payment_intent: "tessst",
-//           });
-//         });
-//     });
-//   }
-// }
-
 export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
-  // const names = tickets.map((x) => {
-  //   return x.name;
-  // });
-  // const { member, table } = await queryMemberBy(["code"], [tickets[0].code]);
-  // if (!member) return null;
-  // sendEmail(email, tickets.length, names);
-
-  // const updateTicket = async (ID: string, quantity: number) => {
-  //   const { member, table } = await queryMemberBy(["ID"], [ID]);
-
-  //   await table.update(member.id, {
-  //     remaining: member.fields.remaining - quantity,
-  //     purchased: member.fields.purchased + quantity,
-  //     payment_intent: "HELOOOOO",
-  //   });
-  // };
-
   const baseId = process.env.AIRTABLE_BASEID;
   if (!baseId) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
   const base = new Airtable({ apiKey: process.env.AIRTABLE_SECRET_TOKEN }).base(
@@ -161,34 +116,7 @@ export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
         });
       });
   });
-
-  // tickets.forEach((ticket) => {
-  //   updateTicket(ticket.ID, ticket.quantity);
-  // });
 }
-//   const members = await table
-//     .select({
-//       filterByFormula: `{payment_intent} = '${id}'`,
-//     })
-//     .all();
-
-//   const updateMembers = async (member: any) => {
-//     if (!member) return null;
-
-//     // const quantity = intent.amount / 100 / member.fields.price;
-//     await table.update(member.id, {
-//       remaining: member.fields.remaining - 1,
-//       purchased: member.fields.purchased + 1,
-//       payment_intent: "",
-//     });
-//   };
-//   members.forEach((member) => {
-//     updateMembers(members);
-//   });
-
-//   const names = ["_"];
-//   sendEmail(email, members.length, names);
-// }
 
 export const sendEmail = async () => {
   const key = process.env.SENDGRID_API_KEY;

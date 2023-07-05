@@ -12,9 +12,34 @@ export const createTicket = async (data: any) => {
   const pdfPath = path.join(__dirname, "tickets", `ticket_${data.name}.pdf`);
   console.log(pdfPath);
   doc.pipe(fs.createWriteStream(pdfPath));
-  doc.fontSize(20).text(`${data.name}`, { align: "center" });
-  doc.moveDown();
   doc.image(qrCodePath, { width: 200, align: "center" });
+  doc.moveDown();
+  doc.fontSize(16).text(`${data.name}`);
+  doc.moveDown();
+  doc
+    .fontSize(8)
+    .text(
+      "This ticket is non-transferable, meant only for members named on the ticket type, their +1s, or other invited guests. You cannot sell or give your ticket to anyone else, doing so will result in that person being denied entry."
+    );
+  doc.moveDown();
+  doc
+    .fontSize(8)
+    .text(
+      "If you can no longer attend and have purchased a ticket, please e-mail htbxlondon@gmail.com to be issued a full refund, applicable until 48 hours before the party."
+    );
+  doc.moveDown();
+  doc.moveDown();
+
+  doc.fontSize(12).text("NO photography is allowed");
+  doc.fontSize(12).text("18+ / bring ID");
+  doc.moveDown();
+  doc.fontSize(12).text("16th July 2023");
+  doc.fontSize(12).text("12:00 - 00:00");
+  doc.moveDown();
+  doc.fontSize(12).text("Address:");
+  doc.fontSize(12).text("SET Woolwich");
+  doc.fontSize(12).text("SE18 6LS");
+  doc.fontSize(12).text("Entrance via Bunton Street");
   doc.end();
 };
 
@@ -28,5 +53,3 @@ export const createTickets = async (names: Array<any>) => {
 
   await Promise.all(fileCreationPromises);
 };
-
-createTicket({ name: "becky" });

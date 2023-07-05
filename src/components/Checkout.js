@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tickets } from "./Tickets";
 
 import logo from "../assets/htbx-logo.png";
@@ -9,11 +9,13 @@ import logo from "../assets/htbx-logo.png";
 // import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
 // import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
+import padam from "../assets/sounds/PadamPadam.mp3";
+
 export function Checkout() {
   const [code, setCode] = useState("");
   const params = useParams();
   const nav = useNavigate();
-
+  const track = new Audio(padam);
   const handleClick = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -21,6 +23,11 @@ export function Checkout() {
       nav(`/checkout/${code}`);
     }
   };
+
+  useEffect(() => {
+    track.currentTime = 64.3;
+    track.play();
+  }, []);
 
   return params.code ? (
     <div>
