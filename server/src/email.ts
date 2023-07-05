@@ -82,7 +82,7 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
   });
 
   const msg = {
-    from: "lewismurray78@gmail.com",
+    from: "htbxlondon@gmail.com",
     to: address,
     subject: "ticket",
     text: "htbx ticket",

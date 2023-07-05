@@ -114,3 +114,12 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   const tickets = await getAllTicketsFromCode(code);
   res.send(tickets);
 });
+
+app.post(
+  "/qr/:code/:ticket",
+  async ({ body, params }: Request, res: Response) => {
+    const code = body.code;
+    const tickets = await getAllTicketsFromCode(code);
+    res.send(tickets);
+  }
+);
