@@ -50,7 +50,7 @@ exports.createTicket = function (data) { return __awaiter(void 0, void 0, void 0
                 qrCodeData = "Your ticket data";
                 ticketsDir = path_1["default"].join(__dirname, "tickets");
                 if (!fs_1["default"].existsSync(ticketsDir))
-                    fs_1["default"].mkdirSync(ticketsDir);
+                    fs_1["default"].mkdirSync(ticketsDir, { recursive: true });
                 qrCodePath = path_1["default"].join(ticketsDir, data.name + "qrcode.png");
                 return [4 /*yield*/, qrcode_1["default"].toFile(qrCodePath, qrCodeData)];
             case 1:

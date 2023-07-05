@@ -7,7 +7,7 @@ export const createTicket = async (data: any) => {
   const doc = new pdfkit();
   const qrCodeData = "Your ticket data"; // Replace with your ticket data
   const ticketsDir = path.join(__dirname, "tickets");
-  if (!fs.existsSync(ticketsDir)) fs.mkdirSync(ticketsDir);
+  if (!fs.existsSync(ticketsDir)) fs.mkdirSync(ticketsDir, { recursive: true });
   const qrCodePath = path.join(ticketsDir, `${data.name}qrcode.png`);
   await Qrcode.toFile(qrCodePath, qrCodeData);
   const pdfPath = path.join(ticketsDir, `ticket_${data.name}.pdf`);

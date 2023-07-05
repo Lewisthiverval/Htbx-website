@@ -63,9 +63,7 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 app.get("/success", async (req: Request, res: Response) => {
   const paymentIntent: any = req.query.payment_intent;
   const encodedData: any = req.query.data;
-  const intent = await stripe.paymentIntents.retrieve(paymentIntent);
-  const email = intent.metadata.email;
-
+  console.log({ paymentIntent, encodedData });
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
@@ -77,7 +75,11 @@ app.get("/success", async (req: Request, res: Response) => {
   }
 
   try {
+    const intent = await stripe.paymentIntents.retrieve(paymentIntent);
+    const email = intent.metadata.email;
     const decodedData = JSON.parse(decodeURIComponent(encodedData));
+    console.log({ decodedData, email, intent });
+    res.send("success");
     await updatePaymentComplete(paymentIntent, decodedData);
     setTimeout(() => {
       confirmEmail(decodedData, email);

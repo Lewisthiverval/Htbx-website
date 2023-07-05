@@ -41,7 +41,7 @@ export function Checkout() {
     <div>
       <div className="secondpageContainer">
         <img src={logo} alt="logo" width="300" height="90"></img>
-        <div className="frameContainer">
+        {/* <div className="frameContainer">
           <input
             type="text"
             className="codeInput"
@@ -54,7 +54,7 @@ export function Checkout() {
             onKeyDown={handleClick}
           ></input>
           <div className="quantityContainer"></div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
