@@ -26,7 +26,7 @@ export function Checkout() {
 
   useEffect(() => {
     track.currentTime = 64.3;
-    track.play();
+    // track.play();
   }, []);
 
   return params.code ? (

@@ -1,7 +1,13 @@
-import { stripe } from "./";
-import { queryMemberBy } from "./airtable";
 import Airtable from "airtable";
+import Stripe from "stripe";
+
 import { createTickets } from "./createTickets";
+import { queryMemberBy } from "./airtable";
+import * as env from "./env";
+
+export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-03-02",
+});
 
 export async function createPaymentIntent(
   data: Array<any>,

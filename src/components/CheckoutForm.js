@@ -33,7 +33,7 @@ export default function CheckoutForm({ tickets }) {
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `http://localhost:3001/success?data=${encodedDataToPass}`,
+        return_url: `${process.env.REACT_APP_API_URL}/success?data=${encodedDataToPass}`,
       },
     });
 

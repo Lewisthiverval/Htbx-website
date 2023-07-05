@@ -2,6 +2,6 @@
   "watch": ["src"],
   "ignore": ["src/**/*.test.ts"],
   "ext": "ts,mjs,js,json,graphql",
-  "exec": "esrun src/index.ts",
+  "exec": "node lib/index.js",
   "legacyWatch": true
 }

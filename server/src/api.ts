@@ -1,24 +1,36 @@
-import express, { Request, Response, response } from "express";
-import { stripe } from "./";
-import cors from "cors";
-import { createPaymentIntent, updatePaymentComplete } from "./payments";
-import { freeCheckoutComplete } from "./payments";
-import { getAllTicketsFromCode } from "./airtable";
+import express, { Request, Response } from "express";
+import expressWinston from "express-winston";
 import sgMail from "@sendgrid/mail";
+import winston from "winston";
+import Stripe from "stripe";
+import cors from "cors";
 import path from "path";
 import fs from "fs";
 
-export const app = express();
+import { createPaymentIntent, updatePaymentComplete } from "./payments";
+import { getAllTicketsFromCode } from "./airtable";
+import { freeCheckoutComplete } from "./payments";
+import * as env from "./env";
 
-const WEBAPP_URL = process.env.WEBAPP_URL!;
-const ADMIN_PAGE_PASSWORD = process.env.ADMIN_PAGE_PASSWORD!;
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY!;
+export const app = express();
+export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-03-02",
+});
 
 app.use(cors({ origin: true }));
 app.use(express.json());
+app.use(
+  expressWinston.logger({
+    transports: [new winston.transports.Console()],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+  })
+);
 
 app.get("/", async (_req, res) => {
-  res.setHeader("Location", `${WEBAPP_URL}`);
+  res.setHeader("Location", `${env.WEBAPP_URL}`);
   res.status(302);
   res.end();
 });
@@ -57,7 +69,7 @@ app.get("/success", async (req: Request, res: Response) => {
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
-      `${WEBAPP_URL}/failure?error=missingpaymentintent`
+      `${env.WEBAPP_URL}/failure?error=missingpaymentintent`
     );
     res.status(302);
     res.end();
@@ -71,13 +83,13 @@ app.get("/success", async (req: Request, res: Response) => {
       confirmEmail(decodedData, email);
     }, 5000);
   } catch (error) {
-    res.setHeader("Location", `${WEBAPP_URL}/failure?error=decodingerror`);
+    res.setHeader("Location", `${env.WEBAPP_URL}/failure?error=decodingerror`);
     res.status(302);
     res.end();
     return;
   }
 
-  res.setHeader("Location", `${WEBAPP_URL}/success`);
+  res.setHeader("Location", `${env.WEBAPP_URL}/success`);
   res.status(302);
   res.end();
 });
@@ -85,13 +97,13 @@ app.get("/success", async (req: Request, res: Response) => {
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
 
-  res.setHeader("Location", `${WEBAPP_URL}/success`);
+  res.setHeader("Location", `${env.WEBAPP_URL}/success`);
   res.status(302);
   res.end();
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
-  body.password === ADMIN_PAGE_PASSWORD ? res.send(true) : res.send(false);
+  body.password === env.ADMIN_PAGE_PASSWORD ? res.send(true) : res.send(false);
 });
 
 app.post("/getTickets", async ({ body }: Request, res: Response) => {
@@ -101,7 +113,7 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
 });
 
 const confirmEmail = async (names: Array<any>, address: string) => {
-  await sgMail.setApiKey(SENDGRID_API_KEY);
+  await sgMail.setApiKey(env.SENDGRID_API_KEY);
 
   let tickets: Array<any> = [];
 

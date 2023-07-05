@@ -8,7 +8,7 @@ export default function AdminLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const password = e.target.elements.password.value;
-    fetch("http://localhost:3001/login", {
+    fetch(`${process.env.REACT_APP_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
