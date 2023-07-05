@@ -4,16 +4,15 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Tickets } from "./Tickets";
 
 export default function CheckoutForm({ tickets }) {
-  const [message, setMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
 
   const dataToPass = tickets.map((x) => {
-    return { ID: x.ID, quantity: x.quantity };
+    return { ID: x.ID, quantity: x.quantity, name: x.name };
   });
   const encodedDataToPass = encodeURIComponent(JSON.stringify(dataToPass));
 
@@ -54,8 +53,6 @@ export default function CheckoutForm({ tickets }) {
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
       </button>
-
-      {message && <div id="payment-message">{message}</div>}
     </form>
   );
 }

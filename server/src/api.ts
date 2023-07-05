@@ -1,11 +1,16 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, response } from "express";
 // import { createStripeCheckoutSession } from "./checkout";
 import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
-import { sendEmail } from "./email";
-// import { getAllPurchasedTickets } from "./airtable";
+import { createTickets } from "./createTickets";
+import { sendEmail } from "./payments";
+import { createTicket } from "./createTickets";
+import { nanoid } from "nanoid";
+const fs = require("fs");
+const path = require("path");
+const sgMail = require("@sendgrid/mail");
 
 export const app = express();
 
@@ -19,6 +24,9 @@ app.get("/", async (_req, res) => {
 });
 
 app.post("/payments", async ({ body }: Request, res: Response) => {
+  function cutoffDecimal(number: number) {
+    return Number(number.toFixed(2));
+  }
   const amount = body.tickets
     .map((x: any) => {
       return x.price * x.quantity;
@@ -57,6 +65,9 @@ app.get("/success", async (req: Request, res: Response) => {
   try {
     const decodedData = JSON.parse(decodeURIComponent(encodedData));
     await updatePaymentComplete(paymentIntent, decodedData);
+    setTimeout(() => {
+      email(decodedData);
+    }, 5000);
   } catch (error) {
     res.setHeader(
       "Location",
@@ -75,9 +86,9 @@ app.get("/success", async (req: Request, res: Response) => {
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
 
-  // res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
-  // res.status(302);
-  // res.end();
+  res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
+  res.status(302);
+  res.end();
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
@@ -92,12 +103,34 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   res.send(tickets);
 });
 
-// app.post("/getPurchased", async (req, res) => {
-//   const purchased = await getAllPurchasedTickets();
-//   res.send(purchased);
-// });
-app.get("/emailtest", (req, res) => {
-  sendEmail("lewismurray78@gmail.com", 4, ["lewis"]).then(() => {
-    res.send("sent");
+const email = async (names: Array<any>) => {
+  await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+  let tickets: Array<any> = [];
+
+  names.forEach((name) => {
+    for (let i = 0; i < name.quantity; i++) {
+      names.forEach((x) => {
+        const fileName = `ticket_${x.name}.pdf`;
+        const filePath = path.join(__dirname, "tickets", fileName);
+        const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
+
+        tickets.push({
+          content: fileContent,
+          filename: fileName,
+          type: "application/pdf",
+          disposition: "attachment",
+        });
+      });
+    }
   });
-});
+
+  const msg = {
+    from: "lewismurray78@gmail.com",
+    to: "lewismurray78@gmail.com",
+    subject: "nanana",
+    text: "nananan",
+    attachments: tickets,
+  };
+  await sgMail.send(msg);
+};

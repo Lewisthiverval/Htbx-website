@@ -28,15 +28,15 @@ export default function Ticket({ ticket, index, addToChosen, modifyQuantity }) {
       onClick={handleCardClick}
     >
       <div key={index} className="ticket">
-        <p className="name">{name}</p>
+        <h1 className="name">{name}</h1>
         <p className="price">£{price}</p>
         {/* <p className="type">{type}</p> */}
-        <div className="quantity-controls">
+        {/* <div className="quantity-controls">
           <button onClick={handleQuantityIncrease}> + </button>
           <p>{quan}</p>
 
           <button onClick={handleQuantityDecrease}> - </button>
-        </div>
+        </div> */}
         <p className="available">{`available: ${available}`}</p>
       </div>
     </div>

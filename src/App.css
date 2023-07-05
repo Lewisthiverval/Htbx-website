@@ -78,7 +78,7 @@
 .codeInput::placeholder {
   /* Most modern browsers support this */
   color: #ec03fc;
-  font-family: Old English Text;
+  /* font-family: Old English Text; */
 }
 
 .sendButton {

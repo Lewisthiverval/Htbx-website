@@ -4,18 +4,20 @@ import { fetchFromAPI } from "../functions/helpers";
 import "./../tickets.css";
 import { validateEmail } from "../functions/helpers";
 import Ticket from "./Ticket";
+import { useNavigate } from "react-router-dom";
 
 export function Tickets(params) {
   const [ticketsChosen, setTicketsChosen] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [chosenTickets, setChosenTickets] = useState([]);
   const [emailValue, setEmailValue] = useState("");
+  const nav = useNavigate();
 
   const getTickets = async () => {
     await fetchFromAPI("getTickets", { body: { code: params.code } }).then(
       (response) => {
         console.log(response, "response");
-        setTickets(response);
+        response.length === 0 ? nav("/noCode") : setTickets(response);
       }
     );
   };
@@ -40,10 +42,6 @@ export function Tickets(params) {
       return updatedChosenTickets;
     });
   };
-  useEffect(() => {
-    console.log(tickets);
-    console.log(chosenTickets);
-  }, [tickets]);
 
   const modifyQuantity = (name, operator, available) => {
     const formula = `x.quantity ${operator} 1 `;
@@ -56,7 +54,6 @@ export function Tickets(params) {
       });
       return mod;
     });
-    console.log(tickets);
 
     setChosenTickets((prevChosenTickets) => {
       const mod = prevChosenTickets.map((x) => {

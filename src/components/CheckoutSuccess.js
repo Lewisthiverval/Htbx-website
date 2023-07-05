@@ -20,3 +20,13 @@ export function CheckoutSuccess() {
     </div>
   );
 }
+
+export function NoCode() {
+  return (
+    <div className="secondpageContainer">
+      <div className="frameContainer">
+        <h1> Sorry babe, your code is sold out?! </h1>
+      </div>
+    </div>
+  );
+}

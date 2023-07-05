@@ -1,14 +1,18 @@
 import { stripe } from "./";
 import { queryMemberBy } from "./airtable";
-import { sendEmail } from "./email";
 import { nanoid } from "nanoid";
 import Airtable from "airtable";
+import { createTickets } from "./createTickets";
 
 export async function createPaymentIntent(
   data: Array<any>,
   email: string,
   amount: number
 ) {
+  function cutoffDecimal(number: number) {
+    return Number(number.toFixed(2));
+  }
+  const fixedAmount = cutoffDecimal(amount);
   const { member } = await queryMemberBy(["name"], [data[0].name]);
   const payment_intent = member?.fields?.payment_intent as string;
 
@@ -19,11 +23,14 @@ export async function createPaymentIntent(
     });
   };
 
+  const names = data.map((x) => x.name);
+  const metaNames = names.join();
+
   const createNewIntent = async () => {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
-      amount: amount,
-      metadata: { code: data[0].code, email: email },
+      amount: fixedAmount,
+      metadata: { code: data[0].code, email: email, names: metaNames },
     });
 
     data.forEach((x) => {
@@ -32,14 +39,14 @@ export async function createPaymentIntent(
 
     return {
       client_secret: paymentIntent.client_secret,
-      amount: amount,
+      amount: fixedAmount,
       id: paymentIntent.id,
     };
   };
 
   if (!payment_intent) return createNewIntent();
   const intent = await stripe.paymentIntents.retrieve(payment_intent);
-  if (intent.amount !== amount) return createNewIntent();
+  if (intent.amount !== fixedAmount) return createNewIntent();
   return {
     client_secret: intent.client_secret,
     amount,
@@ -56,7 +63,13 @@ export const updatePaymentComplete = async (id: string, data: any) => {
       return prev + curr;
     }, 0);
 
-  const names = data.map((x: any) => x.name);
+  const namesAndQuantity = data.map((x: any) => {
+    const obj = { name: x.name, quantity: x.quantity };
+    return obj;
+  });
+
+  await createTickets(namesAndQuantity);
+  // await sendEmail(email, namesAndQuantity);
 
   const updateAirtable = async () => {
     data.forEach(async (x: any) => {
@@ -74,9 +87,9 @@ export const updatePaymentComplete = async (id: string, data: any) => {
   if (intent.status === "succeeded") {
     // await updateAirtable();
     // sendEmail(email, quantityForEmail, names);
-    updateAirtable();
+    await updateAirtable();
 
-    sendEmail(email, Q, names);
+    // sendEmail(email, Q, names);
   }
 };
 
@@ -176,3 +189,42 @@ export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
 //   const names = ["_"];
 //   sendEmail(email, members.length, names);
 // }
+
+export const sendEmail = async () => {
+  const key = process.env.SENDGRID_API_KEY;
+  sgMail.setApiKey(key);
+  const names = [
+    { name: "becky", quantity: 2 },
+    { name: "lol", quantity: 1 },
+  ];
+
+  const directoryPath = __dirname;
+
+  const filesToAttach = names.map((name) => {
+    const fileName = `ticket_${name.name}.pdf`;
+    const filePath = path.join(directoryPath, "tickets", fileName);
+    const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
+
+    return {
+      content: fileContent,
+      filename: fileName,
+      type: "application/pdf",
+      disposition: "attachment",
+    };
+  });
+
+  const msg = {
+    to: "lewismurray78@gmail.com",
+    from: "lewismurray78@gmail.com", // Set the email address from which you want to send the email
+    subject: "whatever",
+    text: "hiiiii",
+    attachments: filesToAttach,
+  };
+
+  try {
+    await sgMail.send(msg);
+    return "success";
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};

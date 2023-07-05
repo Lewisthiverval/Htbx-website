@@ -10,14 +10,20 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useNavigate } from "react-router-dom";
-import { ticketTypes } from "../lib/ticketTypes";
+
+// export const stripePromise = loadStripe(
+//   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
+// ); //LEWIS TEST
 
 export const stripePromise = loadStripe(
-  " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
-);
+  "pk_test_51MXoFZDggugLLcXGmagoSEtRZwQeznmfZtGlq8GSBZyjKlgxxv2abFHduZB51EzISy6j7TP0bCNUBsh9bVxoKmNj00yAmtSMyt"
+); //BECKY TEST
+
+// export const stripePromise = loadStripe(
+//   "pk_live_51MXoFZDggugLLcXG0Evqd7w2yDoej2w4bik2o1M3jrzaRUMRWqVBPmEjHGaQFLrzrjBnxQ8rqjyxMMZSgYYuZ98700Gx1tYYqI"
+// ); //BECKY ACTUAL
 
 function Payment({ products, email }) {
-  // const [emailValue, setEmailValue] = useState("");
   const nav = useNavigate();
 
   const { data, isLoading, error } = useSwr(
@@ -30,11 +36,6 @@ function Payment({ products, email }) {
         },
       })
   );
-
-  useEffect(() => {
-    // console.log(data, "DATA");
-    console.log(products, "products");
-  }, []);
 
   const checkoutfree = useSwrMutation("freeCheckout", () =>
     fetchFromAPI("freeCheckout", {
@@ -58,7 +59,7 @@ function Payment({ products, email }) {
       });
   };
 
-  return products.length > 0 ? (
+  return (
     <div className="checkoutContainer">
       {data.price === 0 ? (
         <div>
@@ -86,8 +87,6 @@ function Payment({ products, email }) {
         </>
       )}
     </div>
-  ) : (
-    <h1> Sorry babe, your code is sold out?! </h1>
   );
 }
 

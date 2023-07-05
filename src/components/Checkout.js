@@ -22,13 +22,6 @@ export function Checkout() {
     }
   };
 
-  // const handleKeyPress = (event) => {
-  //   if (event.key === 'Enter') {
-  //     event.preventDefault();
-  //     document.getElementById('myButton').click();
-  //   }
-  // };
-
   return params.code ? (
     <div>
       <div className="secondpageContainer">
