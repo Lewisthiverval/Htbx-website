@@ -26,7 +26,7 @@ export function Checkout() {
 
   useEffect(() => {
     track.currentTime = 64.3;
-    // track.play();
+    track.play();
   }, []);
 
   return params.code ? (
@@ -53,6 +53,11 @@ export function Checkout() {
             }}
             onKeyDown={handleClick}
           ></input>
+
+          <button className="button home" onClick={handleClick}>
+            Submit
+          </button>
+
           <div className="quantityContainer"></div>
         </div>
       </div>

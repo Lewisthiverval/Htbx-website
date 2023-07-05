@@ -65,7 +65,7 @@
 
 .codeInput {
   color: #ec03fc;
-  width: 30%;
+  width: 40%;
 
   font-size: 30px;
   background-color: black;
@@ -76,6 +76,12 @@
   border-width: 3px;
 
   margin: 10%;
+}
+@media (max-width: 767px) {
+  .codeInput {
+    font-size: 20px;
+    width: 50%; /* Display the element on screens up to 767px wide */
+  }
 }
 .codeInput::placeholder {
   /* Most modern browsers support this */
@@ -276,6 +282,20 @@
   border: 2px solid #00ff00;
   /* Styles specific to the "custom-button" class */
   /* This will override any conflicting styles from the "button" class */
+}
+
+.home {
+  width: 120px;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  opacity: 0.5;
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .home {
+    display: block; /* Display the element on screens up to 767px wide */
+  }
 }
 
 .input666 {
