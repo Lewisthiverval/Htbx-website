@@ -1,8 +1,8 @@
 import Airtable from "airtable";
 import Stripe from "stripe";
 
-import { createTickets } from "./createTickets";
 import { queryMemberBy } from "./airtable";
+import { createTickets } from "./email";
 import * as env from "./env";
 
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
@@ -122,42 +122,3 @@ export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
       });
   });
 }
-
-export const sendEmail = async () => {
-  const key = process.env.SENDGRID_API_KEY;
-  sgMail.setApiKey(key);
-  const names = [
-    { name: "becky", quantity: 2 },
-    { name: "lol", quantity: 1 },
-  ];
-
-  const directoryPath = __dirname;
-
-  const filesToAttach = names.map((name) => {
-    const fileName = `ticket_${name.name}.pdf`;
-    const filePath = path.join(directoryPath, "tickets", fileName);
-    const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
-
-    return {
-      content: fileContent,
-      filename: fileName,
-      type: "application/pdf",
-      disposition: "attachment",
-    };
-  });
-
-  const msg = {
-    to: "lewismurray78@gmail.com",
-    from: "lewismurray78@gmail.com", // Set the email address from which you want to send the email
-    subject: "whatever",
-    text: "hiiiii",
-    attachments: filesToAttach,
-  };
-
-  try {
-    await sgMail.send(msg);
-    return "success";
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-};

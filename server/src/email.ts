@@ -1,70 +1,93 @@
-const sgMail = require("@sendgrid/mail");
-const fs = require("fs");
-const path = require("path");
+import sgMail from "@sendgrid/mail";
+import pdfkit from "pdfkit";
+import Qrcode from "qrcode";
+import path from "path";
+import fs from "fs";
 
-// export const sendEmail = async (address: string, names: Array<any>) => {
-//   const apiKey = process.env.SENDGRID_API_KEY;
+import * as env from "./env";
 
-//   if (!apiKey) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
+const ticketsDir = path.join(__dirname, "tickets");
 
-//   sgMail.setApiKey(apiKey);
-// const quantity = names
-//   .map((x: any) => x.quantity)
-//   .reduce((prev: number, curr: number) => {
-//     return prev + curr;
-//   }, 0);
+export const createTicket = async (data: any) => {
+  const doc = new pdfkit();
+  const qrCodeData = "Your ticket data"; // Replace with your ticket data
+  if (!fs.existsSync(ticketsDir)) fs.mkdirSync(ticketsDir, { recursive: true });
+  const qrCodePath = path.join(ticketsDir, `${data.name}qrcode.png`);
+  await Qrcode.toFile(qrCodePath, qrCodeData);
+  const pdfPath = path.join(ticketsDir, `ticket_${data.name}.pdf`);
+  console.log(pdfPath);
+  doc.pipe(fs.createWriteStream(pdfPath));
+  doc.image(qrCodePath, { width: 200, align: "center" });
+  doc.moveDown();
+  doc.fontSize(16).text(`${data.name}`);
+  doc.moveDown();
+  doc
+    .fontSize(8)
+    .text(
+      "This ticket is non-transferable, meant only for members named on the ticket type, their +1s, or other invited guests. You cannot sell or give your ticket to anyone else, doing so will result in that person being denied entry."
+    );
+  doc.moveDown();
+  doc
+    .fontSize(8)
+    .text(
+      "If you can no longer attend and have purchased a ticket, please e-mail htbxlondon@gmail.com to be issued a full refund, applicable until 48 hours before the party."
+    );
+  doc.moveDown();
+  doc.moveDown();
 
-// const directoryPath = __dirname;
-// const filesToAttach = names.map((name) => {
-//   for (let i = 1; i < name.quantity; i++) {
-//     const fileName = `ticket${name}.pdf`;
-//     const filePath = path.join(directoryPath, "tickets", fileName);
-//     const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
+  doc.fontSize(12).text("NO photography is allowed");
+  doc.fontSize(12).text("18+ / bring ID");
+  doc.moveDown();
+  doc.fontSize(12).text("16th July 2023");
+  doc.fontSize(12).text("12:00 - 00:00");
+  doc.moveDown();
+  doc.fontSize(12).text("Address:");
+  doc.fontSize(12).text("SET Woolwich");
+  doc.fontSize(12).text("SE18 6LS");
+  doc.fontSize(12).text("Entrance via Bunton Street");
+  doc.end();
+};
 
-//     return {
-//       content: fileContent,
-//       filename: fileName,
-//       type: "application/pdf",
-//       disposition: "attachment",
-//     };
-//   }
-// });
+export const createTickets = async (names: Array<any>) => {
+  const fileCreationPromises = [];
+  for (let i = 0; i < names.length; i++) {
+    const data = { name: names[i].name };
+    const promise = await createTicket(data);
+    fileCreationPromises.push(promise);
+  }
 
-//   const msg = {
-//     to: "sandbox@example.com", // Use a registered sandbox recipient address
-//     from: "sandbox@example.com", // Change to your verified sender
-//     subject: "HTBX",
-//     text: "and easy to do anywhere, even with Node.js",
-//     html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-//     // attachments: filesToAttach,
-//   };
+  await Promise.all(fileCreationPromises);
+};
 
-//   return sgMail
-//     .send(msg)
-//     .then(() => {
-//       return "Sent";
-//     })
-//     .catch((error: Error) => {
-//       console.error(error);
-//     });
-// };
+export const confirmEmail = async (names: Array<any>, address: string) => {
+  await sgMail.setApiKey(env.SENDGRID_API_KEY);
 
-const key = process.env.SENDGRID_API_KEY;
-sgMail.setApiKey(key);
+  let tickets: Array<any> = [];
 
-// export async function sendEmail() {
+  names.forEach((name) => {
+    for (let i = 0; i < name.quantity; i++) {
+      names.forEach((x) => {
+        const fileName = `ticket_${x.name}.pdf`;
+        const filePath = path.join(ticketsDir, fileName);
+        const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
 
-//   const msg = {
-//     to: "lewismurray78@gmail.com",
-//     from: "lewismurray78@gmail.com", // Set the email address from which you want to send the email
-//     subject: "whatever",
-//     text: "hiiiii",
-//   };
+        tickets.push({
+          content: fileContent,
+          filename: fileName,
+          type: "application/pdf",
+          disposition: "attachment",
+        });
+      });
+    }
+  });
 
-//   try {
-//     await sgMail.send(msg);
-//     console.log("Email sent successfully");
-//   } catch (error) {
-//     console.error("Error sending email:", error);
-//   }
-// }
+  const msg = {
+    from: "lewismurray78@gmail.com",
+    to: address,
+    subject: "ticket",
+    text: "htbx ticket",
+    attachments: tickets,
+  };
+  console.log("sending emails", msg);
+  await sgMail.send(msg);
+};

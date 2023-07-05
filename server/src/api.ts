@@ -1,15 +1,13 @@
 import express, { Request, Response } from "express";
 import expressWinston from "express-winston";
-import sgMail from "@sendgrid/mail";
 import winston from "winston";
 import Stripe from "stripe";
 import cors from "cors";
-import path from "path";
-import fs from "fs";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
+import { confirmEmail } from "./email";
 import * as env from "./env";
 
 export const app = express();
@@ -79,7 +77,7 @@ app.get("/success", async (req: Request, res: Response) => {
     const email = intent.metadata.email;
     const decodedData = JSON.parse(decodeURIComponent(encodedData));
     console.log({ decodedData, email, intent });
-    res.send("success");
+
     await updatePaymentComplete(paymentIntent, decodedData);
     setTimeout(() => {
       confirmEmail(decodedData, email);
@@ -113,35 +111,3 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
   const tickets = await getAllTicketsFromCode(code);
   res.send(tickets);
 });
-
-const confirmEmail = async (names: Array<any>, address: string) => {
-  await sgMail.setApiKey(env.SENDGRID_API_KEY);
-
-  let tickets: Array<any> = [];
-
-  names.forEach((name) => {
-    for (let i = 0; i < name.quantity; i++) {
-      names.forEach((x) => {
-        const fileName = `ticket_${x.name}.pdf`;
-        const filePath = path.join(__dirname, "tickets", fileName);
-        const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
-
-        tickets.push({
-          content: fileContent,
-          filename: fileName,
-          type: "application/pdf",
-          disposition: "attachment",
-        });
-      });
-    }
-  });
-
-  const msg = {
-    from: "lewismurray78@gmail.com",
-    to: address,
-    subject: "ticket",
-    text: "htbx ticket",
-    attachments: tickets,
-  };
-  await sgMail.send(msg);
-};
