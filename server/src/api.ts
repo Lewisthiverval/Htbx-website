@@ -83,13 +83,16 @@ app.get("/success", async (req: Request, res: Response) => {
       confirmEmail(decodedData, email);
     }, 5000);
   } catch (error) {
-    res.setHeader("Location", `${env.WEBAPP_URL}/failure?error=decodingerror`);
+    res.setHeader(
+      "Location",
+      `${env.WEBAPP_URL}/#/failure?error=decodingerror`
+    );
     res.status(302);
     res.end();
     return;
   }
 
-  res.setHeader("Location", `${env.WEBAPP_URL}/success`);
+  res.setHeader("Location", `${env.WEBAPP_URL}/#/success`);
   res.status(302);
   res.end();
 });
@@ -97,7 +100,7 @@ app.get("/success", async (req: Request, res: Response) => {
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
 
-  res.setHeader("Location", `${env.WEBAPP_URL}/success`);
+  res.setHeader("Location", `${env.WEBAPP_URL}/#/success`);
   res.status(302);
   res.end();
 });
