@@ -3,7 +3,7 @@ import { fetchFromAPI } from "../functions/helpers";
 import { validateEmail } from "../functions/helpers";
 import useSwrMutation from "swr/mutation";
 import useSwr from "swr";
-
+import logo from "../assets/htbx-logo.png";
 import "../App.css";
 
 import { loadStripe } from "@stripe/stripe-js";
@@ -77,7 +77,14 @@ function Payment({ products, email }) {
                 options={{
                   clientSecret: data.client_secret,
                   id: data.id,
-                  appearance: { theme: "stripe" },
+                  appearance: {
+                    theme: "night",
+                    variables: {
+                      colorText: "green",
+
+                      // See all possible variables below
+                    },
+                  },
                 }}
               >
                 <CheckoutForm tickets={products} />

@@ -4,6 +4,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import logo from "../assets/htbx-logo.png";
 
 export default function CheckoutForm({ tickets }) {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -46,13 +47,21 @@ export default function CheckoutForm({ tickets }) {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" />
-      <button disabled={isProcessing || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isProcessing ? "Processing ... " : "Pay now"}
-        </span>
-      </button>
-    </form>
+    <div>
+      <form className="payment-form" id="payment-form" onSubmit={handleSubmit}>
+        <div className="paymentelementContainer">
+          <PaymentElement id="payment-element" />
+        </div>
+        <button
+          className="button"
+          disabled={isProcessing || !stripe || !elements}
+          id="submit"
+        >
+          <span id="button-text">
+            {isProcessing ? "Processing ... " : "Pay now"}
+          </span>
+        </button>
+      </form>
+    </div>
   );
 }

@@ -33,8 +33,8 @@ export function Checkout() {
   ) : (
     <div>
       <div className="secondpageContainer">
+        <img src={logo} alt="logo" width="300" height="90"></img>
         <div className="frameContainer">
-          <img src={logo} alt="logo" width="300" height="90"></img>
           <input
             type="text"
             className="codeInput"

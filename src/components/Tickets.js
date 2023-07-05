@@ -5,6 +5,7 @@ import "./../tickets.css";
 import { validateEmail } from "../functions/helpers";
 import Ticket from "./Ticket";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/htbx-logo.png";
 
 export function Tickets(params) {
   const [ticketsChosen, setTicketsChosen] = useState(false);
@@ -70,7 +71,7 @@ export function Tickets(params) {
     if (validateEmail(emailValue)) {
       setTicketsChosen(true);
     } else {
-      prompt("Babe, focus! that email is invalid");
+      alert("Babe, focus! that email is invalid");
     }
   };
 
@@ -81,36 +82,39 @@ export function Tickets(params) {
   return ticketsChosen ? (
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
-    <div>
-      <div className="tickets-container">
-        {/* <h2 className="tickets-title"> Tickets </h2> */}
-        <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
-          Choose your ticket(s):
-        </h4>
-        <div className="ticket-list">
-          {tickets.map((ticket, index) => {
-            return (
-              <Ticket
-                ticket={ticket}
-                index={index}
-                addToChosen={addToChosen}
-                modifyQuantity={modifyQuantity}
-              />
-            );
-          })}
-        </div>
-        <div className="checkoutAndEmail">
-          <input
-            type="text"
-            id="myInput"
-            placeholder="please enter email"
-            value={emailValue}
-            onChange={handleEmailChange}
-          />
-          <button onClick={handleClick} disabled={chosenTickets.length === 0}>
-            Checkout
-          </button>
-        </div>
+    <div className="tickets-container">
+      <img src={logo} alt="logo" width="300" height="90"></img>
+      <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
+        Choose your ticket(s):
+      </h4>
+      <div className="ticket-list">
+        {tickets.map((ticket, index) => {
+          return (
+            <Ticket
+              ticket={ticket}
+              index={index}
+              addToChosen={addToChosen}
+              modifyQuantity={modifyQuantity}
+            />
+          );
+        })}
+      </div>
+      <div className="checkoutAndEmail">
+        <input
+          className="input666"
+          type="text"
+          id="myInput"
+          placeholder="Email"
+          value={emailValue}
+          onChange={handleEmailChange}
+        />
+        <button
+          className="button checkout-button"
+          onClick={handleClick}
+          disabled={chosenTickets.length === 0}
+        >
+          Checkout
+        </button>
       </div>
     </div>
   );

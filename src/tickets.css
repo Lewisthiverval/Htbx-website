@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  /* justify-content: center;
-  align-items: center; */
+  justify-content: space-evenly;
+
   font-color: red;
-  /* margin: 10%; */
 }
 .tickets-title {
   display: flex;
@@ -17,7 +16,7 @@
 .checkoutAndEmail {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 5%;
 }
@@ -29,19 +28,24 @@
 }
 
 .ticket-card {
+  background-color: transparent;
+  border: 2px solid #ec03fc;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #ec03fc;
+  cursor: pointer;
   display: inline-block;
-  flex: 1 1 300px;
+  flex: 1 1 400px;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .ticket-card.selected {
-  background-color: #fc0fc0;
+  background-color: #ec03fc;
+  border: 2px solid pink;
+  color: pink;
 }
 
 .ticket-card:hover {
@@ -62,6 +66,7 @@
 .price {
   font-size: 16px;
   margin-bottom: 5px;
+  color: green;
 }
 
 .quantity-controls {
@@ -78,6 +83,7 @@ button {
   font-size: 14px;
   color: #888;
 }
+
 /* 
 .ticket {
   border: 1px solid #ccc;

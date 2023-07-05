@@ -15,7 +15,11 @@ export function CheckoutSuccess() {
           Baaaaabes, ticket sent by email, omg thank u so much xoxoxoxo.{" "}
           {sessionId}
         </h1>
-        <button onClick={home}>exit</button>
+        <div calssName="lastPageButton">
+          <button className="button" onClick={home}>
+            exit
+          </button>
+        </div>
       </div>
     </div>
   );
