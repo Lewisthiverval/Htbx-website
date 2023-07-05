@@ -1,5 +1,5 @@
 import Airtable from "airtable";
-import { nanoid } from "nanoid";
+import { v4 as uuid } from "uuid";
 
 type Member = {
   name: string;
@@ -61,7 +61,7 @@ export const getAllTicketsFromCode = async (code: string) => {
       if (member.fields.ID) {
         return { ...member.fields, quantity: 1 };
       }
-      const id = nanoid();
+      const id = uuid();
       const record = {
         ...member.fields,
         ID: id,

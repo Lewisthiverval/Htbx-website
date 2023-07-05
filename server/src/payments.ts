@@ -1,6 +1,5 @@
 import { stripe } from "./";
 import { queryMemberBy } from "./airtable";
-import { nanoid } from "nanoid";
 import Airtable from "airtable";
 import { createTickets } from "./createTickets";
 

@@ -1,8 +1,7 @@
-const pdfkit = require("pdfkit");
-const fs = require("fs");
-const path = require("path");
-const Qrcode = require("qrcode");
-// const nanoid = require("nanoid");
+import pdfkit from "pdfkit";
+import Qrcode from "qrcode";
+import path from "path";
+import fs from "fs";
 
 export const createTicket = async (data: any) => {
   const doc = new pdfkit();

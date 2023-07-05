@@ -4,17 +4,21 @@ import cors from "cors";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { freeCheckoutComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
-const fs = require("fs");
-const path = require("path");
-const sgMail = require("@sendgrid/mail");
+import sgMail from "@sendgrid/mail";
+import path from "path";
+import fs from "fs";
 
 export const app = express();
+
+const WEBAPP_URL = process.env.WEBAPP_URL!;
+const ADMIN_PAGE_PASSWORD = process.env.ADMIN_PAGE_PASSWORD!;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY!;
 
 app.use(cors({ origin: true }));
 app.use(express.json());
 
 app.get("/", async (_req, res) => {
-  res.setHeader("Location", `${process.env.WEBAPP_URL}`);
+  res.setHeader("Location", `${WEBAPP_URL}`);
   res.status(302);
   res.end();
 });
@@ -53,7 +57,7 @@ app.get("/success", async (req: Request, res: Response) => {
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
-      `${process.env.WEBAPP_URL}/failure?error=missingpaymentintent`
+      `${WEBAPP_URL}/failure?error=missingpaymentintent`
     );
     res.status(302);
     res.end();
@@ -67,16 +71,13 @@ app.get("/success", async (req: Request, res: Response) => {
       confirmEmail(decodedData, email);
     }, 5000);
   } catch (error) {
-    res.setHeader(
-      "Location",
-      `${process.env.WEBAPP_URL}/failure?error=decodingerror`
-    );
+    res.setHeader("Location", `${WEBAPP_URL}/failure?error=decodingerror`);
     res.status(302);
     res.end();
     return;
   }
 
-  res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
+  res.setHeader("Location", `${WEBAPP_URL}/success`);
   res.status(302);
   res.end();
 });
@@ -84,15 +85,13 @@ app.get("/success", async (req: Request, res: Response) => {
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
 
-  res.setHeader("Location", `${process.env.WEBAPP_URL}/success`);
+  res.setHeader("Location", `${WEBAPP_URL}/success`);
   res.status(302);
   res.end();
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
-  body.password === process.env.ADMIN_PAGE_PASSWORD
-    ? res.send(true)
-    : res.send(false);
+  body.password === ADMIN_PAGE_PASSWORD ? res.send(true) : res.send(false);
 });
 
 app.post("/getTickets", async ({ body }: Request, res: Response) => {
@@ -102,7 +101,7 @@ app.post("/getTickets", async ({ body }: Request, res: Response) => {
 });
 
 const confirmEmail = async (names: Array<any>, address: string) => {
-  await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  await sgMail.setApiKey(SENDGRID_API_KEY);
 
   let tickets: Array<any> = [];
 
