@@ -17,9 +17,12 @@ export function Checkout() {
   const nav = useNavigate();
   const track = new Audio(padam);
   const handleClick = async (event) => {
+    event.preventDefault();
+    console.log("click");
+    nav(`/checkout/${code}`);
     if (event.key === "Enter") {
       event.preventDefault();
-
+      console.log("click");
       nav(`/checkout/${code}`);
     }
   };
