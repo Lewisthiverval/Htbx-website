@@ -15,13 +15,13 @@ import { useNavigate } from "react-router-dom";
 //   " pk_test_51MXbMhJuyWQVRi2DTlIjJRwvKCYDU3Dl67oKoYiG1DCNNIEj3O5o15WKQhWUFsLOmokiHB3asQyZ910atxMM9nxr001NkCgvIs"
 // ); //LEWIS TEST
 
-export const stripePromise = loadStripe(
-  "pk_test_51MXoFZDggugLLcXGmagoSEtRZwQeznmfZtGlq8GSBZyjKlgxxv2abFHduZB51EzISy6j7TP0bCNUBsh9bVxoKmNj00yAmtSMyt"
-); //BECKY TEST
-
 // export const stripePromise = loadStripe(
-//   "pk_live_51MXoFZDggugLLcXG0Evqd7w2yDoej2w4bik2o1M3jrzaRUMRWqVBPmEjHGaQFLrzrjBnxQ8rqjyxMMZSgYYuZ98700Gx1tYYqI"
-// ); //BECKY ACTUAL
+//   "pk_test_51MXoFZDggugLLcXGmagoSEtRZwQeznmfZtGlq8GSBZyjKlgxxv2abFHduZB51EzISy6j7TP0bCNUBsh9bVxoKmNj00yAmtSMyt"
+// ); //BECKY TEST
+
+export const stripePromise = loadStripe(
+  "pk_live_51MXoFZDggugLLcXG0Evqd7w2yDoej2w4bik2o1M3jrzaRUMRWqVBPmEjHGaQFLrzrjBnxQ8rqjyxMMZSgYYuZ98700Gx1tYYqI"
+); //BECKY ACTUAL
 
 function Payment({ products, email }) {
   const nav = useNavigate();
