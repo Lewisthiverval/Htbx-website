@@ -66,7 +66,6 @@
 .codeInput {
   color: #ec03fc;
   width: 40%;
-
   font-size: 30px;
   background-color: black;
   border-radius: 10px;
@@ -86,6 +85,7 @@
 .codeInput::placeholder {
   /* Most modern browsers support this */
   color: #ec03fc;
+  opacity: 0.5;
   /* font-family: Old English Text; */
 }
 
