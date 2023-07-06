@@ -34,13 +34,13 @@
   box-sizing: border-box;
   color: #ec03fc;
   cursor: pointer;
-  align-itmes: flex-start;
   flex: 1 1 400px;
   margin: 10px;
-
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.2s;
+  min-width: 180px;
+  min-height: 160px; */
 }
 
 .ticket-card.selected {
