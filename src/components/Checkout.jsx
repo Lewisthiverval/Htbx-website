@@ -17,14 +17,20 @@ export function Checkout() {
   const nav = useNavigate();
   const track = new Audio(padam);
   const handleClick = async (event) => {
-    event.preventDefault();
-    console.log("click");
-    nav(`/checkout/${code}`);
+    // event.preventDefault();
+    // console.log("click");
+    // nav(`/checkout/${code}`);
     if (event.key === "Enter") {
       event.preventDefault();
       console.log("click");
       nav(`/checkout/${code}`);
     }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("click");
+    nav(`/checkout/${code}`);
   };
 
   useEffect(() => {
@@ -57,7 +63,7 @@ export function Checkout() {
             onKeyDown={handleClick}
           ></input>
 
-          <button className="button home" onClick={handleClick}>
+          <button className="button home" onClick={handleSubmit}>
             Submit
           </button>
 
