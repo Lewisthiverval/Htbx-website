@@ -29,6 +29,7 @@ export default function Ticket({ ticket, index, addToChosen, modifyQuantity }) {
     >
       <div key={index} className="ticket">
         <h1 className="name">{name}</h1>
+
         <p className="price">£{price}</p>
         {/* <p className="type">{type}</p> */}
         {/* <div className="quantity-controls">
