@@ -12,6 +12,7 @@ export function Tickets(params) {
   const [tickets, setTickets] = useState([]);
   const [chosenTickets, setChosenTickets] = useState([]);
   const [emailValue, setEmailValue] = useState("");
+  const [isLoading, setIsloading] = useState(true);
   const nav = useNavigate();
 
   const getTickets = async () => {
@@ -26,6 +27,12 @@ export function Tickets(params) {
   useEffect(() => {
     getTickets();
   }, []);
+
+  useEffect(() => {
+    if (tickets.length > 0) {
+      setIsloading(false);
+    }
+  }, [tickets]);
 
   const addToChosen = (ticketIndex) => {
     setChosenTickets((prevChosenTickets) => {

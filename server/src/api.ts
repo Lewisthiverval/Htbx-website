@@ -8,6 +8,7 @@ import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
 import { confirmEmail } from "./email";
+import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
 
 export const app = express();
@@ -123,3 +124,12 @@ app.post(
     res.send(tickets);
   }
 );
+
+app.post("/getPurchasedAndTotal", async (req: Request, res: Response) => {
+  try {
+    const tickets = await getPurchasedAndTotal();
+    res.send(tickets);
+  } catch (error) {
+    console.log(error);
+  }
+});
