@@ -40,7 +40,14 @@
   cursor: pointer;
   transition: background-color 0.2s;
   min-width: 180px;
-  min-height: 160px; */
+  min-height: 160px;
+}
+
+@media (max-width: 767px) {
+  .ticket-card {
+    min-width: 130px;
+    min-height: 110px;
+  }
 }
 
 .ticket-card.selected {
