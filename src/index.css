@@ -40,7 +40,10 @@ code {
     background-size: 130px;
   }
 } */
-.html {
+
+html,
+body {
+  width: 100%;
   height: 100%;
 }
 

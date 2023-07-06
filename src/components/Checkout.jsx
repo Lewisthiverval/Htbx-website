@@ -36,36 +36,32 @@ export function Checkout() {
   }, []);
 
   return params.code ? (
-    <div>
-      <div className="secondpageContainer">
-        <div className="frameContainer">
-          <Tickets code={params.code} />
-        </div>
+    <div className="secondpageContainer">
+      <div className="frameContainer">
+        <Tickets code={params.code} />
       </div>
     </div>
   ) : (
-    <div>
-      <div className="secondpageContainer">
-        <img src={logo} alt="logo" width="300" height="90"></img>
-        <div className="frameContainer">
-          <input
-            type="text"
-            className="codeInput"
-            name="CODE"
-            placeholder="ENTER CODE"
-            value={code}
-            onChange={(e) => {
-              setCode(e.target.value);
-            }}
-            onKeyDown={handleClick}
-          ></input>
+    <div className="secondpageContainer">
+      <img src={logo} alt="logo" width="300" height="90"></img>
+      <div className="frameContainer">
+        <input
+          type="text"
+          className="codeInput"
+          name="CODE"
+          placeholder="ENTER CODE"
+          value={code}
+          onChange={(e) => {
+            setCode(e.target.value);
+          }}
+          onKeyDown={handleClick}
+        ></input>
 
-          <button className="button home" onClick={handleSubmit}>
-            Submit
-          </button>
+        <button className="button home" onClick={handleSubmit}>
+          Submit
+        </button>
 
-          <div className="quantityContainer"></div>
-        </div>
+        <div className="quantityContainer"></div>
       </div>
     </div>
   );
