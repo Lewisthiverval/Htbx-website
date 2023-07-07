@@ -7,7 +7,7 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "start": "node lib/index.js",
-    "dev": "nodemon"
+    "dev": "concurrently --raw 'nodemon' 'npm run watch'"
   },
   "keywords": [],
   "author": "",

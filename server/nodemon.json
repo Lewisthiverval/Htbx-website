@@ -1,6 +1,6 @@
 {
-  "watch": ["src"],
-  "ignore": ["src/**/*.test.ts"],
+  "watch": ["lib"],
+  "ignore": ["src/**/*"],
   "ext": "ts,mjs,js,json,graphql",
   "exec": "node lib/index.js",
   "legacyWatch": true
