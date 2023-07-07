@@ -30,7 +30,7 @@
 .ticket-card {
   background-color: transparent;
   border: 2px solid #ec03fc;
-  border-radius: 15px;
+  border-radius: 5px;
   box-sizing: border-box;
   color: #ec03fc;
   cursor: pointer;
@@ -52,7 +52,7 @@
 
 .ticket-card.selected {
   background-color: #ec03fc;
-  border: 2px solid pink;
+  border: 2px solid #00ff00;
   color: pink;
 }
 

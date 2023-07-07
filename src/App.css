@@ -62,7 +62,7 @@
   width: 40%;
   font-size: 30px;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
   border: solid;
   border-color: #ec03fc;
@@ -70,6 +70,16 @@
 
   margin: 10%;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px black inset !important;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ec03fc;
+}
+
 @media (max-width: 767px) {
   .codeInput {
     font-size: 20px;
@@ -226,7 +236,7 @@
   appearance: none;
   background-color: transparent;
   border: 2px solid #ec03fc;
-  border-radius: 15px;
+  border-radius: 5px;
   box-sizing: border-box;
   color: #ec03fc;
   cursor: pointer;
@@ -295,7 +305,7 @@
   appearance: none;
   background-color: transparent;
   border: 2px solid #ec03fc;
-  border-radius: 15px;
+  border-radius: 5px;
   box-sizing: border-box;
   color: #ec03fc;
 
