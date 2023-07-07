@@ -7,16 +7,17 @@
     <title>HTBX</title>
     <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
     <script>
-      window.TrackJS &&
-        TrackJS.install({
-          token: "556666ace4744f0a998d35cf8c0c11d0",
-          // for more configuration options, see https://docs.trackjs.com
-        });
+      if (location.host.indexOf("localhost") !== 0) {
+        window.TrackJS &&
+          TrackJS.install({
+            token: "556666ace4744f0a998d35cf8c0c11d0",
+          });
+      }
     </script>
-
     <script src="https://js.stripe.com/v3/"></script>
     <script>
       (function (h, o, t, j, a, r) {
+        if (location.host.indexOf("localhost")) return;
         h.hj =
           h.hj ||
           function () {
