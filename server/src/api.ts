@@ -8,7 +8,7 @@ import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
 import { confirmEmail } from "./email";
-import { getPurchasedAndTotal } from "./airtable";
+// import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
 
 export const app = express();
@@ -80,9 +80,8 @@ app.get("/success", async (req: Request, res: Response) => {
     console.log({ decodedData, email, intent });
 
     await updatePaymentComplete(paymentIntent, decodedData);
-    setTimeout(() => {
-      confirmEmail(decodedData, email);
-    }, 5000);
+    await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
+    await confirmEmail(decodedData, email);
   } catch (error) {
     res.setHeader(
       "Location",
@@ -100,10 +99,10 @@ app.get("/success", async (req: Request, res: Response) => {
 
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
+  await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
+  await confirmEmail(body.tickets, body.email);
 
-  res.setHeader("Location", `${env.WEBAPP_URL}/#/success`);
-  res.status(302);
-  res.end();
+  res.json({ success: true });
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
@@ -125,11 +124,14 @@ app.post(
   }
 );
 
-app.post("/getPurchasedAndTotal", async (req: Request, res: Response) => {
-  try {
-    const tickets = await getPurchasedAndTotal();
-    res.send(tickets);
-  } catch (error) {
-    console.log(error);
-  }
-});
+// app.post("/getPurchasedAndTotal", async (req: Request, res: Response) => {
+//   const tickets = await getPurchasedAndTotal();
+//   if (!tickets) {
+//     throw new Error("couldn't get ticekts");
+//   }
+//   res.send(tickets);
+// });
+
+// app.get("/test", async (req, res) => {
+//   res.send("hi");
+// });

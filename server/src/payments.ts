@@ -99,26 +99,27 @@ export const updatePaymentComplete = async (id: string, data: any) => {
 };
 
 export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
-  const baseId = process.env.AIRTABLE_BASEID;
+  const baseId = env.AIRTABLE_BASEID;
   if (!baseId) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_SECRET_TOKEN }).base(
-    baseId
-  );
-  const tableName = process.env.AIRTABLE_NAME;
+  const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(baseId);
+  const tableName = env.AIRTABLE_NAME;
   if (!tableName) throw new Error(`Missing AIRTABLE_NAME environment variable`);
   const table = base(tableName);
-  tickets.forEach(async (x: any) => {
-    const recordId = x.ID;
+  if (!tickets) {
+    throw new Error("no tickets...");
+  }
 
-    await table
-      .select({
-        filterByFormula: `{ID} = '${recordId}'`,
-      })
-      .all()
-      .then((record: any) => {
-        table.update(record.id, {
-          payment_intent: "tessst",
-        });
-      });
+  const namesAndQuantity = tickets.map((x: any) => {
+    const obj = { name: x.name, quantity: 1 };
+    return obj;
+  });
+  await createTickets(namesAndQuantity);
+  tickets.forEach(async (x: any) => {
+    const ID = x.ID;
+    const { member, table } = await queryMemberBy(["ID"], [ID]);
+    await table.update(member.id, {
+      remaining: member.fields.remaining - 1,
+      purchased: member.fields.purchased + 1,
+    });
   });
 }

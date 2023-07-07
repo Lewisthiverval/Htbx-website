@@ -43,7 +43,7 @@ function Payment({ products, email }) {
         tickets: products,
         email: email,
       },
-    }).then((response) => console.log(response, "response"))
+    })
   );
 
   if (isLoading) return "Loading";
@@ -52,18 +52,20 @@ function Payment({ products, email }) {
   }
 
   const handleClick = () => {
-    if (validateEmail(email))
-      checkoutfree.trigger().then(() => {
-        console.log("success");
-        nav("/success");
-      });
+    if (validateEmail(email)) {
+      checkoutfree.trigger().then(() => nav("/success"));
+    }
   };
 
   return (
     <div className="checkoutContainer">
       {data.price === 0 ? (
         <div>
-          <button onClick={handleClick} disabled={checkoutfree.isLoading}>
+          <button
+            className="button"
+            onClick={handleClick}
+            disabled={checkoutfree.isLoading}
+          >
             Send free ticket(s) by email
           </button>
         </div>
