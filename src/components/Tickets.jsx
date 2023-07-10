@@ -91,11 +91,12 @@ export function Tickets(params) {
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
     <div className="tickets-container">
-      {/* {isLoading && <p className="loading">loading...</p>} */}
       <img src={logo} alt="logo" width="300" height="90"></img>
+
       <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
         Select your ticket(s):
       </h4>
+      {isLoading && <p className="loading">loading...</p>}
       <div className="ticket-list">
         {tickets.map((ticket, index) => {
           return (
