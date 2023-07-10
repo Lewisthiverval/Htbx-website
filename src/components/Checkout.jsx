@@ -52,7 +52,7 @@ export function Checkout() {
           placeholder="ENTER CODE"
           value={code}
           onChange={(e) => {
-            setCode(e.target.value.toLowerCase());
+            setCode(e.target.value);
           }}
           onKeyDown={handleClick}
         ></input>

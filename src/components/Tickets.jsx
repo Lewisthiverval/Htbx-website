@@ -16,12 +16,12 @@ export function Tickets(params) {
   const nav = useNavigate();
 
   const getTickets = async () => {
-    await fetchFromAPI("getTickets", { body: { code: params.code } }).then(
-      (response) => {
-        console.log(response, "response");
-        response.length === 0 ? nav("/noCode") : setTickets(response);
-      }
-    );
+    await fetchFromAPI("getTickets", {
+      body: { code: params.code.toLowerCase() },
+    }).then((response) => {
+      console.log(response, "response");
+      response.length === 0 ? nav("/noCode") : setTickets(response);
+    });
   };
 
   useEffect(() => {
