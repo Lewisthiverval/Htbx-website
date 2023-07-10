@@ -66,22 +66,23 @@ export const getAllTicketsFromCode = async (code: string) => {
   }
 };
 
-// export const getPurchasedAndTotal = async () => {
-//   try {
-//     const members = await table
-//       .select({ filterByFormula: `{purchased} > 0` })
-//       .all();
-//     // const tickets: Array<any> = members.map((x) => {
-//     //   return {
-//     //     name: x.fields.name,
-//     //     price: x.fields.price,
-//     //     purchased: x.fields.purchased,
-//     //   };
-//     // });
-//     // return tickets;
-//     return members;
-//   } catch (error) {
-//     console.error("Error in getAllTicketsFromCode:", error);
-//     throw new Error("can't get tickets!");
-//   }
-// };
+export const getPurchasedAndTotal = async () => {
+  try {
+    const members = await table
+      .select({ filterByFormula: `{purchased} > 0` })
+      .all();
+
+    const total = members.map((x) => {
+      return {
+        code: x.fields.code,
+        sold: x.fields.purchased,
+        name: x.fields.name,
+        price: x.fields.price,
+      };
+    });
+    return total;
+  } catch (error) {
+    console.error("Error in getAllTicketsFromCode:", error);
+    throw new Error("can't get tickets!");
+  }
+};
