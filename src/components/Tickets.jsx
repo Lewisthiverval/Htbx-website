@@ -19,6 +19,7 @@ export function Tickets(params) {
     await fetchFromAPI("getTickets", {
       body: { code: params.code.toLowerCase() },
     }).then((response) => {
+      setIsloading(false);
       console.log(response, "response");
       response.length === 0 ? nav("/noCode") : setTickets(response);
     });
@@ -90,6 +91,7 @@ export function Tickets(params) {
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
     <div className="tickets-container">
+      {isLoading && <p className="loading">loading...</p>}
       <img src={logo} alt="logo" width="300" height="90"></img>
       <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
         Select your ticket(s):
