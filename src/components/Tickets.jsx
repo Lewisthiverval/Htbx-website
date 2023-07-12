@@ -12,6 +12,9 @@ export function Tickets(params) {
   const [tickets, setTickets] = useState([]);
   const [chosenTickets, setChosenTickets] = useState([]);
   const [emailValue, setEmailValue] = useState("");
+  const [ticketName, setTicketName] = useState("");
+  const [name, setName] = useState("");
+
   const [isLoading, setIsloading] = useState(true);
   const nav = useNavigate();
 
@@ -22,6 +25,7 @@ export function Tickets(params) {
       setIsloading(false);
       console.log(response, "response");
       response.length === 0 ? nav("/noCode") : setTickets(response);
+      setTicketName(response[0].name.toLowerCase().replace(" ", ""));
     });
   };
 
@@ -77,6 +81,10 @@ export function Tickets(params) {
 
   const handleClick = () => {
     if (validateEmail(emailValue)) {
+      if (ticketName === "guest") {
+        chosenTickets[0].name = name;
+      }
+      console.log(chosenTickets);
       setTicketsChosen(true);
     } else {
       alert("Babe, focus! that email is invalid");
@@ -85,6 +93,10 @@ export function Tickets(params) {
 
   const handleEmailChange = (event) => {
     setEmailValue(event.target.value);
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.value);
   };
 
   return ticketsChosen ? (
@@ -110,6 +122,18 @@ export function Tickets(params) {
         })}
       </div>
       <div className="checkoutAndEmail">
+        {ticketName === "guest" ? (
+          <input
+            className="input666"
+            type="text"
+            id="myInput"
+            placeholder="name"
+            value={name}
+            onChange={handleNameChange}
+          />
+        ) : (
+          <div></div>
+        )}
         <input
           className="input666"
           type="text"

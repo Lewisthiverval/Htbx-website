@@ -73,14 +73,16 @@ export const getPurchasedAndTotal = async () => {
       .all();
 
     const total = members.map((x) => {
-      return {
-        code: x.fields.code,
-        sold: x.fields.purchased,
-        name: x.fields.name,
-        price: x.fields.price,
-      };
+      return x.fields.purchased;
+      // return {
+      //   code: x.fields.code,
+      //   sold: x.fields.purchased,
+      //   name: x.fields.name,
+      //   price: x.fields.price,
+      // };
     });
-    return total;
+
+    return total.reduce((prev, curr) => prev + curr, 0);
   } catch (error) {
     console.error("Error in getAllTicketsFromCode:", error);
     throw new Error("can't get tickets!");
