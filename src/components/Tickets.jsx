@@ -81,9 +81,9 @@ export function Tickets(params) {
 
   const handleClick = () => {
     if (validateEmail(emailValue)) {
-      if (ticketName === "guest") {
-        chosenTickets[0].name = name;
-      }
+      // if (ticketName === "guest") {
+      //   chosenTickets[0].name = name;
+      // }
       console.log(chosenTickets);
       setTicketsChosen(true);
     } else {
@@ -122,7 +122,7 @@ export function Tickets(params) {
         })}
       </div>
       <div className="checkoutAndEmail">
-        {ticketName === "guest" ? (
+        {/* {ticketName === "guest" ? (
           <input
             className="input666"
             type="text"
@@ -133,7 +133,7 @@ export function Tickets(params) {
           />
         ) : (
           <div></div>
-        )}
+        )} */}
         <input
           className="input666"
           type="text"
