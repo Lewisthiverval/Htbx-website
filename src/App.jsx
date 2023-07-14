@@ -28,9 +28,9 @@ function EnterPage() {
     <div className="App">
       <div className="firstPageContainer">
         <div className="enterContainer">
-          <Link to="/checkout">
+          {/* <Link to="/checkout">
             <h1 className="enter">E N T E R</h1>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

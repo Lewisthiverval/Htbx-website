@@ -35,9 +35,6 @@ app.get("/", async (_req, res) => {
 });
 
 app.post("/payments", async ({ body }: Request, res: Response) => {
-  function cutoffDecimal(number: number) {
-    return Number(number.toFixed(2));
-  }
   const amount = body.tickets
     .map((x: any) => {
       return x.price * x.quantity;
