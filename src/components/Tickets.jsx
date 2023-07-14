@@ -81,9 +81,6 @@ export function Tickets(params) {
 
   const handleClick = () => {
     if (validateEmail(emailValue)) {
-      // if (ticketName === "guest") {
-      //   chosenTickets[0].name = name;
-      // }
       console.log(chosenTickets);
       setTicketsChosen(true);
     } else {
@@ -122,18 +119,6 @@ export function Tickets(params) {
         })}
       </div>
       <div className="checkoutAndEmail">
-        {/* {ticketName === "guest" ? (
-          <input
-            className="input666"
-            type="text"
-            id="myInput"
-            placeholder="name"
-            value={name}
-            onChange={handleNameChange}
-          />
-        ) : (
-          <div></div>
-        )} */}
         <input
           className="input666"
           type="text"
