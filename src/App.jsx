@@ -27,11 +27,11 @@ function EnterPage() {
   return (
     <div className="App">
       <div className="firstPageContainer">
-        <div className="enterContainer">
+        {/* <div className="enterContainer">
           <Link to="/checkout">
             <h1 className="enter">E N T E R</h1>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
