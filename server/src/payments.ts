@@ -18,7 +18,7 @@ export async function createPaymentIntent(
     return Number(number.toFixed(2));
   }
   const fixedAmount = cutoffDecimal(amount);
-  const { member } = await queryMemberBy(["name"], [data[0].name]);
+  const { member } = await queryMemberBy(["ID"], [data[0].ID]);
   const payment_intent = member?.fields?.payment_intent as string;
 
   const updatePaymentIntent = async (ID: string, paymentIntent: string) => {
@@ -28,14 +28,14 @@ export async function createPaymentIntent(
     });
   };
 
-  const names = data.map((x) => x.name);
-  const metaNames = names.join();
+  // const names = data.map((x) => x.name);
+  // const metaNames = names.join();
 
   const createNewIntent = async () => {
     const paymentIntent = await stripe.paymentIntents.create({
       currency: "gbp",
       amount: fixedAmount,
-      metadata: { code: data[0].code, email: email, names: metaNames },
+      metadata: { code: data[0].code, email: email },
     });
 
     data.forEach((x) => {
@@ -89,6 +89,7 @@ export const updatePaymentComplete = async (id: string, data: any) => {
       });
     });
   };
+
   if (intent.status === "succeeded") {
     // await updateAirtable();
     // sendEmail(email, quantityForEmail, names);
