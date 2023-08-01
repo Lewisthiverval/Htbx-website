@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import AdminPage from "./AdminPage";
+import { AdminPage } from "./AdminPage";
+import "./admin.css";
 
 export default function AdminLogin() {
   const [auth, setAuth] = useState(false);
@@ -29,7 +30,12 @@ export default function AdminLogin() {
   ) : (
     <div className="loginPage">
       <div>
-        <form method="POST" action="/login" onSubmit={handleSubmit}>
+        <form
+          method="POST"
+          action="/login"
+          onSubmit={handleSubmit}
+          className="inputC"
+        >
           <input
             type="password"
             id="password"

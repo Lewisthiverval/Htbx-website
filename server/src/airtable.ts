@@ -17,7 +17,7 @@ type Member = {
 type Qr = {
   name: string;
   id: string;
-  scanned: boolean;
+  scanned: string;
 };
 const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(
   env.AIRTABLE_BASEID
@@ -96,12 +96,37 @@ export const addQRcode = async (ID: string, name: string) => {
     const newQRCode = await qrTable.create({
       name: name,
       id: ID,
-      scanned: false,
+      scanned: "false",
     });
     console.log("Added QR code:", newQRCode);
     return newQRCode;
   } catch (error) {
     console.error("Error adding QR code:", error);
+    throw error;
+  }
+};
+
+export const checkQR = async (ID: string) => {
+  try {
+    const qr: any = await qrTable
+      .select({ filterByFormula: `{ID} = "${ID}"` })
+      .all()
+      .then((records) => {
+        return records?.[0];
+      });
+
+    if (!qr) {
+      return "QR not found";
+    }
+    if (qr.fields.scanned === "true") {
+      return "QR invalid";
+    }
+    await qrTable.update(qr.id, {
+      scanned: "true",
+    });
+    return "QR code scanned successfully";
+  } catch (error) {
+    console.error("Couldn't find or update QR code:", error);
     throw error;
   }
 };

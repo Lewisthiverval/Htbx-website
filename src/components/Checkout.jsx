@@ -45,7 +45,7 @@ export function Checkout() {
     <div className="secondpageContainer">
       <img src={logo} alt="logo" width="300" height="90"></img>
       <div className="frameContainer">
-        {/* <input
+        <input
           type="text"
           className="codeInput"
           name="CODE"
@@ -55,7 +55,7 @@ export function Checkout() {
             setCode(e.target.value);
           }}
           onKeyDown={handleClick}
-        ></input> */}
+        ></input>
         <button className="button home" onClick={handleSubmit}>
           Submit
         </button>

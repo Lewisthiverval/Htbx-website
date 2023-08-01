@@ -5,7 +5,7 @@ import Stripe from "stripe";
 import cors from "cors";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
-import { getAllTicketsFromCode } from "./airtable";
+import { checkQR, getAllTicketsFromCode } from "./airtable";
 import { addQRcode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
 import { confirmEmail } from "./email";
@@ -128,14 +128,6 @@ app.get("/purchased", async (req: Request, res: Response) => {
 });
 
 app.post("/scan", async (req: Request, res: Response) => {
-  res.send("scan");
-});
-
-app.post("/qradd", async (req: Request, res: Response) => {
-  try {
-    await addQRcode("5687", "becky");
-    res.send("success");
-  } catch (error) {
-    res.send(error);
-  }
+  const scannedMess = await checkQR("1234");
+  res.send(scannedMess);
 });

@@ -1,35 +1,24 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { fetchFromAPI } from "../../functions/helpers";
+import React, { useState } from "react";
+import { QrReader } from "react-qr-reader";
 
-export default function AdminPage() {
-  const [tickets, setTickets] = useState([]);
+export const AdminPage = () => {
+  const [data, setData] = useState("No result");
 
-  const getData = async () => {
-    await fetchFromAPI("getPurchasedAndTotal", { body: { code: "" } }).then(
-      (response) => {
-        setTickets(response);
-      }
-    );
-  };
+  return (
+    <div style={{ backgroundColor: "black", height: "80vh", width: "100vh" }}>
+      <QrReader
+        onResult={(result, error) => {
+          if (!!result) {
+            setData(result?.text);
+          }
 
-  useEffect(() => {
-    getData().then((response) => {
-      console.log(response);
-    });
-  }, []);
-
-  return <div></div>;
-}
-
-//   return (
-//     <div>
-//       <h1>{`Tickets sold: ${ravers.length}`}</h1>
-//       <h2>{` ${cash}`}</h2>
-
-//       {ravers.map((x) => (
-//         <Member key={x.id} x={x} onrefresh onRefresh={handleRefresh} />
-//       ))}
-//     </div>
-//   );
-// }
+          if (!!error) {
+            console.info(error);
+          }
+        }}
+        style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}
+      />
+      <p style={{ color: "white", textAlign: "center" }}>{data}</p>
+    </div>
+  );
+};

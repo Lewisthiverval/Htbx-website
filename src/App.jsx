@@ -15,7 +15,6 @@ function App() {
         <Route path="/" element={<EnterPage />} />
         <Route path="/checkout/:code" element={<Checkout />} />
         <Route path="/checkout" element={<Checkout />} />
-        {/* <Route path="/QRcode" element={<QRcode />} /> */}
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/noCode" element={<NoCode />} />
       </Routes>
@@ -28,7 +27,9 @@ function EnterPage() {
     <div className="App">
       <div className="firstPageContainer">
         <div className="enterContainer">
-          <h1 className="enter">SOLD OUT</h1>
+          <Link to="/admin">
+            <h1 className="enter">E N T E R</h1>
+          </Link>
         </div>
       </div>
     </div>
