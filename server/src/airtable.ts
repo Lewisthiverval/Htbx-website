@@ -13,10 +13,18 @@ type Member = {
   ID: string;
   currQuant: number;
 };
+
+type Qr = {
+  name: string;
+  id: string;
+  scanned: boolean;
+};
 const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(
   env.AIRTABLE_BASEID
 );
+
 const table = base<Member>(env.AIRTABLE_NAME);
+const qrTable = base<Qr>("QRcodes");
 
 export const queryMemberBy = async (
   keys: Array<string>,
@@ -74,17 +82,26 @@ export const getPurchasedAndTotal = async () => {
 
     const total = members.map((x) => {
       return x.fields.purchased;
-      // return {
-      //   code: x.fields.code,
-      //   sold: x.fields.purchased,
-      //   name: x.fields.name,
-      //   price: x.fields.price,
-      // };
     });
 
     return total.reduce((prev, curr) => prev + curr, 0);
   } catch (error) {
     console.error("Error in getAllTicketsFromCode:", error);
     throw new Error("can't get tickets!");
+  }
+};
+
+export const addQRcode = async (ID: string, name: string) => {
+  try {
+    const newQRCode = await qrTable.create({
+      name: name,
+      id: ID,
+      scanned: false,
+    });
+    console.log("Added QR code:", newQRCode);
+    return newQRCode;
+  } catch (error) {
+    console.error("Error adding QR code:", error);
+    throw error;
   }
 };

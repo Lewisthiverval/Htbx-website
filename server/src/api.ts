@@ -6,6 +6,7 @@ import cors from "cors";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import { getAllTicketsFromCode } from "./airtable";
+import { addQRcode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
 import { confirmEmail } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
@@ -121,19 +122,20 @@ app.post(
   }
 );
 
-// app.post("/getPurchasedAndTotal", async (req: Request, res: Response) => {
-//   const tickets = await getPurchasedAndTotal();
-//   if (!tickets) {
-//     throw new Error("couldn't get ticekts");
-//   }
-//   res.send(tickets);
-// });
-
-// app.get("/test", async (req, res) => {
-//   res.send("hi");
-// });
-
-app.get("/purchased", async (req, res) => {
+app.get("/purchased", async (req: Request, res: Response) => {
   const members = await getPurchasedAndTotal();
   res.json(members);
+});
+
+app.post("/scan", async (req: Request, res: Response) => {
+  res.send("scan");
+});
+
+app.post("/qradd", async (req: Request, res: Response) => {
+  try {
+    await addQRcode("5687", "becky");
+    res.send("success");
+  } catch (error) {
+    res.send(error);
+  }
 });
