@@ -74,7 +74,6 @@ export const updatePaymentComplete = async (id: string, data: any) => {
   });
 
   await createTickets(namesAndQuantity);
-  // await sendEmail(email, namesAndQuantity);
 
   const updateAirtable = async () => {
     data.forEach(async (x: any) => {
@@ -94,8 +93,6 @@ export const updatePaymentComplete = async (id: string, data: any) => {
     // await updateAirtable();
     // sendEmail(email, quantityForEmail, names);
     await updateAirtable();
-
-    // sendEmail(email, Q, names);
   }
 };
 

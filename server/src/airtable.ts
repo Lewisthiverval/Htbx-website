@@ -106,10 +106,10 @@ export const addQRcode = async (ID: string, name: string) => {
   }
 };
 
-export const checkQR = async (ID: string) => {
+export const checkQR = async (id: string) => {
   try {
     const qr: any = await qrTable
-      .select({ filterByFormula: `{ID} = "${ID}"` })
+      .select({ filterByFormula: `{id} = "${id}"` })
       .all()
       .then((records) => {
         return records?.[0];
@@ -121,12 +121,31 @@ export const checkQR = async (ID: string) => {
     if (qr.fields.scanned === "true") {
       return "QR invalid";
     }
+    return "Valid";
+  } catch (error) {
+    console.error("Couldn't find  QR code:", error);
+    throw error;
+  }
+};
+
+export const updateQR = async (id: string) => {
+  try {
+    const qr: any = await qrTable
+      .select({ filterByFormula: `{id} = "${id}"` })
+      .all()
+      .then((records) => {
+        return records?.[0];
+      });
+
+    if (!qr) {
+      return "QR not found";
+    }
     await qrTable.update(qr.id, {
       scanned: "true",
     });
     return "QR code scanned successfully";
   } catch (error) {
-    console.error("Couldn't find or update QR code:", error);
-    throw error;
+    console.error("could not update state of qr...");
+    console.log(error);
   }
 };

@@ -14,7 +14,11 @@ export const createTicket = async (data: any) => {
   try {
     const doc = new pdfkit();
     const qrCodeObj = { name: data.name, id: uuidv4() };
-    const qrCodeData = `ticket for ${qrCodeObj.name}.  id: ${qrCodeObj.id}`; // Replace with your ticket data
+    const qrCodeData = JSON.stringify({
+      name: qrCodeObj.name,
+      id: qrCodeObj.id,
+    });
+
     if (!fs.existsSync(ticketsDir))
       fs.mkdirSync(ticketsDir, { recursive: true });
     const qrCodePath = path.join(ticketsDir, `${data.name}qrcode.png`);

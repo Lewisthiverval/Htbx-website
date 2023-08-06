@@ -27,10 +27,17 @@ function EnterPage() {
     <div className="App">
       <div className="firstPageContainer">
         <div className="enterContainer">
-          <Link to="/admin">
+          <Link to="/checkout">
             <h1 className="enter">E N T E R</h1>
           </Link>
+
+          {/* <div className="gif"></div> */}
         </div>
+        <img
+          className="gif"
+          height="400px"
+          src="src/assets/alejandra.gif"
+        ></img>
       </div>
     </div>
   );

@@ -5,10 +5,9 @@ import Stripe from "stripe";
 import cors from "cors";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
-import { checkQR, getAllTicketsFromCode } from "./airtable";
-import { addQRcode } from "./airtable";
+import { checkQR, updateQR, getAllTicketsFromCode } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
-import { confirmEmail } from "./email";
+import { confirmEmail, createTickets } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
 
@@ -127,7 +126,28 @@ app.get("/purchased", async (req: Request, res: Response) => {
   res.json(members);
 });
 
-app.post("/scan", async (req: Request, res: Response) => {
-  const scannedMess = await checkQR("1234");
-  res.send(scannedMess);
+app.post("/scan", async ({ body }: Request, res: Response) => {
+  const scannedMess = await checkQR(body.id);
+  res.send({ response: scannedMess });
 });
+
+app.post("/updateQr", async ({ body }: Request, res: Response) => {
+  try {
+    const state = await updateQR(body.id);
+    res.json(state);
+  } catch (error) {
+    console.error("could not update. api call failed.");
+    console.log(error);
+  }
+});
+
+// app.post("/testTicket", async (req: Request, res: Response) => {
+//   try {
+//     await createTickets([{ name: "lewis" }]);
+//     // await confirmEmail(["lewis"], "lewismurray78@gmail.com");
+//     res.send("success");
+//   } catch (error) {
+//     console.error("canne make or send the ticket");
+//     console.log(error);
+//   }
+// });

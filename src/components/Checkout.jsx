@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Tickets } from "./Tickets";
+import NIN from "../assets/sounds/NIN-WAX.mp3";
+
+import padam from "../assets/sounds/PadamPadam.mp3";
 
 import logo from "../assets/htbx-logo.jpg";
 // import apple1 from "../assets/sounds/apple1.wav";
@@ -9,13 +12,13 @@ import logo from "../assets/htbx-logo.jpg";
 // import track1 from "../assets/sounds/Puce Mary - The Size Of Our Desires (PAN 87).mp3";
 // import track2 from "../assets/sounds/NN-Police Brutality.mp3";
 
-import padam from "../assets/sounds/PadamPadam.mp3";
+import { Socials } from "./Socials";
 
 export function Checkout() {
   const [code, setCode] = useState("");
   const params = useParams();
   const nav = useNavigate();
-  const track = new Audio(padam);
+  const track = new Audio(NIN);
   const handleClick = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -31,8 +34,21 @@ export function Checkout() {
   };
 
   useEffect(() => {
-    track.currentTime = 64.3;
+    track.currentTime = 300.5;
     track.play();
+
+    const handleTrackEnd = () => {
+      track.currentTime = 219.5;
+      track.play();
+    };
+
+    // Add the 'ended' event listener for looping
+    track.addEventListener("ended", handleTrackEnd);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      track.removeEventListener("ended", handleTrackEnd);
+    };
   }, []);
 
   return params.code ? (
@@ -40,10 +56,11 @@ export function Checkout() {
       <div className="frameContainer">
         <Tickets code={params.code} />
       </div>
+      <Socials />
     </div>
   ) : (
     <div className="secondpageContainer">
-      <img src={logo} alt="logo" width="300" height="90"></img>
+      <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
       <div className="frameContainer">
         <input
           type="text"
@@ -62,6 +79,7 @@ export function Checkout() {
 
         <div className="quantityContainer"></div>
       </div>
+      <Socials />
     </div>
   );
 }

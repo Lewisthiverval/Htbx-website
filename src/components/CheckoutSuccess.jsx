@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export function CheckoutSuccess() {
+export function CheckoutSuccess({ email }) {
   const nav = useNavigate();
   const url = window.location.href;
   const sessionId = new URL(url).searchParams.get("session_id");
@@ -11,7 +11,10 @@ export function CheckoutSuccess() {
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <h1>Thank u sxc, check your email! x. {sessionId}</h1>
+        <h1>
+          Thank u sxc, ticket sent to {email}. If you didn't receive it contact
+          us at hi@htbx.london! x. {sessionId}
+        </h1>
         <div calssName="lastPageButton">
           <button className="button" onClick={home}>
             exit
