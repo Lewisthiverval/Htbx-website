@@ -1,5 +1,5 @@
 .firstPageContainer {
-  background-image: url("assets/glitter.jpeg");
+  /* background-image: url("assets/glitter.jpeg"); */
   background-size: 100%;
   /* height: 100%;
   width: 100%; */
@@ -26,9 +26,9 @@
   }
 }
 .gif {
-  background-image: url("assets/alejandra.gif");
-  background-size: 100%;
-  height: 400px;
+  /* background-image: url("assets/alejandra.gif"); */
+  /* background-size: 200px; */
+  /* height: 400px; */
   display: flex;
   justify-container: center;
   align-items: center;

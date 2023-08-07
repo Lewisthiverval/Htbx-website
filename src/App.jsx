@@ -7,6 +7,8 @@ import { NoCode } from "./components/CheckoutSuccess";
 import { Checkout } from "./components/Checkout";
 import "./App.css";
 
+import gif from "./assets/alejandra.gif";
+
 function App() {
   return (
     <ErrorBoundary>
@@ -33,11 +35,7 @@ function EnterPage() {
 
           {/* <div className="gif"></div> */}
         </div>
-        <img
-          className="gif"
-          height="400px"
-          src="src/assets/alejandra.gif"
-        ></img>
+        <img className="gif" height="400px" src={gif}></img>
       </div>
     </div>
   );
