@@ -5,7 +5,12 @@ import Stripe from "stripe";
 import cors from "cors";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
-import { checkQR, updateQR, getAllTicketsFromCode } from "./airtable";
+import {
+  checkQR,
+  updateQR,
+  getAllTicketsFromCode,
+  runBatches,
+} from "./airtable";
 import { freeCheckoutComplete } from "./payments";
 import { confirmEmail, createTickets } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
@@ -138,6 +143,16 @@ app.post("/updateQr", async ({ body }: Request, res: Response) => {
   } catch (error) {
     console.error("could not update. api call failed.");
     console.log(error);
+  }
+});
+
+app.get("/resetFields", async (Reques: Request, res: Response) => {
+  try {
+    const message = await runBatches();
+    res.send("success");
+  } catch (error) {
+    console.log(error);
+    console.log("couldn't update fields");
   }
 });
 

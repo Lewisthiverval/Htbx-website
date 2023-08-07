@@ -34,7 +34,7 @@ export function Checkout() {
   };
 
   useEffect(() => {
-    track.currentTime = 300.5;
+    track.currentTime = 219.5;
     track.play();
 
     const handleTrackEnd = () => {

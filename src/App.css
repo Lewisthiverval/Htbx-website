@@ -11,7 +11,19 @@
   /* height: 100dvh; */
   width: 100vw;
 }
-
+@keyframes blinker2 {
+  0%,
+  80% {
+    background-opacity: 0.5;
+  }
+  30%,
+  20% {
+    background-opacity: 0.2;
+  }
+  100% {
+    background-opacity: 0.8;
+  }
+}
 .gif {
   background-image: url("assets/alejandra.gif");
   background-size: 100%;
@@ -40,10 +52,11 @@
 .secondpageContainer {
   color: #ec03fc;
   /* background-image: url("assets/alejandra.gif"); */
-  background: black;
-
+  /* background: black; */
+  /* animation: blinker2 6s linear infinite;
+  background-color: rgba(0, 0, 0, 0.4); */
   background-size: 200px;
-  background-opacity: 0.3;
+  background-opacity: 0.1;
   /* height: 100%;
   width: 100%; */
   display: flex;

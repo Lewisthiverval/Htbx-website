@@ -12,8 +12,8 @@ export function CheckoutSuccess({ email }) {
     <div className="secondpageContainer">
       <div className="frameContainer">
         <h1>
-          Thank u sxc, ticket sent to {email}. If you didn't receive it contact
-          us at hi@htbx.london! x. {sessionId}
+          Thank u sxc, ticket sent to {email}. contact us at hi@htbx.london with
+          any issues x. {sessionId}
         </h1>
         <div calssName="lastPageButton">
           <button className="button" onClick={home}>

@@ -26,6 +26,39 @@ const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(
 const table = base<Member>(env.AIRTABLE_NAME);
 const qrTable = base<Qr>("QRcodes");
 
+export const updateBatchOfRecords = async (records: any) => {
+  const updates = records.map((record: any) => ({
+    id: record.id,
+    fields: {
+      purchased: 0,
+      ID: "",
+      payment_intent: "",
+      remaining: 1,
+    },
+  }));
+  await table.update(updates);
+};
+
+export function createSubarrays(inputArray: any, subarraySize: number) {
+  const subarrays = [];
+  const numSubarrays = Math.ceil(inputArray.length / subarraySize);
+  for (let i = 0; i < numSubarrays; i++) {
+    const startIdx = i * subarraySize;
+    const endIdx = (i + 1) * subarraySize;
+    const subarray = inputArray.slice(startIdx, endIdx);
+    subarrays.push(subarray);
+  }
+  return subarrays;
+}
+
+export async function runBatches() {
+  const allrecords = await table.select().all();
+  const batches = createSubarrays(allrecords, 10);
+  batches.forEach((batch) => {
+    updateBatchOfRecords(batch);
+  });
+}
+
 export const queryMemberBy = async (
   keys: Array<string>,
   values: Array<string>
