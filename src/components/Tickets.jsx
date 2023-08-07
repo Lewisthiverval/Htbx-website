@@ -100,7 +100,7 @@ export function Tickets(params) {
     <Payment products={chosenTickets} email={emailValue} />
   ) : (
     <div className="tickets-container">
-      <img src={logo} alt="logo" width="300" height="90"></img>
+      <img src={logo} className="logo" alt="logo" width="300" height="90"></img>
 
       <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
         Select your ticket(s):
