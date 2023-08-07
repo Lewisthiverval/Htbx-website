@@ -90,6 +90,8 @@ app.get("/success", async (req: Request, res: Response) => {
       `${env.WEBAPP_URL}/#/failure?error=decodingerror`
     );
     res.status(302);
+    res.send(error);
+    console.log(error);
     res.end();
     return;
   }
@@ -155,14 +157,3 @@ app.get("/resetFields", async (Reques: Request, res: Response) => {
     console.log("couldn't update fields");
   }
 });
-
-// app.post("/testTicket", async (req: Request, res: Response) => {
-//   try {
-//     await createTickets([{ name: "lewis" }]);
-//     // await confirmEmail(["lewis"], "lewismurray78@gmail.com");
-//     res.send("success");
-//   } catch (error) {
-//     console.error("canne make or send the ticket");
-//     console.log(error);
-//   }
-// });

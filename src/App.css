@@ -11,6 +11,7 @@
   /* height: 100dvh; */
   width: 100vw;
 }
+
 @keyframes blinker2 {
   0%,
   80% {
@@ -269,7 +270,7 @@ input:-webkit-autofill:active {
   height: 100%;
   width: 100%;
   margin-top: 10%;
-  margin-bottom: 25%;
+  padding-bottom: 8%;
 }
 
 .checkout {

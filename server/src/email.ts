@@ -73,7 +73,7 @@ export const createTickets = async (names: Array<any>) => {
 };
 
 export const confirmEmail = async (names: Array<any>, address: string) => {
-  await sgMail.setApiKey(env.SENDGRID_API_KEY);
+  sgMail.setApiKey(env.SENDGRID_API_KEY);
 
   let tickets: Array<any> = [];
 
@@ -95,7 +95,7 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
   });
 
   const msg = {
-    from: "htbxlondon@gmail.com",
+    from: "hi@htbx.london",
     to: address,
     subject: "ticket",
     text: "htbx ticket",
