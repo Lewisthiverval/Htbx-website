@@ -13,7 +13,7 @@ export default function CheckoutForm({ tickets }) {
   const elements = useElements();
 
   const dataToPass = tickets.map((x) => {
-    return { ID: x.ID, quantity: x.quantity, name: x.name };
+    return { ID: x.ID, quantity: x.quantity, name: x.name, email: x.email };
   });
   const encodedDataToPass = encodeURIComponent(JSON.stringify(dataToPass));
 

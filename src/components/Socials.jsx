@@ -13,7 +13,7 @@ export const Socials = () => {
         <h3 className="social-text">Instagram</h3>
       </a>
       <a
-        href="https://www.soundcloud.com/"
+        href="https://soundcloud.com/h_t_b_x"
         target="_blank"
         rel="noopener noreferrer"
         className="social-link"
