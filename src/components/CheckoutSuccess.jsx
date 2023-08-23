@@ -5,7 +5,6 @@ export function CheckoutSuccess({ email }) {
   const nav = useNavigate();
   const url = window.location.href;
   const sessionId = new URL(url).searchParams.get("session_id");
-  const emailClient = new URL(url).searchParams.get("email");
   const home = () => {
     nav("/");
   };

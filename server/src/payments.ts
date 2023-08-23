@@ -73,7 +73,7 @@ export const updatePaymentComplete = async (id: string, data: any) => {
     return obj;
   });
 
-  await createTickets(namesAndQuantity);
+  await createTickets(namesAndQuantity, email);
 
   const updateAirtable = async () => {
     data.forEach(async (x: any) => {
@@ -111,7 +111,7 @@ export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
     const obj = { name: x.name, quantity: 1 };
     return obj;
   });
-  await createTickets(namesAndQuantity);
+  await createTickets(namesAndQuantity, email);
   tickets.forEach(async (x: any) => {
     const ID = x.ID;
     const { member, table } = await queryMemberBy(["ID"], [ID]);

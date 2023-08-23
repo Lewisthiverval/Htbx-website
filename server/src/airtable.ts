@@ -18,6 +18,7 @@ type Qr = {
   name: string;
   id: string;
   scanned: string;
+  email: string;
 };
 const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(
   env.AIRTABLE_BASEID
@@ -124,13 +125,15 @@ export const getPurchasedAndTotal = async () => {
   }
 };
 
-export const addQRcode = async (ID: string, name: string) => {
+export const addQRcode = async (ID: string, name: string, email: string) => {
   try {
     const newQRCode = await qrTable.create({
       name: name,
       id: ID,
       scanned: "false",
+      email: email,
     });
+
     console.log("Added QR code:", newQRCode);
     return newQRCode;
   } catch (error) {

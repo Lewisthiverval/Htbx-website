@@ -6,8 +6,9 @@
 }
 
 .inputC {
+  display: flex;
+  flex-direction: row;
   color: #ec03fc;
-  width: 40%;
   font-size: 30px;
   background-color: black;
   border-radius: 5px;
@@ -15,6 +16,4 @@
   border: solid;
   border-color: #ec03fc;
   border-width: 3px;
-
-  margin: 10%;
 }

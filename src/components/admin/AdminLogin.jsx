@@ -24,9 +24,7 @@ export default function AdminLogin() {
   };
 
   return auth ? (
-    <div>
-      <AdminPage />
-    </div>
+    <AdminPage />
   ) : (
     <div className="loginPage">
       <div>

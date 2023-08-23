@@ -3,6 +3,7 @@ import expressWinston from "express-winston";
 import winston from "winston";
 import Stripe from "stripe";
 import cors from "cors";
+import { sendTicketsManually } from "./manualPdfs";
 
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import {
@@ -148,12 +149,22 @@ app.post("/updateQr", async ({ body }: Request, res: Response) => {
   }
 });
 
-app.get("/resetFields", async (Reques: Request, res: Response) => {
+app.get("/resetFields", async (Request: Request, res: Response) => {
   try {
     const message = await runBatches();
     res.send("success");
   } catch (error) {
     console.log(error);
     console.log("couldn't update fields");
+  }
+});
+
+app.post("/manualTickets", async (req: Request, res: Response) => {
+  try {
+    const response = await sendTicketsManually(req.body);
+    res.send(response);
+  } catch (error) {
+    console.error(error);
+    res.send(error);
   }
 });

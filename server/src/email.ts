@@ -23,7 +23,7 @@ export const createTicket = async (data: any) => {
       fs.mkdirSync(ticketsDir, { recursive: true });
     const qrCodePath = path.join(ticketsDir, `${data.name}qrcode.png`);
     await Qrcode.toFile(qrCodePath, qrCodeData);
-    await addQRcode(qrCodeObj.id, qrCodeObj.name);
+    await addQRcode(qrCodeObj.id, qrCodeObj.name, data.email);
     const pdfPath = path.join(ticketsDir, `ticket_${data.name}.pdf`);
     doc.pipe(fs.createWriteStream(pdfPath));
     doc.image(qrCodePath, { width: 200, align: "center" });
@@ -59,10 +59,10 @@ export const createTicket = async (data: any) => {
   }
 };
 
-export const createTickets = async (names: Array<any>) => {
+export const createTickets = async (names: Array<any>, email: string) => {
   const fileCreationPromises = [];
   for (let i = 0; i < names.length; i++) {
-    const data = { name: names[i].name };
+    const data = { name: names[i].name, email: email };
     const promise = await createTicket(data);
     fileCreationPromises.push(promise);
   }
@@ -95,8 +95,8 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
   const msg = {
     from: "hi@htbx.london",
     to: address,
-    subject: "ticket",
-    text: "htbx ticket",
+    subject: "HTBX 27.08.23",
+    text: "HTBX ticket",
     attachments: tickets,
   };
   console.log("sending emails", msg);

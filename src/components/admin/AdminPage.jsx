@@ -10,7 +10,7 @@ export const AdminPage = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "black", height: "80vh", width: "80vh" }}>
+    <div style={{ backgroundColor: "black", height: "100vh", width: "80vh" }}>
       <QrReader
         onResult={async (result, error) => {
           if (!!result) {
@@ -30,31 +30,27 @@ export const AdminPage = () => {
             console.log(error);
           }
         }}
-        style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}
+        // style={{ width: "100%", height: "100%" }}
       />
-      <p style={{ color: "white", textAlign: "center" }}>
-        {data.responseMessage}
-      </p>
-      <button
-        onClick={markAsScanned}
-        style={{ backgroundColor: "white", color: "black" }}
-      >
-        MARK AS SCANNED
-      </button>
+
+      <p>{data.responseMessage}</p>
+      <button onClick={markAsScanned}>MARK AS SCANNED</button>
       {data === "valid" ? (
-        <button
-          style={{
-            backgroundColor: "white",
-            color: "white",
-            width: "200px",
-            height: "100px",
-            fontSize: "200px",
-          }}
-        >
-          MARK QR AS SCANNED
-        </button>
+        <div>
+          <button
+            style={{
+              backgroundColor: "white",
+              color: "white",
+              width: "200px",
+              height: "100px",
+              fontSize: "200px",
+            }}
+          >
+            MARK QR AS SCANNED
+          </button>
+        </div>
       ) : (
-        <div></div>
+        <div className="flex bg-black h-5 w-7"></div>
       )}
     </div>
   );
