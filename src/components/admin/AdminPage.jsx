@@ -12,7 +12,8 @@ export const AdminPage = () => {
     <div className="h-screen w-screen flex flex-col items-center justify-center bg-black">
       <div className="h-4/5 w-4/5 bg-black overflow-hidden group">
         <QrReader
-          facingMode="environment"
+          key="environment"
+          constraints={{ facingMode: "environment" }}
           onResult={async (result, error) => {
             if (!!result) {
               const parsedResult = JSON.parse(result?.text);
