@@ -204,7 +204,7 @@ input:-webkit-autofill:active {
   /* background: url("assets/alejandra.gif"); */
   border: white;
   position: absolute;
-
+  top: 40%;
   left: 0;
   animation: blinker 1s linear infinite;
   /* color: #ff10f0; */
