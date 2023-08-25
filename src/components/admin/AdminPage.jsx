@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { QrReader } from "react-qr-reader";
 import { fetchFromAPI } from "../../functions/helpers";
+import { useEffect } from "react";
 
 export const AdminPage = () => {
   const [data, setData] = useState("No result");
+  useEffect(() => {});
 
   const markAsScanned = async () => {
     await fetchFromAPI("updateQr", { body: data });
@@ -33,14 +35,6 @@ export const AdminPage = () => {
             }
           }}
         />
-        <style>
-          {`
-        .group video {
-           width: 100%!important;
-           height: 100%!important;
-        }
-      `}
-        </style>
       </div>
 
       <p className="text-white mt-4">{data.responseMessage}</p>

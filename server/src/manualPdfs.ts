@@ -11,8 +11,12 @@ const data: Array<namesAndEmail> = [
     email: "lewismurray78@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Matas", quantity: 1 }],
-    email: "Mmartusevicius18@gmail.com",
+    namesAndQuantity: [{ name: "Harper", quantity: 1 }],
+    email: "Harperpfionceleste@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Harper's + 1", quantity: 1 }],
+    email: "Harperpfionceleste@gmail.com",
   },
 ];
 export const sendTicketsManually = async (
@@ -26,3 +30,5 @@ export const sendTicketsManually = async (
 
   return "files created";
 };
+
+// sendTicketsManually(data);
