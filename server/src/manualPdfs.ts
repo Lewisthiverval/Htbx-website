@@ -11,21 +11,25 @@ const data: Array<namesAndEmail> = [
     email: "lewismurray78@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Christian", quantity: 1 }],
-    email: "fohringer.c@gmail.com",
+    namesAndQuantity: [{ name: "astrid", quantity: 1 }],
+    email: "astridobermayer@gmail.com",
   },
-  {
-    namesAndQuantity: [{ name: "Diana", quantity: 1 }],
-    email: "andreamarcou@gmail.com",
-  },
-  {
-    namesAndQuantity: [{ name: "luke", quantity: 1 }],
-    email: "lukehnichols@gmail.com",
-  },
-  {
-    namesAndQuantity: [{ name: "Pedro", quantity: 1 }],
-    email: "phrabelo@hotmail.com",
-  },
+  // {
+  //   namesAndQuantity: [{ name: "Christian", quantity: 1 }],
+  //   email: "fohringer.c@gmail.com",
+  // },
+  // {
+  //   namesAndQuantity: [{ name: "Diana", quantity: 1 }],
+  //   email: "andreamarcou@gmail.com",
+  // },
+  // {
+  //   namesAndQuantity: [{ name: "luke", quantity: 1 }],
+  //   email: "lukehnichols@gmail.com",
+  // },
+  // {
+  //   namesAndQuantity: [{ name: "Pedro", quantity: 1 }],
+  //   email: "phrabelo@hotmail.com",
+  // },
 ];
 export const sendTicketsManually = async (
   namesAndEmail: Array<namesAndEmail>

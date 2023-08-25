@@ -62,7 +62,7 @@ export function Checkout() {
     <div className="secondpageContainer">
       <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
       <div className="frameContainer">
-        <input
+        {/* <input
           type="text"
           className="codeInput"
           name="CODE"
@@ -75,7 +75,7 @@ export function Checkout() {
         ></input>
         <button className="button home" onClick={handleSubmit}>
           Submit
-        </button>
+        </button> */}
 
         <div className="quantityContainer"></div>
       </div>
