@@ -29,9 +29,9 @@ function EnterPage() {
     <div className="App">
       <div className="firstPageContainer">
         <div className="enterContainer">
-          {/* <Link to="/checkout"> */}
-          <h1 className="enter">B R B </h1>
-          {/* </Link> */}
+          <Link to="/checkout">
+            <h1 className="enter">E N T E R</h1>
+          </Link>
 
           {/* <div className="gif"></div> */}
         </div>

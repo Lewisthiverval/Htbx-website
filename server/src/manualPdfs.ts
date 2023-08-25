@@ -11,12 +11,20 @@ const data: Array<namesAndEmail> = [
     email: "lewismurray78@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Harper", quantity: 1 }],
-    email: "Harperpfionceleste@gmail.com",
+    namesAndQuantity: [{ name: "Christian", quantity: 1 }],
+    email: "fohringer.c@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Harper's + 1", quantity: 1 }],
-    email: "Harperpfionceleste@gmail.com",
+    namesAndQuantity: [{ name: "Diana", quantity: 1 }],
+    email: "andreamarcou@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "luke", quantity: 1 }],
+    email: "lukehnichols@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Pedro", quantity: 1 }],
+    email: "phrabelo@hotmail.com",
   },
 ];
 export const sendTicketsManually = async (
@@ -31,4 +39,4 @@ export const sendTicketsManually = async (
   return "files created";
 };
 
-// sendTicketsManually(data);
+sendTicketsManually(data);
