@@ -7,7 +7,7 @@
 
 .inputC {
   display: flex;
-  flex-direction: row;
+  flex-direction: col;
   color: #ec03fc;
   font-size: 30px;
   background-color: black;

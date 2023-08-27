@@ -32,16 +32,19 @@ export default function AdminLogin() {
           method="POST"
           action="/login"
           onSubmit={handleSubmit}
-          className="inputC"
+          className="flex flex-col items-center justify-center text-purple-500 text-3xl bg-black rounded-md text-center border-3 border-purple-500 border-solid w-48 h-16"
         >
           <input
+            className="bg-pink"
             type="password"
             id="password"
             placeholder="password"
             name="password"
             required
           ></input>
-          <button type="submit">Submit</button>
+          <button className="" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>
