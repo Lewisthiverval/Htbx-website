@@ -10,7 +10,12 @@ export const AdminPage = () => {
   const markAsScanned = async () => {
     const scanResponse = await fetchFromAPI("updateQr", { body: data });
     setRes(scanResponse);
+    setData("");
   };
+
+  useEffect(() => {
+    console.log(data);
+  });
 
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center bg-black  border-pink-500 border-solid border-2">
@@ -42,13 +47,13 @@ export const AdminPage = () => {
         </div>
       </div>
 
-      <p className="text-red-400 text-4xl mt-4"> {data}</p>
+      <p className="text-red-400 text-4xl mt-4"> {data.responseMessage}</p>
 
-      {data === "valid" ? (
+      {data.responseMessage === "Valid" ? (
         <div>
-          <div className="mt-4 bg-pink-300 text-white py-2 px-4 rounded">
+          {/* <div className="mt-4 bg-pink-300 text-white py-2 px-4 rounded">
             VALID
-          </div>
+          </div> */}
           <button
             className="mt-4 bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-800 focus:outline-none"
             onClick={markAsScanned}
@@ -57,9 +62,7 @@ export const AdminPage = () => {
           </button>
         </div>
       ) : (
-        <div className="mt-4 bg-pink-300 text-white py-2 px-4 rounded">
-          NOT VALID
-        </div>
+        <div></div>
       )}
     </div>
   );
