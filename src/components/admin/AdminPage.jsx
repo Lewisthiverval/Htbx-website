@@ -42,18 +42,23 @@ export const AdminPage = () => {
         </div>
       </div>
 
-      <p className="text-red-400 text-4xl mt-4"> VALID</p>
+      <p className="text-red-400 text-4xl mt-4"> {data}</p>
 
       {data === "valid" ? (
-        <button
-          className="mt-4 bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-800 focus:outline-none"
-          onClick={markAsScanned}
-        >
-          MARK AS SCANNED
-        </button>
+        <div>
+          <div className="mt-4 bg-pink-300 text-white py-2 px-4 rounded">
+            VALID
+          </div>
+          <button
+            className="mt-4 bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-800 focus:outline-none"
+            onClick={markAsScanned}
+          >
+            MARK AS SCANNED
+          </button>
+        </div>
       ) : (
         <div className="mt-4 bg-pink-300 text-white py-2 px-4 rounded">
-          NO QR SHOWED
+          NOT VALID
         </div>
       )}
     </div>
