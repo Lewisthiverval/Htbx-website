@@ -13,7 +13,7 @@ function App() {
   return (
     <ErrorBoundary>
       <Routes>
-        <Route path="/success" element={<CheckoutSuccess />} />
+        <Route path="/success/:ticketname" element={<CheckoutSuccess />} />
         <Route path="/" element={<EnterPage />} />
         <Route path="/checkout/:code" element={<Checkout />} />
         <Route path="/checkout" element={<Checkout />} />

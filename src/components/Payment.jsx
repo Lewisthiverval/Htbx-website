@@ -37,6 +37,12 @@ function Payment({ products, email }) {
       })
   );
 
+  const ticketNames = products
+    .map((x) => {
+      return `ticket_${x.name}`;
+    })
+    .join(",");
+
   const checkoutfree = useSwrMutation("freeCheckout", () =>
     fetchFromAPI("freeCheckout", {
       body: {
@@ -53,7 +59,7 @@ function Payment({ products, email }) {
 
   const handleClick = () => {
     if (validateEmail(email)) {
-      checkoutfree.trigger().then(() => nav("/success"));
+      checkoutfree.trigger().then(() => nav(`/success/${ticketNames}`));
     }
   };
 

@@ -81,7 +81,6 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
         const fileName = `ticket_${x.name}.pdf`;
         const filePath = path.join(ticketsDir, fileName);
         const fileContent = fs.readFileSync(filePath, { encoding: "base64" });
-
         tickets.push({
           content: fileContent,
           filename: fileName,
@@ -99,6 +98,5 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
     text: "HTBX ticket",
     attachments: tickets,
   };
-  console.log("sending emails", msg);
   await sgMail.send(msg);
 };

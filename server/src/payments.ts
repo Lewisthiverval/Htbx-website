@@ -90,8 +90,6 @@ export const updatePaymentComplete = async (id: string, data: any) => {
   };
 
   if (intent.status === "succeeded") {
-    // await updateAirtable();
-    // sendEmail(email, quantityForEmail, names);
     await updateAirtable();
   }
 };

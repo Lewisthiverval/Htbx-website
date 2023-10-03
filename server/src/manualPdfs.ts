@@ -11,8 +11,8 @@ const data: Array<namesAndEmail> = [
     email: "lewismurray78@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Laureano", quantity: 1 }],
-    email: "laureano.nisenbaum@gmail.com",
+    namesAndQuantity: [{ name: "xavier", quantity: 1 }],
+    email: "xavierandrewdj@gmail.com",
   },
   // {
   //   namesAndQuantity: [{ name: "kelly", quantity: 3 }],

@@ -8,17 +8,12 @@ import logo from "../assets/htbx-logo.jpg";
 
 export default function CheckoutForm({ tickets }) {
   const [isProcessing, setIsProcessing] = useState(false);
-
   const stripe = useStripe();
   const elements = useElements();
-
   const dataToPass = tickets.map((x) => {
     return { ID: x.ID, quantity: x.quantity, name: x.name, email: x.email };
   });
   const encodedDataToPass = encodeURIComponent(JSON.stringify(dataToPass));
-
-  console.log(dataToPass, "datatopass");
-  console.log(encodedDataToPass, "encoded");
 
   if (!stripe || !elements) {
     return;

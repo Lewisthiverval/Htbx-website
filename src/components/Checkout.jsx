@@ -42,10 +42,7 @@ export function Checkout() {
       track.play();
     };
 
-    // Add the 'ended' event listener for looping
     track.addEventListener("ended", handleTrackEnd);
-
-    // Clean up the event listener when the component unmounts
     return () => {
       track.removeEventListener("ended", handleTrackEnd);
     };

@@ -13,7 +13,6 @@ export function Tickets(params) {
   const [chosenTickets, setChosenTickets] = useState([]);
   const [emailValue, setEmailValue] = useState("");
   const [ticketName, setTicketName] = useState("");
-  // const [name, setName] = useState("");
 
   const [isLoading, setIsloading] = useState(true);
   const nav = useNavigate();

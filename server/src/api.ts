@@ -65,7 +65,12 @@ app.post("/payments", async ({ body }: Request, res: Response) => {
 app.get("/success", async (req: Request, res: Response) => {
   const paymentIntent: any = req.query.payment_intent;
   const encodedData: any = req.query.data;
-  console.log({ paymentIntent, encodedData });
+  const decodedData = JSON.parse(decodeURIComponent(encodedData));
+  const ticketNames = decodedData
+    .map((x: any) => {
+      return `ticket_${x.name}`;
+    })
+    .join(",");
   if (typeof paymentIntent !== "string") {
     res.setHeader(
       "Location",
@@ -79,8 +84,6 @@ app.get("/success", async (req: Request, res: Response) => {
   try {
     const intent = await stripe.paymentIntents.retrieve(paymentIntent);
     const email = intent.metadata.email;
-    const decodedData = JSON.parse(decodeURIComponent(encodedData));
-    console.log({ decodedData, email, intent });
 
     await updatePaymentComplete(paymentIntent, decodedData);
     await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
@@ -97,7 +100,7 @@ app.get("/success", async (req: Request, res: Response) => {
     return;
   }
 
-  res.setHeader("Location", `${env.WEBAPP_URL}/#/success`);
+  res.setHeader("Location", `${env.WEBAPP_URL}/#/success/${ticketNames}`);
   res.status(302);
   res.end();
 });
@@ -151,7 +154,7 @@ app.post("/updateQr", async ({ body }: Request, res: Response) => {
 
 app.get("/resetFields", async (Request: Request, res: Response) => {
   try {
-    const message = await runBatches();
+    await runBatches();
     res.send("success");
   } catch (error) {
     console.log(error);

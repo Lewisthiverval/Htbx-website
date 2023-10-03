@@ -1,7 +1,13 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export function CheckoutSuccess({ email }) {
+  const { ticketname } = useParams();
+  const individualTicketNames = ticketname.includes(",")
+    ? ticketname.split(",")
+    : [ticketname];
+
   const nav = useNavigate();
   const url = window.location.href;
   const sessionId = new URL(url).searchParams.get("session_id");
@@ -15,7 +21,7 @@ export function CheckoutSuccess({ email }) {
           Thank u sxc. contact us at hi@htbx.london with any issues x.{" "}
           {sessionId}
         </h1>
-        <div calssName="lastPageButton">
+        <div className="lastPageButton">
           <button className="button" onClick={home}>
             exit
           </button>
