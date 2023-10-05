@@ -112,7 +112,7 @@ app.post("/ticket", async (req: Request, res: Response) => {
   const ticketPath = path.join(ticketDir, ticketName);
 
   try {
-    // await fs.promises.access(ticketPath, fs.constants.F_OK);
+    await fs.promises.access(ticketPath, fs.constants.F_OK);
     res.setHeader("Content-Type", "application/pdf");
     res.sendFile(ticketPath);
   } catch {

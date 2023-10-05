@@ -11,7 +11,7 @@ export function Tickets(params) {
   const [ticketsChosen, setTicketsChosen] = useState(false);
   const [tickets, setTickets] = useState([]);
   const [chosenTickets, setChosenTickets] = useState([]);
-  const [emailValue, setEmailValue] = useState("");
+  const [emailValue, setEmailValue] = useState({ email1: "", email2: "" });
   const [ticketName, setTicketName] = useState("");
 
   const [isLoading, setIsloading] = useState(true);
@@ -31,6 +31,10 @@ export function Tickets(params) {
   useEffect(() => {
     getTickets();
   }, []);
+
+  useEffect(() => {
+    console.log(emailValue.email1, emailValue.email2);
+  }, [emailValue]);
 
   useEffect(() => {
     if (tickets.length > 0) {
@@ -79,20 +83,26 @@ export function Tickets(params) {
   };
 
   const handleClick = () => {
-    if (validateEmail(emailValue)) {
-      console.log(chosenTickets);
+    if (
+      validateEmail(emailValue.email1) &&
+      emailValue.email1 === emailValue.email2
+    ) {
       setTicketsChosen(true);
     } else {
-      alert("Babe, focus! that email is invalid");
+      alert("Babe, focus! the emails don't match...");
     }
   };
 
-  const handleEmailChange = (event) => {
-    setEmailValue(event.target.value);
+  const handleEmail1Change = (event) => {
+    setEmailValue((prev) => {
+      return { email1: event.target.value, email2: prev.email2 };
+    });
   };
 
-  const handleNameChange = (e) => {
-    setName(e.value);
+  const handleEmail2Change = (event) => {
+    setEmailValue((prev) => {
+      return { email1: prev.email1, email2: event.target.value };
+    });
   };
 
   return ticketsChosen ? (
@@ -118,14 +128,24 @@ export function Tickets(params) {
         })}
       </div>
       <div className="checkoutAndEmail">
-        <input
-          className="input666"
-          type="text"
-          id="myInput"
-          placeholder="Email"
-          value={emailValue}
-          onChange={handleEmailChange}
-        />
+        <div>
+          <input
+            className="input666"
+            type="text"
+            id="myInput"
+            placeholder="Email"
+            value={emailValue.email1}
+            onChange={handleEmail1Change}
+          />
+          <input
+            className="input666"
+            type="text"
+            id="myInput"
+            placeholder="Email confirmation"
+            value={emailValue.email2}
+            onChange={handleEmail2Change}
+          />
+        </div>
         <button
           className="button checkout-button"
           onClick={handleClick}
