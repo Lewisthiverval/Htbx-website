@@ -134,7 +134,7 @@ export function Tickets(params) {
             className="input666"
             type="text"
             id="myInput"
-            placeholder="Email"
+            placeholder="e-mail"
             value={emailValue.email1}
             onChange={handleEmail1Change}
           />
@@ -142,7 +142,7 @@ export function Tickets(params) {
             className="input666"
             type="text"
             id="myInput"
-            placeholder="Email confirmation"
+            placeholder="confirm e-mail"
             value={emailValue.email2}
             onChange={handleEmail2Change}
           />

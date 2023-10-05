@@ -62,9 +62,13 @@ export function CheckoutSuccess({ email }) {
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <h1 className="successMessage">
+        {/* <h1 className="successMessage">
           Thank u sxc. contact us at hi@htbx.london with any issues x.{" "}
           {sessionId}
+        </h1> */}
+        <h1 className="successMessage">
+          Thank u sxc! Please download your tickets below, contact us at
+          hi@htbx.london with any issues x. {sessionId}{" "}
         </h1>
         {individualTicketNames.map((x) => {
           return (

@@ -299,7 +299,6 @@ input:-webkit-autofill:active {
   appearance: none;
   background-color: transparent;
   border: 2px solid #ec03fc;
-  border-radius: 5px;
   box-sizing: border-box;
   color: #ec03fc;
   cursor: pointer;
@@ -368,7 +367,7 @@ input:-webkit-autofill:active {
   appearance: none;
   background-color: transparent;
   border: 2px solid #ec03fc;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
   color: #ec03fc;
 
