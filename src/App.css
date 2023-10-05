@@ -1,5 +1,5 @@
 .firstPageContainer {
-  background-image: url("assets/img.jpeg");
+  background-image: url("assets/img3.jpeg");
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -205,7 +205,6 @@ input:-webkit-autofill:active {
   border: 1px solid #e1e1e1;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
-
 .enter {
   display: flex;
   background-color: black;
@@ -216,16 +215,15 @@ input:-webkit-autofill:active {
   color: pink;
   text-align: center;
   text-decoration: none;
-  font-size: 70px;
+  font-size: 40px;
   padding-left: 2rem;
   padding-right: 2rem;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  /* transform: translateX(180px); */
-  margin-top: 40px;
-  /* transform: translateY(20px); */
+  transform: rotate(20deg); /* Rotate 90 degrees to the right */
+  margin-top: 130px;
 }
 
 .enterContainer {
@@ -233,6 +231,8 @@ input:-webkit-autofill:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 200px;
+  margin-bottom: 50px;
 }
 
 .enter:hover {
