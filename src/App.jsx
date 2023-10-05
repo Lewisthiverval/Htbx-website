@@ -35,7 +35,7 @@ function EnterPage() {
 
           {/* <div className="gif"></div> */}
         </div>
-        {/* <img className="gif" height="400px" src={gif}></img> */}
+        {/* <img className="gif" src={gif}></img> */}
       </div>
     </div>
   );

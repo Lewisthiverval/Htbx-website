@@ -25,20 +25,20 @@ export const createPdf = (
   doc
     .fontSize(8)
     .text(
-      "This ticket is non-transferable, meant only for members named on the ticket type, their +1s, or other invited guests. You cannot sell or give your ticket to anyone else, doing so will result in that person being denied entry."
+      "You cannot sell or give your ticket to anyone else, doing so will result in that person being denied entry."
     );
   doc.moveDown();
   doc
     .fontSize(8)
     .text(
-      "If you can no longer attend and have purchased a ticket, please e-mail htbxlondon@gmail.com to be issued a full refund, applicable until 48 hours before the party."
+      "If you can no longer attend, please e-mail htbxlondon@gmail.com to be issued a full refund, applicable until 48 hours before the party."
     );
   doc.moveDown();
   doc.moveDown();
   doc.fontSize(12).text("NO photography is allowed");
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();
-  doc.fontSize(12).text("29/09/23");
+  doc.fontSize(12).text("29/09/23  13:00 to 00:00");
   doc.moveDown();
   doc.fontSize(12).text("Address:");
   doc.fontSize(12).text("SET Woolwich");
