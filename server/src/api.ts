@@ -109,6 +109,8 @@ app.post("/ticket", async (req: Request, res: Response) => {
   const ticketDir = path.join(__dirname, "tickets");
   const ticketName = req.body.ticketName + ".pdf";
   const ticketPath = path.join(ticketDir, ticketName);
+  console.log("ticketDir:", ticketDir);
+  console.log("ticketPath:", ticketPath);
 
   try {
     await fs.promises.access(ticketPath, fs.constants.F_OK);
