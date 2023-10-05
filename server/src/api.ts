@@ -17,7 +17,6 @@ import { freeCheckoutComplete } from "./payments";
 import { confirmEmail, createTickets } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
-
 export const app = express();
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-03-02",
@@ -124,7 +123,7 @@ app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
   await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
   await confirmEmail(body.tickets, body.email);
-
+  console.log("test");
   res.json({ success: true });
 });
 

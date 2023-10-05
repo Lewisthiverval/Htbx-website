@@ -106,7 +106,7 @@ export function Tickets(params) {
   };
 
   return ticketsChosen ? (
-    <Payment products={chosenTickets} email={emailValue} />
+    <Payment products={chosenTickets} email={emailValue.email1} />
   ) : (
     <div className="tickets-container">
       <img src={logo} className="logo" alt="logo" width="300" height="90"></img>
@@ -121,6 +121,7 @@ export function Tickets(params) {
             <Ticket
               ticket={ticket}
               index={index}
+              key={index}
               addToChosen={addToChosen}
               modifyQuantity={modifyQuantity}
             />
