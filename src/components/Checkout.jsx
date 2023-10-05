@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Tickets } from "./Tickets";
 import NIN from "../assets/sounds/NIN-WAX.mp3";
+import halloween from "../assets//sounds/halloween.mp3";
 
 import padam from "../assets/sounds/PadamPadam.mp3";
 
@@ -18,7 +19,7 @@ export function Checkout() {
   const [code, setCode] = useState("");
   const params = useParams();
   const nav = useNavigate();
-  const track = new Audio(NIN);
+  const track = new Audio(halloween);
   const handleClick = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -34,7 +35,7 @@ export function Checkout() {
   };
 
   useEffect(() => {
-    track.currentTime = 219.5;
+    track.currentTime = 163;
     track.play();
 
     const handleTrackEnd = () => {

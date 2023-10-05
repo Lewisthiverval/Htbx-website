@@ -1,9 +1,23 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { fetchFromAPI } from "../functions/helpers";
+import ReactPDF from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { useEffect } from "react";
 const API = process.env.REACT_APP_API_URL;
+
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#E4E4E4",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+});
+
 export function CheckoutSuccess({ email }) {
   const { ticketname } = useParams();
 
@@ -48,12 +62,16 @@ export function CheckoutSuccess({ email }) {
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <h1>
+        <h1 className="successMessage">
           Thank u sxc. contact us at hi@htbx.london with any issues x.{" "}
           {sessionId}
         </h1>
         {individualTicketNames.map((x) => {
-          return <iframe key={x} id={x} width="100%" height="600px"></iframe>;
+          return (
+            <div key={x} class="pdf-container">
+              <iframe id={x} width="100%" height="600px"></iframe>
+            </div>
+          );
         })}
         {/* <button onClick={() => loadTickets(individualTicketNames)}>
           Load Ticket
@@ -77,3 +95,13 @@ export function NoCode() {
     </div>
   );
 }
+
+const MyDocument = () => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      <View style={styles.section}>
+        <Text>Section #1</Text>
+      </View>
+    </Page>
+  </Document>
+);
