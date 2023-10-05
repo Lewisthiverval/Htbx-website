@@ -30,12 +30,12 @@ function EnterPage() {
       <div className="firstPageContainer">
         <div className="enterContainer">
           <Link to="/checkout">
-            <h1 className="enter">SOLD OUT</h1>
+            <h1 className="enter">ENTER</h1>
           </Link>
 
           {/* <div className="gif"></div> */}
         </div>
-        <img className="gif" height="400px" src={gif}></img>
+        {/* <img className="gif" height="400px" src={gif}></img> */}
       </div>
     </div>
   );

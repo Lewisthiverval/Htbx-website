@@ -4,7 +4,8 @@ import winston from "winston";
 import Stripe from "stripe";
 import cors from "cors";
 import { sendTicketsManually } from "./manualPdfs";
-
+import path from "path";
+import fs from "fs";
 import { createPaymentIntent, updatePaymentComplete } from "./payments";
 import {
   checkQR,
@@ -103,6 +104,20 @@ app.get("/success", async (req: Request, res: Response) => {
   res.setHeader("Location", `${env.WEBAPP_URL}/#/success/${ticketNames}`);
   res.status(302);
   res.end();
+});
+
+app.post("/ticket", async (req: Request, res: Response) => {
+  const ticketDir = path.join(__dirname, "..", "tickets");
+  const ticketName = req.body.ticketName + ".pdf";
+  const ticketPath = path.join(ticketDir, ticketName);
+
+  try {
+    // await fs.promises.access(ticketPath, fs.constants.F_OK);
+    res.setHeader("Content-Type", "application/pdf");
+    res.sendFile(ticketPath);
+  } catch {
+    res.status(404).send(`File ${ticketName} does not exist.`);
+  }
 });
 
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {

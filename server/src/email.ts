@@ -46,7 +46,7 @@ export const createTicket = async (data: any) => {
     doc.fontSize(12).text("NO photography is allowed");
     doc.fontSize(12).text("18+ / bring ID");
     doc.moveDown();
-    doc.fontSize(12).text("27/08/23");
+    doc.fontSize(12).text("29/09/23");
     doc.moveDown();
     doc.fontSize(12).text("Address:");
     doc.fontSize(12).text("SET Woolwich");
@@ -57,6 +57,11 @@ export const createTicket = async (data: any) => {
     console.error("error creating ticket");
     console.log(error);
   }
+};
+
+export const fetchTicket = (ticketName: string) => {
+  const pdfPath = path.join(ticketsDir, `${ticketName}.pdf`);
+  const fileContent = fs.readFileSync(pdfPath, { encoding: "base64" });
 };
 
 export const createTickets = async (names: Array<any>, email: string) => {
