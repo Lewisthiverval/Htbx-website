@@ -9,7 +9,7 @@ import * as env from "./env";
 import { addQRcode } from "./airtable";
 
 const ticketsDir = path.join(__dirname, "tickets");
-const SavedticketDir = path.join(__dirname, "..", "tickets");
+const SavedticketDir = path.join(__dirname, "tickets");
 
 export const createPdf = (
   pdfPath: string,

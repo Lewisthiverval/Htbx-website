@@ -106,7 +106,7 @@ app.get("/success", async (req: Request, res: Response) => {
 });
 
 app.post("/ticket", async (req: Request, res: Response) => {
-  const ticketDir = path.join(__dirname, "..", "tickets");
+  const ticketDir = path.join(__dirname, "tickets");
   const ticketName = req.body.ticketName + ".pdf";
   const ticketPath = path.join(ticketDir, ticketName);
 
