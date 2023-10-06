@@ -25,9 +25,9 @@ export function CheckoutSuccess({ email }) {
     });
   }
 
-  function loadTicket(ticketName) {
+  async function loadTicket(ticketName) {
     setTickets(true);
-    fetch(`${API}/ticket`, {
+    await fetch(`${API}/ticket`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
