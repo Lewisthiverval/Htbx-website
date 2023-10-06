@@ -32,7 +32,6 @@ function EnterPage() {
           <Link to="/checkout">
             <h1 className="enter">ENTER</h1>
           </Link>
-
           {/* <div className="gif"></div> */}
         </div>
         {/* <img className="gif" src={gif}></img> */}

@@ -70,13 +70,15 @@ export function CheckoutSuccess({ email }) {
           Thank u sxc! Please download your tickets below, contact us at
           hi@htbx.london with any issues x. {sessionId}{" "}
         </h1>
-        {individualTicketNames.map((x) => {
-          return (
-            <div key={x} class="pdf-container">
-              <iframe id={x} width="100%" height="600px"></iframe>
-            </div>
-          );
-        })}
+        <div className="pdf-container">
+          {individualTicketNames.map((x) => {
+            return (
+              <div key={x} class="pdf">
+                <iframe id={x} height="400px"></iframe>
+              </div>
+            );
+          })}
+        </div>
         {/* <button onClick={() => loadTickets(individualTicketNames)}>
           Load Ticket
         </button> */}
