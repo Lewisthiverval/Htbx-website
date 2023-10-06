@@ -38,7 +38,7 @@ export const createPdf = (
   doc.fontSize(12).text("NO photography is allowed");
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();
-  doc.fontSize(12).text("29/09/23  13:00 to 00:00");
+  doc.fontSize(12).text("29/10/23  13:00 to 00:00");
   doc.moveDown();
   doc.fontSize(12).text("Address:");
   doc.fontSize(12).text("SET Woolwich");
