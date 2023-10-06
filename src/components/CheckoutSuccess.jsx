@@ -1,22 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import ReactPDF from "@react-pdf/renderer";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { useEffect, useState } from "react";
 const API = process.env.REACT_APP_API_URL;
-
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#E4E4E4",
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-});
+import { Document, Page } from "react-pdf";
 
 export function CheckoutSuccess({ email }) {
   const { ticketname } = useParams();
@@ -68,24 +55,15 @@ export function CheckoutSuccess({ email }) {
           Thank u sxc! Please download your tickets below, contact us at
           hi@htbx.london with any issues x. {sessionId}{" "}
         </h1>
-        <div className="viewTicketsContainer">
-          {/* {!tickets && (
-            <div className="viewTickets">
-              <button onClick={() => loadTickets(individualTicketNames)}>
-                View ticket(s)
-              </button>
-            </div>
-          )} */}
-        </div>
+        <div className="viewTicketsContainer"></div>
         <div className="pdf-container">
-          {tickets &&
-            individualTicketNames.map((x) => {
-              return (
-                <div key={x} className="pdf">
-                  <iframe id={x} height="400px"></iframe>
-                </div>
-              );
-            })}
+          {individualTicketNames.map((x) => {
+            return (
+              <div key={x} className="pdf">
+                <iframe id={x} height="400px"></iframe>
+              </div>
+            );
+          })}
         </div>
 
         <div className="lastPageButton">
@@ -107,13 +85,3 @@ export function NoCode() {
     </div>
   );
 }
-
-const MyDocument = () => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.section}>
-        <Text>Section #1</Text>
-      </View>
-    </Page>
-  </Document>
-);
