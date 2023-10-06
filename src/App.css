@@ -246,8 +246,10 @@ input:-webkit-autofill:active {
 }
 @media (max-width: 600px) {
   .enter {
-    font-size: 12px;
-    /* Adjust this value as needed for desired text size */
+    left: 200px !important;
+    margin-top: 85px;
+    margin-right: 65px;
+    font-size: 30px !important;
   }
 }
 .enterContainer {
