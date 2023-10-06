@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ReactPDF from "@react-pdf/renderer";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const API = process.env.REACT_APP_API_URL;
 
 const styles = StyleSheet.create({
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 
 export function CheckoutSuccess({ email }) {
   const { ticketname } = useParams();
+  const [tickets, setTickets] = useState(false);
 
   const individualTicketNames = ticketname.includes(",")
     ? ticketname.split(",")
@@ -38,6 +39,7 @@ export function CheckoutSuccess({ email }) {
   }
 
   function loadTicket(ticketName) {
+    setTickets(true);
     fetch(`${API}/ticket`, {
       method: "POST",
       headers: {
@@ -62,26 +64,30 @@ export function CheckoutSuccess({ email }) {
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        {/* <h1 className="successMessage">
-          Thank u sxc. contact us at hi@htbx.london with any issues x.{" "}
-          {sessionId}
-        </h1> */}
         <h1 className="successMessage">
           Thank u sxc! Please download your tickets below, contact us at
           hi@htbx.london with any issues x. {sessionId}{" "}
         </h1>
-        <div className="pdf-container">
-          {individualTicketNames.map((x) => {
-            return (
-              <div key={x} className="pdf">
-                <iframe id={x} height="400px"></iframe>
-              </div>
-            );
-          })}
+        <div className="viewTicketsContainer">
+          {/* {!tickets && (
+            <div className="viewTickets">
+              <button onClick={() => loadTickets(individualTicketNames)}>
+                View ticket(s)
+              </button>
+            </div>
+          )} */}
         </div>
-        {/* <button onClick={() => loadTickets(individualTicketNames)}>
-          Load Ticket
-        </button> */}
+        <div className="pdf-container">
+          {tickets &&
+            individualTicketNames.map((x) => {
+              return (
+                <div key={x} className="pdf">
+                  <iframe id={x} height="400px"></iframe>
+                </div>
+              );
+            })}
+        </div>
+
         <div className="lastPageButton">
           <button className="button" onClick={home}>
             exit

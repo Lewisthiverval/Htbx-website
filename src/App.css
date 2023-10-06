@@ -206,6 +206,9 @@ input:-webkit-autofill:active {
   justify-content: space-evenly;
   flex-direction: row;
 }
+.successMessage {
+  font-size: 24px; /* You can adjust the value to make the text bigger or smaller */
+}
 
 .pdf {
   margin: 40px auto;
@@ -215,13 +218,12 @@ input:-webkit-autofill:active {
 
 @media (max-width: 600px) {
   .pdf-container {
-    margin-top: 400px;
     flex-direction: column;
     align-items: center;
   }
-
-  .pdf {
-    margin: 20px auto; /* Adjust the margin as needed */
+  .successMessage {
+    font-size: 18px !important;
+    padding: 30px; /* You can adjust the value to make the text bigger or smaller */
   }
 }
 .enter {
@@ -426,9 +428,6 @@ input:-webkit-autofill:active {
   border: grey;
 }
 
-.successMessage {
-  font-size: 24px; /* You can adjust the value to make the text bigger or smaller */
-}
 .input666 :hover {
   color: #fff;
   background-color: #1a1a1a;
