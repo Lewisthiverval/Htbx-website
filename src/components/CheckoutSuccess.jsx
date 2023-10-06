@@ -73,7 +73,7 @@ export function CheckoutSuccess({ email }) {
         <div className="pdf-container">
           {individualTicketNames.map((x) => {
             return (
-              <div key={x} class="pdf">
+              <div key={x} className="pdf">
                 <iframe id={x} height="400px"></iframe>
               </div>
             );
