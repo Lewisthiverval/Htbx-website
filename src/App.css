@@ -11,6 +11,12 @@
   background-repeat: no-repeat;
 }
 
+@media (max-width: 600px) {
+  .firstPageContainer {
+    background-size: 200%; /* Or any value you find visually pleasing */
+  }
+}
+
 @keyframes blinker2 {
   0%,
   80% {
@@ -239,7 +245,12 @@ input:-webkit-autofill:active {
   transform: rotate(20deg); /* Rotate 90 degrees to the right */
   margin-top: 130px;
 }
-
+@media (max-width: 600px) {
+  .enter {
+    font-size: 12px;
+    /* Adjust this value as needed for desired text size */
+  }
+}
 .enterContainer {
   width: 100%;
   display: flex;
