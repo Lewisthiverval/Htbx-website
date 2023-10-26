@@ -52,13 +52,13 @@ export function Checkout() {
   return params.code ? (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <Tickets code={params.code} />
+        {/* <Tickets code={params.code} /> */}
       </div>
       <Socials />
     </div>
   ) : (
     <div className="secondpageContainer">
-      <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
+      {/* <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
       <div className="frameContainer">
         <input
           type="text"
@@ -77,7 +77,7 @@ export function Checkout() {
 
         <div className="quantityContainer"></div>
       </div>
-      <Socials />
+      <Socials /> */}
     </div>
   );
 }

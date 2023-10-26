@@ -7,8 +7,12 @@ type namesAndEmail = {
 
 const data: Array<namesAndEmail> = [
   {
-    namesAndQuantity: [{ name: "lewis", quantity: 1 }],
-    email: "lewismurray78@gmail.com",
+    namesAndQuantity: [{ name: "Farren", quantity: 1 }],
+    email: "farrengardner@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Farren's + 1", quantity: 1 }],
+    email: "farrengardner@gmail.com",
   },
 ];
 export const sendTicketsManually = async (
@@ -23,5 +27,4 @@ export const sendTicketsManually = async (
   return "files created";
 };
 
-//
-// sendTicketsManually(data);
+sendTicketsManually(data);
