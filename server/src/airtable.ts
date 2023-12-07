@@ -20,11 +20,12 @@ type Qr = {
   scanned: string;
   email: string;
 };
-const base = new Airtable({ apiKey: env.AIRTABLE_SECRET_TOKEN }).base(
-  env.AIRTABLE_BASEID
-);
+const base = new Airtable({
+  apiKey:
+    "patsnl6G6xsvlftgR.8d7baafc620b0b35c244c10492c57d3a55aebf4fbca1d8d731ba8c04b9ec1965",
+}).base("appe8kR3xJxcj1Jsr");
 
-const table = base<Member>(env.AIRTABLE_NAME);
+const table = base<Member>("OFFICIAL");
 const qrTable = base<Qr>("QRcodes");
 
 export const updateBatchOfRecords = async (records: any) => {

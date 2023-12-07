@@ -1,3 +1,4 @@
+import { x } from "pdfkit";
 import { createTickets, confirmEmail } from "./email";
 
 type namesAndEmail = {
@@ -7,14 +8,32 @@ type namesAndEmail = {
 
 const data: Array<namesAndEmail> = [
   {
-    namesAndQuantity: [{ name: "Farren", quantity: 1 }],
-    email: "farrengardner@gmail.com",
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
   },
   {
-    namesAndQuantity: [{ name: "Farren's + 1", quantity: 1 }],
-    email: "farrengardner@gmail.com",
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
+  },
+  {
+    namesAndQuantity: [{ name: "Guest", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
   },
 ];
+
+
 export const sendTicketsManually = async (
   namesAndEmail: Array<namesAndEmail>
 ) => {
@@ -26,5 +45,7 @@ export const sendTicketsManually = async (
 
   return "files created";
 };
+
+console.log("hello");
 
 sendTicketsManually(data);

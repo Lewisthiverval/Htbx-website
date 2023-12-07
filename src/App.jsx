@@ -30,7 +30,7 @@ function EnterPage() {
       <div className="firstPageContainer">
         <div className="enterContainer">
           {/* <Link to="/checkout"> */}
-          <h1 className="enter">SOLD OUT</h1>
+          <h1 className="enter">COMING SOON</h1>
           {/* </Link> */}
           {/* <div className="gif"></div> */}
         </div>
