@@ -22,8 +22,20 @@ type Qr = {
 };
 const base = new Airtable({
   apiKey:
-    "patsnl6G6xsvlftgR.8d7baafc620b0b35c244c10492c57d3a55aebf4fbca1d8d731ba8c04b9ec1965",
+    "patAL8AUV081hJMS1.01804fed951e5b2267accd0062368b95df30d5a4ee65e07490ea514b57dc56ca",
 }).base("appe8kR3xJxcj1Jsr");
+// Airtable.configure({
+//   endpointUrl: "https://api.airtable.com",
+//   apiKey:
+//     "patAL8AUV081hJMS1.01804fed951e5b2267accd0062368b95df30d5a4ee65e07490ea514b57dc56ca",
+// });
+
+// const base = new Airtable({
+//   endpointUrl: "https://api.airtable.com",
+//   headers: {
+//     Authorization: "Bearer " + '',
+//   },
+// }).base("appe8kR3xJxcj1Jsr");
 
 const table = base<Member>("OFFICIAL");
 const qrTable = base<Qr>("QRcodes");
@@ -80,7 +92,7 @@ export const queryMemberBy = async (
 
 export const getAllTicketsFromCode = async (code: string) => {
   try {
-    console.log("get all tickets", code);
+    console.log(table);
     const members = await table
       .select({ filterByFormula: `AND({code} = '${code}', {remaining} > 0)` })
       .all();

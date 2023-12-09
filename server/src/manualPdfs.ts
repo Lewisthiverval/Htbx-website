@@ -33,7 +33,6 @@ const data: Array<namesAndEmail> = [
   },
 ];
 
-
 export const sendTicketsManually = async (
   namesAndEmail: Array<namesAndEmail>
 ) => {
@@ -48,4 +47,4 @@ export const sendTicketsManually = async (
 
 console.log("hello");
 
-sendTicketsManually(data);
+// sendTicketsManually(data);

@@ -10,9 +10,10 @@ const kylie =
   "https://soundcloud.com/rkills/padam-padam-rkills-hard-trance-remix";
 const nin =
   "https://soundcloud.com/waxwingsofficial/nin-closer-wax-wings-animal-mix";
+const ufo = "https://soundcloud.com/mamatoldya/ufo95-move-on";
 
 client
-  .getSongInfo(nin)
+  .getSongInfo(ufo)
   .then(async (song) => {
     const stream = await song.downloadProgressive();
     const writer = stream.pipe(fs.createWriteStream(`./${song.title}.mp3`));

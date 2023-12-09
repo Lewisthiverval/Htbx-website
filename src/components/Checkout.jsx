@@ -5,6 +5,7 @@ import NIN from "../assets/sounds/NIN-WAX.mp3";
 import halloween from "../assets//sounds/halloween.mp3";
 
 import padam from "../assets/sounds/PadamPadam.mp3";
+import ufo from "../assets/sounds/UFO95.mp3";
 
 import logo from "../assets/htbx-logo.jpg";
 // import apple1 from "../assets/sounds/apple1.wav";
@@ -19,7 +20,7 @@ export function Checkout() {
   const [code, setCode] = useState("");
   const params = useParams();
   const nav = useNavigate();
-  const track = new Audio(halloween);
+  const track = new Audio(ufo);
   const handleClick = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -35,7 +36,7 @@ export function Checkout() {
   };
 
   useEffect(() => {
-    track.currentTime = 163;
+    track.currentTime = 5;
     track.play();
 
     const handleTrackEnd = () => {
@@ -52,13 +53,13 @@ export function Checkout() {
   return params.code ? (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        {/* <Tickets code={params.code} /> */}
+        <Tickets code={params.code} />
       </div>
       <Socials />
     </div>
   ) : (
     <div className="secondpageContainer">
-      {/* <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
+      <img className="logo" src={logo} alt="logo" width="300" height="90"></img>
       <div className="frameContainer">
         <input
           type="text"
@@ -77,7 +78,7 @@ export function Checkout() {
 
         <div className="quantityContainer"></div>
       </div>
-      <Socials /> */}
+      <Socials />
     </div>
   );
 }

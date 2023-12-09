@@ -1,11 +1,11 @@
 .firstPageContainer {
-  background-image: url("assets/death.gif");
+  background-image: url("assets/ny.gif");
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100vh; /* Viewport height */
+  width: 100vw; /* Viewport width */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -13,7 +13,10 @@
 
 @media (max-width: 600px) {
   .firstPageContainer {
-    background-size: 200%; /* Or any value you find visually pleasing */
+    background-image: url("assets/phoneimg.gif");
+    background-size: cover; /* cover ensures the image covers the entire container */
+    overflow-y: hidden;
+    overflow-x: hidden;
   }
 }
 
@@ -35,7 +38,7 @@
   /* background-size: 200px; */
   /* height: 400px; */
   display: flex;
-  justify-container: center;
+
   align-items: center;
   position: relative;
   top: -20px;
@@ -43,7 +46,7 @@
   border-width: 2px;
   border-color: rgba(57, 255, 20, 10);
   border-radius: 0px;
-  border-opacity: 0.5;
+
   /* box-shadow: 0px 0px 0px 2px rgba(57, 255, 20, 0.3); */
 }
 /* @keyframes blinker {
@@ -231,9 +234,9 @@ input:-webkit-autofill:active {
   background-color: black;
   border: white;
   top: 40%;
-  left: 0;
+  left: 90%;
   animation: blinker 1s linear infinite;
-  color: red;
+  color: greenyellow;
   text-align: center;
   text-decoration: none;
   font-size: 40px;
@@ -243,14 +246,14 @@ input:-webkit-autofill:active {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transform: rotate(20deg); /* Rotate 90 degrees to the right */
-  margin-top: 130px;
+  transform: rotate(-10deg); /* Rotate 90 degrees to the right */
+  margin-right: 450px;
 }
 @media (max-width: 600px) {
   .enter {
-    left: 200px !important;
+    left: 10%;
     margin-top: 85px;
-    margin-right: 65px;
+    margin-right: 200px;
     font-size: 30px !important;
   }
 }

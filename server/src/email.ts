@@ -20,25 +20,29 @@ export const createPdf = (
   doc.pipe(fs.createWriteStream(pdfPath));
   doc.image(qrCodePath, { width: 200, align: "center" });
   doc.moveDown();
-  doc.fontSize(16).text(`${name}`);
+  doc.fontSize(16).text(`${name.toUpperCase()}`);
   doc.moveDown();
   doc
-    .fontSize(8)
+    .fontSize(12)
     .text(
-      "You cannot sell or give your ticket to anyone else, doing so will result in that person being denied entry."
+      "*IMPORTANT* You cannot resell your ticket without our prior written consent, or the buyer will be refused entry on the door."
     );
   doc.moveDown();
   doc
-    .fontSize(8)
+    .fontSize(12)
     .text(
-      "If you can no longer attend, please e-mail htbxlondon@gmail.com to be issued a full refund, applicable until 48 hours before the party."
+      "If you can no longer attend, please e-mail hi@htbx.london to request a full refund, applicable until 48 hours before the party starts (this means by midnight on 29th of December 2023) - No refunds will be issued after this deadline -"
     );
   doc.moveDown();
   doc.moveDown();
-  doc.fontSize(12).text("NO photography is allowed");
+  doc
+    .fontSize(12)
+    .text("NO photography is allowed ANYWHERRRE inside this event");
+  doc.fontSize(12).text("That means everywhere, OK?");
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();
-  doc.fontSize(12).text("29/10/23  13:00 to 00:00");
+  doc.fontSize(12).text("01/01/24  12:00 to 00:00");
+  doc.fontSize(12).text("Last Entry: 21:00 *NO EXCEPTIONS HUNS*");
   doc.moveDown();
   doc.fontSize(12).text("Address:");
   doc.fontSize(12).text("SET Woolwich");
@@ -86,7 +90,7 @@ export const createTickets = async (names: Array<any>, email: string) => {
 
 export const confirmEmail = async (names: Array<any>, address: string) => {
   sgMail.setApiKey(
-    "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"
+    "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"
   );
 
   let tickets: Array<any> = [];
