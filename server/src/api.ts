@@ -111,7 +111,7 @@ app.post("/ticket", async (req: Request, res: Response) => {
   const ticketPath = path.join(ticketDir, ticketName);
   console.log("ticketDir:", ticketDir);
   console.log("ticketPath:", ticketPath);
-  console.log("HELLLLLLLLLLLOOOOOOOOO");
+  console.log("HELLLLLLLLLLLOOOOOOOO");
 
   try {
     await fs.promises.access(ticketPath, fs.constants.F_OK);
