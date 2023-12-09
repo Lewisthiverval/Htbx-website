@@ -99,7 +99,6 @@ app.get("/success", async (req: Request, res: Response) => {
     res.end();
     return;
   }
-
   res.setHeader("Location", `${env.WEBAPP_URL}/#/success/${ticketNames}`);
   res.status(302);
   res.end();
