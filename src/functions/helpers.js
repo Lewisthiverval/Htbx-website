@@ -8,6 +8,7 @@ export async function fetchFromAPI(endpointURL, opts) {
     headers: {
       "Content-Type": "application/json",
     },
+    mode: "cors",
   });
 
   return res.json();
