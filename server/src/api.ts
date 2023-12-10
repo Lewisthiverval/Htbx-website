@@ -21,7 +21,7 @@ export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-03-02",
 });
 export const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({ origin: "https://htbx.london" }));
 app.use(express.json());
 
 // app.use(
