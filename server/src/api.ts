@@ -14,7 +14,7 @@ import {
   runBatches,
 } from "./airtable";
 import { freeCheckoutComplete } from "./payments";
-import { confirmEmail, createTickets } from "./email";
+import { confirmEmail } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
 export const app = express();

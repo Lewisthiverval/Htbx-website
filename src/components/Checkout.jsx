@@ -37,11 +37,11 @@ export function Checkout() {
 
   useEffect(() => {
     track.currentTime = 5;
-    track.play();
+    // track.play();
 
     const handleTrackEnd = () => {
       track.currentTime = 219.5;
-      track.play();
+      // track.play();
     };
 
     track.addEventListener("ended", handleTrackEnd);

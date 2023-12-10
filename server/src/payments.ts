@@ -97,8 +97,7 @@ export async function freeCheckoutComplete(tickets: Array<any>, email: string) {
   const baseId = env.AIRTABLE_BASEID;
   if (!baseId) throw new Error(`Missing AIRTABLE_BASEID environment variable`);
   const base = new Airtable({
-    apiKey:
-      "patAL8AUV081hJMS1.01804fed951e5b2267accd0062368b95df30d5a4ee65e07490ea514b57dc56ca",
+    apiKey: env.AIRTABLE_SECRET_TOKEN,
   }).base(baseId);
   const tableName = env.AIRTABLE_NAME;
   if (!tableName) throw new Error(`Missing AIRTABLE_NAME environment variable`);
