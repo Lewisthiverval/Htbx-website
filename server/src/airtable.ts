@@ -194,6 +194,7 @@ export const updateQR = async (id: string) => {
     });
     return "QR code scanned successfully";
   } catch (error) {
+    console.log("na");
     console.error("could not update state of qr...");
     console.log(error);
   }
