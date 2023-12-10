@@ -17,22 +17,22 @@ import { freeCheckoutComplete } from "./payments";
 import { confirmEmail } from "./email";
 import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
-export const app = express();
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-03-02",
 });
-
+export const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
-app.use(
-  expressWinston.logger({
-    transports: [new winston.transports.Console()],
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.json()
-    ),
-  })
-);
+
+// app.use(
+//   expressWinston.logger({
+//     transports: [new winston.transports.Console()],
+//     format: winston.format.combine(
+//       winston.format.colorize(),
+//       winston.format.json()
+//     ),
+//   })
+// );
 
 app.get("/", async (_req, res) => {
   res.setHeader("Location", `${env.WEBAPP_URL}`);
