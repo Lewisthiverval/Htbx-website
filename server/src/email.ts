@@ -90,7 +90,7 @@ export const createTickets = async (names: Array<any>, email: string) => {
 
 export const confirmEmail = async (names: Array<any>, address: string) => {
   sgMail.setApiKey(
-    "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"
+    "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"
   );
 
   let tickets: Array<any> = [];
@@ -114,7 +114,7 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
   const msg = {
     from: "hi@htbx.london",
     to: address,
-    subject: "HTBX 27.08.23",
+    subject: "HTBX 01.01.24",
     text: "HTBX ticket",
     attachments: tickets,
   };

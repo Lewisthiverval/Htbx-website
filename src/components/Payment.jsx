@@ -43,29 +43,23 @@ function Payment({ products, email }) {
     })
     .join(",");
 
-  // const checkoutfree = useSwrMutation("freeCheckout", () =>
-  //   fetchFromAPI("freeCheckout", {
-  //     body: {
-  //       tickets: products,
-  //       email: email,
-  //     },
-  //   })
-  // );
+  const checkoutfree = useSwrMutation("freeCheckout", () =>
+    fetchFromAPI("freeCheckout", {
+      body: {
+        tickets: products,
+        email: email,
+      },
+    })
+  );
 
   if (isLoading) return "Loading";
   if (error) {
     console.log(error);
   }
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (validateEmail(email)) {
-      await fetchFromAPI("freeCheckout", {
-        body: {
-          tickets: products,
-          email: email,
-        },
-      }).then(() => nav(`/success/${ticketNames}`));
-      // checkoutfree.trigger().then(() => nav(`/success/${ticketNames}`));
+      checkoutfree.trigger().then(() => nav(`/success/${ticketNames}`));
     }
   };
 
@@ -76,7 +70,7 @@ function Payment({ products, email }) {
           <button
             className="button"
             onClick={handleClick}
-            // disabled={checkoutfree.isLoading}
+            disabled={checkoutfree.isLoading}
           >
             Send free ticket by email
           </button>

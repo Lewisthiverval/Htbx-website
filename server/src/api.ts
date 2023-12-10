@@ -108,9 +108,6 @@ app.post("/ticket", async (req: Request, res: Response) => {
   const ticketDir = path.join(__dirname, "tickets");
   const ticketName = req.body.ticketName + ".pdf";
   const ticketPath = path.join(ticketDir, ticketName);
-  console.log("ticketDir:", ticketDir);
-  console.log("ticketPath:", ticketPath);
-  console.log("HELLLLLLLLLLLOOOOOOOO");
 
   try {
     await fs.promises.access(ticketPath, fs.constants.F_OK);
@@ -125,8 +122,7 @@ app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
   await freeCheckoutComplete(body.tickets, body.email);
   await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
   await confirmEmail(body.tickets, body.email);
-  console.log("test");
-  // res.json({ success: true });
+  res.json({ success: true });
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
