@@ -110,7 +110,6 @@ export function Tickets(params) {
   ) : (
     <div className="tickets-container">
       <img src={logo} className="logo" alt="logo" width="300" height="90"></img>
-
       <h4 style={{ fontStyle: "italic", opacity: 0.6 }}>
         Select your ticket(s):
       </h4>

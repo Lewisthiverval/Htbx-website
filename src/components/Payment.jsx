@@ -43,23 +43,29 @@ function Payment({ products, email }) {
     })
     .join(",");
 
-  const checkoutfree = useSwrMutation("freeCheckout", () =>
-    fetchFromAPI("freeCheckout", {
-      body: {
-        tickets: products,
-        email: email,
-      },
-    })
-  );
+  // const checkoutfree = useSwrMutation("freeCheckout", () =>
+  //   fetchFromAPI("freeCheckout", {
+  //     body: {
+  //       tickets: products,
+  //       email: email,
+  //     },
+  //   })
+  // );
 
   if (isLoading) return "Loading";
   if (error) {
     console.log(error);
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (validateEmail(email)) {
-      checkoutfree.trigger().then(() => nav(`/success/${ticketNames}`));
+      await fetchFromAPI("freeCheckout", {
+        body: {
+          tickets: products,
+          email: email,
+        },
+      }).then(() => nav(`/success/${ticketNames}`));
+      // checkoutfree.trigger().then(() => nav(`/success/${ticketNames}`));
     }
   };
 
