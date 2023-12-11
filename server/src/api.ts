@@ -122,11 +122,11 @@ app.post("/ticket", async (req: Request, res: Response) => {
 });
 
 app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
-  await freeCheckoutComplete(body.tickets, body.email);
-  await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
-  await confirmEmail(body.tickets, body.email);
-
-  res.json({ success: true });
+  // await freeCheckoutComplete(body.tickets, body.email);
+  // await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
+  // await confirmEmail(body.tickets, body.email);
+  // res.json({ success: true });
+  console.log("hello");
 });
 
 app.post("/login", async ({ body }: Request, res: Response) => {
