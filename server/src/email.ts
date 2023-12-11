@@ -37,7 +37,7 @@ export const createPdf = (
   doc.moveDown();
   doc
     .fontSize(12)
-    .text("NO photography is allowed ANYWHERRRE inside this event");
+    .text("NO photography is allowed ANYWHERrrrrRRE inside this event");
 
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();

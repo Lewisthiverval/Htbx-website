@@ -52,7 +52,10 @@ export function CheckoutSuccess({ email }) {
     <div className="secondpageContainer">
       <div className="frameContainer">
         <h1 className="successMessage">Thank u sxc!</h1>
-        <h1 className="successMessage">Please download your tickets below.</h1>
+        <h1 className="successMessage">
+          Please save your tickets now, either by downloading them or taking a
+          screenshot of the QR codes.
+        </h1>
         <div className="viewTicketsContainer"></div>
         <div className="pdf-container">
           {individualTicketNames.map((x) => {

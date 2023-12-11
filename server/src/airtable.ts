@@ -21,8 +21,7 @@ type Qr = {
   email: string;
 };
 const base = new Airtable({
-  apiKey:
-    "patAL8AUV081hJMS1.01804fed951e5b2267accd0062368b95df30d5a4ee65e07490ea514b57dc56ca",
+  apiKey: env.AIRTABLE_SECRET_TOKEN,
 }).base("appe8kR3xJxcj1Jsr");
 // Airtable.configure({
 //   endpointUrl: "https://api.airtable.com",
@@ -37,7 +36,7 @@ const base = new Airtable({
 //   },
 // }).base("appe8kR3xJxcj1Jsr");
 
-const table = base<Member>("OFFICIAL");
+const table = base<Member>("OFFICIALcopy");
 const qrTable = base<Qr>("QRcodes");
 
 export const updateBatchOfRecords = async (records: any) => {
