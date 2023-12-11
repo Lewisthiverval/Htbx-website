@@ -38,7 +38,7 @@ export const createPdf = (
   doc
     .fontSize(12)
     .text("NO photography is allowed ANYWHERRRE inside this event");
-  doc.fontSize(12).text("That means everywhere, OK?");
+
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();
   doc.fontSize(12).text("01/01/24  12:00 to 00:00");
