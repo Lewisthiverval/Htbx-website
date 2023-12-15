@@ -88,8 +88,10 @@ export const createTickets = async (names: Array<any>, email: string) => {
   await Promise.all(fileCreationPromises);
 };
 
-export const confirmEmail = async (names: Array<any>, address: string) => {
-  sgMail.setApiKey(env.SENDGRID_API_KEY);
+export const confirmEmail = async (names: Array<any>, email: string) => {
+  sgMail.setApiKey(
+    "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"
+  );
 
   let tickets: Array<any> = [];
 
@@ -111,7 +113,7 @@ export const confirmEmail = async (names: Array<any>, address: string) => {
 
   const msg = {
     from: "hi@htbx.london",
-    to: address,
+    to: email,
     subject: "HTBX 01.01.24",
     text: "HTBX ticket",
     attachments: tickets,
