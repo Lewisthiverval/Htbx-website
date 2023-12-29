@@ -53,7 +53,7 @@ export function Checkout() {
   return params.code ? (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        {/* <Tickets code={params.code} /> */}
+        <Tickets code={params.code} />
       </div>
       <Socials />
     </div>
