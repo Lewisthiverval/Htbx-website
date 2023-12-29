@@ -87,9 +87,7 @@ export const createTickets = async (names: Array<any>, email: string) => {
 };
 
 export const confirmEmail = async (names: Array<any>, email: string) => {
-  sgMail.setApiKey(
-    "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"
-  );
+  sgMail.setApiKey(env.SENDGRID_API_KEY);
 
   let tickets: Array<any> = [];
 
