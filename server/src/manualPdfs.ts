@@ -7,18 +7,18 @@ type namesAndEmail = {
 };
 
 const data: Array<namesAndEmail> = [
-  // {
-  //   namesAndQuantity: [{ name: "Lorcan", quantity: 1 }],
-  //   email: "lorcanabrannigan@gmail.com",
-  // },
+  {
+    namesAndQuantity: [{ name: "Jack", quantity: 1 }],
+    email: "Jackhoward7@live.com",
+  },
   // {
   //   namesAndQuantity: [{ name: "Robin", quantity: 1 }],
   //   email: "robin.mooneye@gmail.com",
   // },
-  // {
-  //   namesAndQuantity: [{ name: "Robin", quantity: 1 }],
-  //   email: "lewismurray78@gmail.com",
-  // },
+  {
+    namesAndQuantity: [{ name: "Robin", quantity: 1 }],
+    email: "lewismurray78@gmail.com",
+  },
 ];
 
 export const sendTicketsManually = async (
@@ -33,4 +33,4 @@ export const sendTicketsManually = async (
   return "files created";
 };
 
-// sendTicketsManually(data);
+sendTicketsManually(data);

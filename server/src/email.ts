@@ -35,9 +35,7 @@ export const createPdf = (
     );
   doc.moveDown();
   doc.moveDown();
-  doc
-    .fontSize(12)
-    .text("NO photography is allowed ANYWHERrrrrRRE inside this event");
+  doc.fontSize(12).text("NO photography is allowed anywhere inside this event");
 
   doc.fontSize(12).text("18+ / bring ID");
   doc.moveDown();
@@ -90,7 +88,7 @@ export const createTickets = async (names: Array<any>, email: string) => {
 
 export const confirmEmail = async (names: Array<any>, email: string) => {
   sgMail.setApiKey(
-    "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"
+    "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"
   );
 
   let tickets: Array<any> = [];
