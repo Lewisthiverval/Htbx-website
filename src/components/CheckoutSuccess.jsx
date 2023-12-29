@@ -81,10 +81,11 @@ export function CheckoutSuccess({ email }) {
 }
 
 export function NoCode() {
+  console.log("no code");
   return (
     <div className="secondpageContainer">
       <div className="frameContainer">
-        <h1> Sorry babe, your code is sold out?! </h1>
+        <h1> Sorry babe, we are sold out! </h1>
       </div>
     </div>
   );

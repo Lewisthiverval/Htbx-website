@@ -22,7 +22,6 @@ export function Tickets(params) {
       body: { code: params.code.toLowerCase() },
     }).then((response) => {
       setIsloading(false);
-      console.log(response, "response");
       response.length === 0 ? nav("/noCode") : setTickets(response);
       setTicketName(response[0].name.toLowerCase().replace(" ", ""));
     });
