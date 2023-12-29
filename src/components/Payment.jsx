@@ -72,7 +72,7 @@ function Payment({ products, email }) {
             onClick={handleClick}
             disabled={checkoutfree.isLoading}
           >
-            Send free ticket by email
+            Show tickets and send by email
           </button>
         </div>
       ) : (
