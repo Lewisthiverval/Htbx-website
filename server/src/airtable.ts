@@ -37,7 +37,7 @@ const base = new Airtable({
 //   },
 // }).base("appe8kR3xJxcj1Jsr");
 
-const table = base<Member>("OFFICIALcopy");
+const table = base<Member>("NYDXTRATIX");
 const qrTable = base<Qr>("QRcodes");
 
 export const updateBatchOfRecords = async (records: any) => {
