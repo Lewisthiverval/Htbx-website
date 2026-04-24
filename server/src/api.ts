@@ -1,25 +1,9 @@
 import express, { Request, Response } from "express";
 import expressWinston from "express-winston";
 import winston from "winston";
-import Stripe from "stripe";
 import cors from "cors";
-import { sendTicketsManually } from "./manualPdfs";
-import path from "path";
-import fs from "fs";
-import { createPaymentIntent, updatePaymentComplete } from "./payments";
-import {
-  checkQR,
-  updateQR,
-  getAllTicketsFromCode,
-  runBatches,
-} from "./airtable";
-import { freeCheckoutComplete } from "./payments";
-import { confirmEmail } from "./email";
-import { getPurchasedAndTotal } from "./airtable";
 import * as env from "./env";
-export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-  apiVersion: "2020-03-02",
-});
+
 export const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
@@ -34,155 +18,28 @@ app.use(
   })
 );
 
+const unavailable = (_req: Request, res: Response) => {
+  res.status(503).json({ error: "Service temporarily unavailable" });
+};
+
 app.get("/", async (_req, res) => {
   res.setHeader("Location", `${env.WEBAPP_URL}`);
   res.status(302);
   res.end();
 });
 
-app.post("/payments", async ({ body }: Request, res: Response) => {
-  const amount = body.tickets
-    .map((x: any) => {
-      return x.price * x.quantity;
-    })
-    .reduce((prev: any, curr: any) => {
-      return prev + curr;
-    }, 0);
-
-  if (amount === 0) {
-    return res.json({ price: 0, client_secret: null, id: null });
-  }
-
-  await createPaymentIntent(body.tickets, body.email, amount * 100)
-    .then((x) => res.json(x))
-    .catch((error) => {
-      console.log(error);
-      res.status(402);
-      res.json({ error });
-    });
-});
-
-app.get("/success", async (req: Request, res: Response) => {
-  const paymentIntent: any = req.query.payment_intent;
-  const encodedData: any = req.query.data;
-  const decodedData = JSON.parse(decodeURIComponent(encodedData));
-  const ticketNames = decodedData
-    .map((x: any) => {
-      return `ticket_${x.name}`;
-    })
-    .join(",");
-  if (typeof paymentIntent !== "string") {
-    res.setHeader(
-      "Location",
-      `${env.WEBAPP_URL}/failure?error=missingpaymentintent`
-    );
-    res.status(302);
-    res.end();
-    return;
-  }
-
-  try {
-    const intent = await stripe.paymentIntents.retrieve(paymentIntent);
-    const email = intent.metadata.email;
-
-    await updatePaymentComplete(paymentIntent, decodedData);
-    await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
-    await confirmEmail(decodedData, email);
-  } catch (error) {
-    res.setHeader(
-      "Location",
-      `${env.WEBAPP_URL}/#/failure?error=decodingerror`
-    );
-    res.status(302);
-    res.send(error);
-    console.log(error);
-    res.end();
-    return;
-  }
-  res.setHeader("Location", `${env.WEBAPP_URL}/#/success/${ticketNames}`);
-  res.status(302);
-  res.end();
-});
-
-app.post("/ticket", async (req: Request, res: Response) => {
-  const ticketDir = path.join(__dirname, "tickets");
-  const ticketName = req.body.ticketName + ".pdf";
-  const ticketPath = path.join(ticketDir, ticketName);
-  console.log("ticketDir:", ticketDir);
-  console.log("ticketPath:", ticketPath);
-
-  try {
-    await fs.promises.access(ticketPath, fs.constants.F_OK);
-    res.setHeader("Content-Type", "application/pdf");
-    res.sendFile(ticketPath);
-  } catch {
-    res.status(404).send(`File ${ticketName} does not exist.`);
-  }
-});
-
-app.post("/freeCheckout", async ({ body }: Request, res: Response) => {
-  await freeCheckoutComplete(body.tickets, body.email);
-  await new Promise((resolve) => setTimeout(() => resolve(null), 1000));
-  await confirmEmail(body.tickets, body.email);
-  res.json({ success: true });
-  console.log("hello");
-});
-
 app.post("/login", async ({ body }: Request, res: Response) => {
   body.password === env.ADMIN_PAGE_PASSWORD ? res.send(true) : res.send(false);
 });
 
-app.post("/getTickets", async ({ body }: Request, res: Response) => {
-  const code = body.code;
-  const tickets = await getAllTicketsFromCode(code);
-  res.send(tickets);
-});
-
-app.post(
-  "/qr/:code/:ticket",
-  async ({ body, params }: Request, res: Response) => {
-    const code = body.code;
-    const tickets = await getAllTicketsFromCode(code);
-    res.send(tickets);
-  }
-);
-
-app.get("/purchased", async (req: Request, res: Response) => {
-  const members = await getPurchasedAndTotal();
-  res.json(members);
-});
-
-app.post("/scan", async ({ body }: Request, res: Response) => {
-  const scannedMess = await checkQR(body.id);
-  res.send({ response: scannedMess });
-});
-
-app.post("/updateQr", async ({ body }: Request, res: Response) => {
-  try {
-    const state = await updateQR(body.id);
-    res.json(state);
-  } catch (error) {
-    console.error("could not update. api call failed.");
-    console.log(error);
-  }
-});
-
-app.get("/resetFields", async (Request: Request, res: Response) => {
-  try {
-    await runBatches();
-    res.send("success");
-  } catch (error) {
-    console.log(error);
-    console.log("couldn't update fields");
-  }
-});
-
-app.post("/manualTickets", async (req: Request, res: Response) => {
-  try {
-    const response = await sendTicketsManually(req.body);
-    res.send(response);
-  } catch (error) {
-    console.error(error);
-    res.send(error);
-  }
-});
+app.post("/payments", unavailable);
+app.get("/success", unavailable);
+app.post("/ticket", unavailable);
+app.post("/freeCheckout", unavailable);
+app.post("/getTickets", unavailable);
+app.post("/qr/:code/:ticket", unavailable);
+app.get("/purchased", unavailable);
+app.post("/scan", unavailable);
+app.post("/updateQr", unavailable);
+app.get("/resetFields", unavailable);
+app.post("/manualTickets", unavailable);

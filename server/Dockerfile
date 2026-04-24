@@ -23,7 +23,7 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY --link package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --production=false
+RUN pnpm install --no-frozen-lockfile --production=false
 
 # Copy application code
 COPY --link . .
