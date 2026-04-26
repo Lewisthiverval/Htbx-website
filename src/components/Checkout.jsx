@@ -76,6 +76,15 @@ export function Checkout() {
           Submit
         </button>
 
+        <iframe
+          src="https://trixy.com/embed/events/4f1ec0ac-bfa5-4873-8340-c8f728f6d875"
+          width="420"
+          height="650"
+          frameBorder="0"
+          style={{ borderRadius: "12px", border: "none" }}
+          title="Get Tickets"
+        ></iframe>
+
         <div className="quantityContainer"></div>
       </div>
       <Socials />
